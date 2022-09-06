@@ -9,7 +9,7 @@
 <body>
 
 
-<form action="viewMemberHistory.jsp" method="post">
+<form action="update.jsp" method="post">
 
 	<table border="1">
 		
@@ -20,7 +20,13 @@
 		</tr>
 		
 		<tr>
-			<td colspan="4"><input type="submit" value="조회"></td>
+			<td>이름</td>
+			<td><input type="text" name="name" size="10"></td>
+			
+		</tr>
+		
+		<tr>
+			<td colspan="4"><input type="submit" value="변경"></td>
 		</tr>
 
 

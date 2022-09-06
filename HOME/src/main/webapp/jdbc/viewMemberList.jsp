@@ -15,6 +15,9 @@ member 테이블의 내용
 
 <table width="600" border="1">
 
+   
+   
+   
 	<tr>
 		<td>이름</td>
 		<td>아이디</td>
@@ -22,20 +25,15 @@ member 테이블의 내용
 	</tr>
 <%
 	
-	Class.forName("oracle.jdbc.driver.OracleDriver");
-
-
-
-
 	Connection conn=null;
 	Statement stmt=null;
 	ResultSet rs = null;
 	
 	
 	try{
-		String jdbcDriver = "jdbc:oracle:thin:@192.168.0.6:1521:xe?" + "useUnicode=true&characterEncoding=utf8";
-		String dbUser = "ez";
-		String dbPass = "oracle";
+		String jdbcDriver = "jdbc:oracle:thin:@localhost:1521:xe";
+		String dbUser = "scott";
+		String dbPass = "tiger";
 		
 		String query="select * from member order by name";
 		
@@ -49,7 +47,8 @@ member 테이블의 내용
 
 	<tr>
 		<td><%=rs.getString("name") %></td>
-		<td><%=rs.getString("id") %></td>
+		<td><a href="viewMember.jsp?memberID=<%=rs.getString("memberID")%>">
+   <%= rs.getString("memberID") %></a></td>
 		<td><%=rs.getString("email") %></td>
 	</tr>
 <%

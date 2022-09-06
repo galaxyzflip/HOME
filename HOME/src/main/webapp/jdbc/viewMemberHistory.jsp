@@ -22,10 +22,10 @@
 	ResultSet rs = null;
 
 	try{
-		String jdbc = "jdbc:oracle:thin:@192.168.0.6:1521:xe?" + "useUnicode=true&characterEncoding=utf8";
-		String dbUser = "ez";
-		String dbPass = "oracle";
-		String query = "select * from member_history where id='" + id +  "'";
+		String jdbc = "jdbc:oracle:thin:@localhost:1521:xe?" + "useUnicode=true&characterEncoding=utf8";
+		String dbUser = "scott";
+		String dbPass = "tiger";
+		String query = "select * from member_history where memberid='" + id +  "'";
 		
 		conn = DriverManager.getConnection(jdbc, dbUser, dbPass);
 		stmt = conn.createStatement();

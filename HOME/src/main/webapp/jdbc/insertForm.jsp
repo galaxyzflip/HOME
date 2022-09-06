@@ -10,24 +10,29 @@
 
 <form action="insert.jsp" method="post">
 
-<table border="1">
+<table border="1" width="400">
 	<tr>
 		<td>아이디</td>
-		<td><input type="text" name="id" size="10"></td>
+		<td><input type="text" name="memberID" size="10"></td>
+		
+	</tr>	
+	<tr>
 		<td>암호</td>
-		<td><input type="password" name="password" size="10"></td>
+		<td colspan="2"><input type="password" name="password" size="15"></td>
 	</tr>
 	
 	<tr>
 		<td>이름</td>
-		<td><input type="text" name="name" size="10"></td>
+		<td colspan="2"><input type="text" name="name" size="15"></td>
+	</tr>	
+	<tr>
 		<td>이메일</td>
-		<td><input type="text" name="email" size="10"></td>
+		<td colspan="2"><input type="text" name="email" size="15"></td>
 	</tr>
 	
 	<tr>
 		<td>번호</td>
-		<td><input type="text" name="tel" size="10"></td>
+		<td colspan="2"><input type="text" name="phone" size="15"></td>
 		
 	</tr>
 	

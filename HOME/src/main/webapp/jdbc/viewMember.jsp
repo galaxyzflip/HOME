@@ -6,7 +6,14 @@
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="java.sql.SQLException" %>
 
-<% String memberID = request.getParameter("memberID"); %>
+<%
+request.setCharacterEncoding("utf-8");
+	String memberID = request.getParameter("memberID"); 
+
+%>
+
+
+<%-- <% String memberID="0001"; %> --%>
 
     
 <!DOCTYPE html>
@@ -17,17 +24,16 @@
 </head>
 <body>
 <%
-	Class.forName("oracle.jdbc.driver.OracleDriver");
 	Connection conn = null;
 	Statement stmt = null;
 	ResultSet rs = null;
 	
 	try{
 		
-		String jdbcDriver = "jdbc:oracle:thin:@192.168.0.6:1521:xe?" + "useUnicode=true&characterEncoding=utf8";
-		String dbUser = "ez";
-		String dbPass = "oracle";
-		String query = "select * from member where id='" + memberID +"'";
+		String jdbcDriver = "jdbc:oracle:thin:@localhost:1521:xe";
+		String dbUser = "scott";
+		String dbPass = "tiger";
+		String query = "select * from member where memberid='" + memberID +"'";
 		
 		conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
 		stmt = conn.createStatement();
@@ -35,7 +41,7 @@
 		
 		if(rs.next()){
 %>			
-<table border="1">
+<table border="1" width ="400">
 
 	<tr>
 		<td>아이디</td><td><%= memberID %></td>
@@ -46,7 +52,7 @@
 	<tr>
 
 	<tr>
-		<td>이름</td><td><%=rs.getString("id") %></td>
+		<td>이름</td><td><%=rs.getString("name") %></td>
 	<tr>
 
 	<tr>
@@ -54,7 +60,7 @@
 	<tr>
 
 	<tr>
-		<td>전화번호</td><td><%=rs.getString("tel") %></td>
+		<td>전화번호</td><td><%=rs.getString("phone") %></td>
 	<tr>
 </table>
 	
@@ -64,6 +70,9 @@
 <%= memberID %> 에 해당하는 정보가 존재하지 않습니다.
 <% 	
 	}
+}catch(SQLException ex){
+	out.println(ex.getMessage());
+	ex.printStackTrace();
 }finally{
 	if(rs != null) try{rs.close();} catch(SQLException es) {};
 	if(stmt != null) try{stmt.close();} catch(SQLException ex){};
