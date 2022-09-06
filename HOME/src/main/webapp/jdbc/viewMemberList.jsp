@@ -11,7 +11,9 @@
 </head>
 <body>
 
-member 테이블의 내용
+member 테이블의 내용 <br>
+
+<a href="insertForm.jsp"> 글 입력 </a> <br>
 
 <table width="600" border="1">
 
@@ -31,13 +33,13 @@ member 테이블의 내용
 	
 	
 	try{
-		String jdbcDriver = "jdbc:oracle:thin:@localhost:1521:xe";
-		String dbUser = "scott";
-		String dbPass = "tiger";
-		
+		//String jdbcDriver = "jdbc:oracle:thin:@localhost:1521:xe";
+		//String dbUser = "scott";
+		//String dbPass = "tiger";
+		String jdbcDrier = "jdbc:apache:commons:dbcp:/pool";
 		String query="select * from member order by name";
 		
-		conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
+		conn = DriverManager.getConnection(jdbcDrier);
 		stmt = conn.createStatement();
 		rs = stmt.executeQuery(query);
 		

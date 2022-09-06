@@ -4,19 +4,19 @@ import java.util.*;
 
 public class MemberInfo {
 
-	private String id;
+	private String memberID;
 	private String password;
 	private String name;
 	private String address;
 	private Date registerDate;
 	private String email;
 	
-	public String getId() {
-		return id;
+	public String getmemberID() {
+		return memberID;
 	}
 	
-	public void setId(String id) {
-		this.id = id;
+	public void setId(String memberID) {
+		this.memberID = memberID;
 	}
 
 	public String getPassword() {

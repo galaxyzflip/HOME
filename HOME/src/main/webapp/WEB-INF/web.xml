@@ -9,13 +9,20 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+
+
+  
   <servlet>
-    <servlet-name>JDBCDriverLoader</servlet-name>
-    <servlet-class>loader.Loader</servlet-class>
-    <init-param>
-      <param-name>jdbcdriver</param-name>
-      <param-value>oracle.jdbc.driver.OracleDriver</param-value>
-    </init-param>
-    <load-on-startup>1</load-on-startup>
+  	<servlet-name>DBCPInit</servlet-name>
+  	<servlet-class>loader.DBCPInit</servlet-class>
+  	
+  	<init-param>
+  		<param-name>jdbcdriver</param-name>
+  		<param-value>oracle.jdbc.driver.OracleDriver</param-value>
+  		
+  	</init-param>
+	<load-on-startup>1</load-on-startup>  
   </servlet>
+  
+  
 </web-app>

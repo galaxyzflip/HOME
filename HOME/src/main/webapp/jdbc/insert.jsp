@@ -10,7 +10,7 @@
 	String password = request.getParameter("password");
 	String name = request.getParameter("name");
 	String email = request.getParameter("email");
-	String tel = request.getParameter("phone");
+	String phone = request.getParameter("phone");
 	
 	
 	Connection conn = null;
@@ -26,10 +26,10 @@
 		
 		pstmt = conn.prepareStatement("insert into member values(?,?,?,?,?)");
 		pstmt.setString(1, memberID);
-		pstmt.setString(2, password);
-		pstmt.setString(3, name);
+		pstmt.setString(2, name);
+		pstmt.setString(3, password);
 		pstmt.setString(4, email);
-		pstmt.setString(5, tel);
+		pstmt.setString(5, phone);
 		
 		pstmt.executeUpdate();
 		
@@ -48,6 +48,9 @@
 <title>insert 결과 화면</title>
 </head>
 <body>
+
+
+
 
 MEMBER테이블에 새로운 레코드를 삽입했습니다. <br>
 <%= memberID %>(<%= name %>)
