@@ -11,7 +11,7 @@
 <%
 	try{
 		if(session.getAttribute("memId") == null){ %>
-<script language="javascript">
+<script language="javaScript">
 
 	function focusIt(){
 		document.inform.id.focus();
@@ -33,7 +33,9 @@ function chekIt()
 
 </head>
 <body onLoad="focusIt();" bgcolor="<%=bodyback_c %>">
-	<table width=500 cellpadding="0" cellspacing="0" align="center" border="1">
+	
+	
+	<table width="500" cellpadding="0" cellspacing="0" align="center" border="1">
 	
 		<tr>
 			<td width="300" bgcolor="<%= bodyback_c %>" height="20">
@@ -52,31 +54,49 @@ function chekIt()
 			<td width="100" bgcolor="<%= value_c %>">
 				<input type="password" name="passwd" size="15" maxlength="10"></td>
 		</tr>
-			
-			
-			
-			
+		
+		<tr>
+			<td colspan="3" bgcolor="<%= title_c %>" align="center">
+			<input type="submit" name="Submit" value="로그인">
+			<input type="button" value="회원가입" onclick="javascript:wondow.location="'inputFormm.jsp'">
+			</td>
+		</tr>
 			</form>
 			
-	
-	
-	
-	
-	
-	
 	
 	</table>
 
 
 
 
-
-
-
-
 <% 					
-		}
-	}
+		} else
 %>
+			<table width="500" cellpadding="0" cellspacting="0" align="center" border="1">
+			
+				<tr>
+					<td width="300" bgcolor="<%=value_c %>" align="center">
+					<%=session.getAttribute("memId") %> 님이 <br> 방문하셨습니다.
+					
+					<form method="post" action="logout.jsp">
+					<input type="submit" value="로그아웃">
+					<input type="button" value="회원정보변경" onclick="javascript:window.location='modify.jsp'">
+					</form>
+					
+					</td>
+				</tr>
+				
+				<tr>
+					<td rowspan="2" bgcolor="<%= bodyback_c %>" width="300"> 메인입니다. </td>
+				</tr>
+			
+			</table>
+		<br>
+
+<% 			
+	}catch(NullPointerException ex){}
+%>
+
+<% %>
 </body>
 </html>

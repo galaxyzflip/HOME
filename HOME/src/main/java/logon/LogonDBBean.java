@@ -83,7 +83,7 @@ public class LogonDBBean {
 	
 	//confirmId.jsp 에서 id 중복체크 // 최창선
 	//중복 아니면 1리턴 중복이면 -1 리턴
-	public int confurmId(String id) throws Exception{
+	public int confirmId(String id) throws Exception{
 		Connection conn = null;
 		PreparedStatement pstmt= null;
 		ResultSet rs = null;
