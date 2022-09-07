@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>회원가입</title>
-<link gref="style.css" rel="stylesheet" type="text/css">
+<link href="style.css" rel="stylesheet" type="text/css">
 <script language="javaScript">
 
 	function checkId(){
@@ -81,7 +81,7 @@
 		<tr>
 			<td width="200"> 사용자 ID </td>
 			<td width="400">
-				<input type="text" name="id" size="10" maxlength="12">
+				<input type="text" name="id" size="10" maxlength="12" placeholder="아이디 입력">
 				<input type="button" name="confirm_id" value="ID중복확인" Onclick = "openConfirmid(this.form)">
 			</td>
 		</tr>
@@ -89,14 +89,14 @@
 		<tr>
 			<td width="200"> 비밀번호 </td>
 			<td width="400">
-				<input type="password" name="passwd" size="15" maxlength="12">
+				<input type="password" name="passwd" size="15" placeholder="비밀번호 입력" maxlength="12">
 			</td>
 		</tr>
 		
 		<tr>
 			<td width="200"> 비밀번호 확인</td>
 			<td width="400">
-				<input type="password" name="passwd2" size="15" maxlength="12">
+				<input type="password" name="passwd2" size="15" placeholder="비밀번호 확인" maxlength="12">
 			</td>
 		</tr>
 		
@@ -108,7 +108,7 @@
 		<tr>
 			<td width="200">사용자이름</td>
 			<td width="400">
-				<input type="text" name="name" size="15" maxlength="10">
+				<input type="text" name="name" size="15" placeholder="이름입력"  maxlength="10">
 			</td>
 		</tr>
 		
@@ -116,7 +116,14 @@
 		<tr>
 			<td width="200"> 생일 </td>
 			<td width="400">
-				<input type="text" name="birthday" size="8" maxlength="8">
+				<!-- <input type="text" name="birthday" size="8" maxlength="8"> -->
+				<form>
+					<input type="date" name="birthday" value="1988-07-20" >
+				</form>
+				
+				
+				
+				
 			</td>
 		</tr>
 			
@@ -126,9 +133,9 @@
 				<!-- <input type="text" name="male" size="2" maxlength="2"> -->
 				
 				<select name="male">
-					<option value="">없음</option>
 					<option value="ma">남자</option>
 					<option value="fe">여자</option>
+					<option value="">없음</option>
 				</select>
 			</td>
 		</tr>

@@ -1,5 +1,6 @@
 package logon;
 import java.sql.*;
+import java.sql.DriverManager;
 
 public class LogonDBBean {
 
@@ -22,6 +23,34 @@ public class LogonDBBean {
 	
 	
 	//inputPro.jsp 에서 회원가입할때 사용
+//	public int insertMember(LogonDataBean member) throws Exception{
+//		Connection conn = null;
+//		PreparedStatement pstmt = null;
+//		int x = -1;
+//		try {
+//			conn = getConnection();
+//			pstmt = conn.prepareStatement("insert into members values(?,?,?,?,?,?,?,?)");
+//			pstmt.setString(1, member.getId());
+//			pstmt.setString(2, member.getPasswd());
+//			pstmt.setString(3, member.getName());
+//			pstmt.setString(4, member.getBirthday());
+//			pstmt.setString(5, member.getMale());
+//			pstmt.setString(6, member.getEmail());
+//			pstmt.setString(7, member.getBlog());
+//			pstmt.setTimestamp(8, member.getReg_date());
+//			
+//			pstmt.executeQuery();
+//			x = 1;
+//			return x; 
+//		}catch(Exception ex) {
+//			ex.printStackTrace();
+//			return x;
+//		}finally {
+//			if(pstmt != null) try {pstmt.close();} catch(SQLException ex) {}
+//			if(conn != null) try {conn.close();} catch(SQLException ex) {}
+//		}
+//		
+//	}
 	public void insertMember(LogonDataBean member) throws Exception{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
