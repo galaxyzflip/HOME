@@ -11,7 +11,7 @@
 	LogonDBBean manager = LogonDBBean.getInstance();
 	int check = manager.userCheck(id, passwd);
 	
-	if(check ==1){
+	if(check == 1){
 		session.setAttribute("memId", id);
 		response.sendRedirect("main.jsp");
 	}else if(check == 0){

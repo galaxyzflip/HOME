@@ -11,6 +11,8 @@
 <%
 	try{
 		if(session.getAttribute("memId") == null){ %>
+		<!-- memId 세션이 없으면 로그인 안한상태 -->
+		
 <script language="javaScript">
 
 	function focusIt(){
@@ -25,7 +27,7 @@ function chekIt()
 		inputForm.passwd.focus();
 		return flase;
 	}
-	}
+}
 
 
 </script>
@@ -44,7 +46,7 @@ function chekIt()
 			
 			<form name="inform" method="post" action="loginPro.jsp" onsubmit = "return checkIt();">
 			
-			<td bgcolor="<%=title_c %> width="100" align="right"> 아이디 </td>
+			<td bgcolor="<%=title_c %>" width="100" align="right"> 아이디 </td>
 			<td width="100" bcolor="<%= value_c %>">
 				<input type="text" name="id" size="15" maxlength="10"/></td>
 		</tr>
@@ -58,7 +60,7 @@ function chekIt()
 		<tr>
 			<td colspan="3" bgcolor="<%= title_c %>" align="center">
 			<input type="submit" name="Submit" value="로그인">
-			<input type="button" value="회원가입" onclick="javascript:wondow.location="'inputFormm.jsp'">
+			<input type="button" value="회원가입" onclick="javascript:window.location='inputForm.jsp'">
 			</td>
 		</tr>
 			</form>
@@ -70,7 +72,7 @@ function chekIt()
 
 
 <% 					
-		} else
+		} else {
 %>
 			<table width="500" cellpadding="0" cellspacting="0" align="center" border="1">
 			
@@ -83,6 +85,7 @@ function chekIt()
 					<input type="button" value="회원정보변경" onclick="javascript:window.location='modify.jsp'">
 					</form>
 					
+					
 					</td>
 				</tr>
 				
@@ -93,7 +96,7 @@ function chekIt()
 			</table>
 		<br>
 
-<% 			
+<% 	}		
 	}catch(NullPointerException ex){}
 %>
 

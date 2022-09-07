@@ -1,21 +1,21 @@
 package logon;
 import java.sql.*;
 
-public class LogonDBBean {
+public class LogonDBBean_home {
 
-	private static LogonDBBean instance = new LogonDBBean();
+	private static LogonDBBean_home instance = new LogonDBBean_home();
 	
-	public static LogonDBBean getInstance() {
+	public static LogonDBBean_home getInstance() {
 		return instance;
 	}
 	
-	private LogonDBBean() {
+	private LogonDBBean_home() {
 		
 	}
 	
 	//커넥션풀 생성, 커넥션 객체 반환
 	private Connection getConnection() throws Exception{
-		String jdbcDriver = "jdbc:apache:commons:dbcp:/pool";
+		String jdbcDriver = "jdbc:apache:commons:dbcp:/pool_home";
 		return DriverManager.getConnection(jdbcDriver);
 	}
 

@@ -2,9 +2,9 @@
 	xmlns="http://apache.org/xml/xmlns/jakarta/commons/jocl">
 
 <object class="org.apache.commons.dbcp.DriverManagerConnectionFactory">
-	<string value="jdbc:oracle:thin:@localhost:1521:xe"/>
+	<string value="jdbc:oracle:thin:@192.168.0.6:1521:xe"/>
 	<string value="pigcs"/>
-	<string value="pigcs"/>
+	<string value="oracle"/>
 </object>
 
 <object class="org.apache.commons.pool.impl.GenericObjectPool">

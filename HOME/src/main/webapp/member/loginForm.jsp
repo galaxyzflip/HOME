@@ -52,7 +52,7 @@
 		<tr height="30">
 			<td width="110" bgcolor="<%=title_c%>" align="center">비밀번호</td>
 			<td width="150" bgcolor="<%=value_c %>" align="center">
-				<input type="text" name="passwd" size="15" maxlength="12">
+				<input type="password" name="passwd" size="15" maxlength="12">
 			</td>
 		</tr>
 		

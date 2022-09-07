@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>회원가입</title>
 <link gref="style.css" rel="stylesheet" type="text/css">
 <script language="javaScript">
 
@@ -51,11 +51,11 @@
 		alert("아이디를 입력하세요");
 		return;
 	}
-	url과 사용자 입력 id 를 조합합니다.
-	url = "confirmId.jsp?id="userinput.id.value;
+	//url과 사용자 입력 id 를 조합합니다.
+	url = "confirmId.jsp?id=" + userinput.id.value;
 	
 	//새로운 윈도우를 엽니다.
-	open(url."confirm", "toolbar=no, location=no, status=no,menubar=no, scrollbars=no, resizable=no, width=300, height=200");
+	open(url, "confirm", "toolbar=no, location=no, status=no,menubar=no, scrollbars=no, resizable=no, width=300, height=200");
 }
 
 
@@ -123,7 +123,13 @@
 		<tr>
 			<td width="200"> 성별 </td>
 			<td width="400">
-				<input type="text" name="male" size="2" maxlength="2">
+				<!-- <input type="text" name="male" size="2" maxlength="2"> -->
+				
+				<select name="male">
+					<option value="">없음</option>
+					<option value="ma">남자</option>
+					<option value="fe">여자</option>
+				</select>
 			</td>
 		</tr>
 			
