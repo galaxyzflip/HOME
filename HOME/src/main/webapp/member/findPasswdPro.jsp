@@ -16,13 +16,37 @@
 <head>
 <meta charset="UTF-8">
 <title>비밀번호 찾기</title>
+
+
+<script language="JavaScript">
+
+	function close(){
+		self.close();
+	}
+
+</script>
+
 </head>
 <body>
 
-비밀번호는 <%= passwd %> 입니다.
+<%
+	if(passwd != ""){
+%>
+	비밀번호는 <%=passwd %> 입니다.
 
-<input type="button" value="닫기" onclick="setpasswd()">
+<% 		
+	} else{
+%>
+	찾으시는 계정이 존재하지 않습니다. <br>
+	다시 시도해주시기 바랍니다.
+<% 		
+	}
+%>
+
+<input type="button" value="닫기" onclick="close()">
 
 
 </body>
 </html>
+
+

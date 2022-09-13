@@ -27,7 +27,7 @@
 	member.setId(id);
 	
 	LogonDBBean manager = LogonDBBean.getInstance();
-	int x = manager.checkPhone(member.getPhone());
+	int x = manager.checkPhone2(member.getPhone(), id);
 	if(x == 1){
 
 		manager.updateMember(member);

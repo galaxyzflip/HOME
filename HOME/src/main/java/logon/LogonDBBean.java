@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 
 public class LogonDBBean {
 
+	
 	private static LogonDBBean instance = new LogonDBBean();
 	
 	public static LogonDBBean getInstance() {
@@ -52,6 +53,8 @@ public class LogonDBBean {
 //		}
 //		
 //	}
+	
+	//inputPro.jsp 에서 회원가입할때 사용
 	public void insertMember(LogonDataBean member) throws Exception{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -59,10 +62,12 @@ public class LogonDBBean {
 		try {
 			conn = getConnection();
 			
-			
+			//휴대폰번호 - 기호 삭제
 			String phone = member.getPhone().replace("-", "");
 			
-			pstmt = conn.prepareStatement("insert into members values(?,?,?,?,?,?,?,?,?,?,?,?)");
+			pstmt = conn.prepareStatement("insert into members(id, passwd, name, birthday,"
+					+ " male, email,blog, reg_date, zipcode, address, detailaddress, phone) "
+					+ "values(?,?,?,?,?,?,?,?,?,?,?,?)");
 			pstmt.setString(1, member.getId());
 			pstmt.setString(2, member.getPasswd());
 			pstmt.setString(3, member.getName());
@@ -82,8 +87,8 @@ public class LogonDBBean {
 			ex.printStackTrace();
 			
 		}finally {
-			if(pstmt != null) try {pstmt.close();} catch(SQLException ex) {}
-			if(conn != null) try {conn.close();} catch(SQLException ex) {}
+			jdbcUtil.close(pstmt);
+			jdbcUtil.close(conn);
 			
 		}
 		
@@ -115,6 +120,7 @@ public class LogonDBBean {
 			
 		}catch(Exception ex) {
 			ex.printStackTrace();
+			
 		}finally {
 			if(pstmt != null) try {pstmt.close();} catch(SQLException ex) {}
 			if(rs != null) try {rs.close();} catch(SQLException ex) {}
@@ -124,7 +130,7 @@ public class LogonDBBean {
 		return x;
 	}
 	
-	//confirmId.jsp 에서 id 중복체크 // 최창선
+	//confirmId.jsp 에서 id 중복체크 
 	//중복 아니면 1리턴 중복이면 -1 리턴
 	public int confirmId(String id) throws Exception{
 		Connection conn = null;
@@ -141,11 +147,12 @@ public class LogonDBBean {
 			if(rs.next()) {
 				x = 1; // 해당 아이디 있음
 			}else {
-				x = -1; //해당 아이디 없음
+				x = -1; //해당 아이디 없음 > 사용 가능
 			}
 			
 		}catch(Exception ex) {
 			ex.printStackTrace();
+			
 		}finally {
 			if(rs != null) try {rs.close();} catch(SQLException ex) {}
 			if(pstmt != null) try {rs.close();} catch(SQLException ex) {}
@@ -156,7 +163,7 @@ public class LogonDBBean {
 		
 	}
 	
-	//updateMember.jsp 에서 수정폼에 가입된 회원의 정보를 보여줄대
+	//modifyForm.jsp 에서 수정폼에 로그인한 회원의 정보를 보여줄대
 	public LogonDataBean getMember(String id) throws Exception{
 		
 		Connection conn = null;
@@ -198,14 +205,15 @@ public class LogonDBBean {
 	}
 	
 	
-	//update 쿼리 날릴때
+	//modifyPro.jsp 에서 작업
 	public void updateMember(LogonDataBean member) throws Exception {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
 		try {
 			conn = getConnection();
-			pstmt = conn.prepareStatement("update members set passwd=?, name=?, email=?, blog=?, zipcode=?, address = ?, address2 = ?, phone=? where id=?");
+			pstmt = conn.prepareStatement("update members set passwd=?, name=?, "
+					+ "email=?, blog=?, zipcode=?, address = ?, address2 = ?, phone=? where id=?");
 			pstmt.setString(1, member.getPasswd());
 			pstmt.setString(2, member.getName());
 			pstmt.setString(3, member.getEmail());
@@ -219,13 +227,15 @@ public class LogonDBBean {
 			
 		}catch(Exception ex) {
 			ex.printStackTrace();
+			
 		}finally {
 			if(pstmt != null) try {pstmt.close();} catch(SQLException ex) {}
 			if(conn != null) try {conn.close();} catch(SQLException ex) {}
 		}
 	}
 	
-	//delete 할때 
+	//deletePro.jsp 에서 호출
+	//회원정보 삭제할때
 	public int deleteMember(String id, String passwd) throws Exception{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -261,7 +271,7 @@ public class LogonDBBean {
 		return x;
 	}
 	
-
+	//다음 주소 api 쓰면서 안쓰기로함...
 	public Vector<ZipcodeBean> zipcodeRead(String area3) {
 		
 		Vector<ZipcodeBean> vecList = new Vector<>();
@@ -299,9 +309,8 @@ public class LogonDBBean {
 	}
 	
 	
-	// 이름, 생년월일 입력해서 아이디 찾기
+	// 이름, 폰번호 입력해서 아이디 찾기
 	public String findId(String name, String sendPhone) {
-		LogonDataBean bean = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -402,6 +411,40 @@ public class LogonDBBean {
 		return x;
 	}
 	
+	// checkphone2............. 
+	public int checkPhone2(String sendPhone, String id) {
+		int x = -1;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String phone = sendPhone.replace("-", "");
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement("select phone from members where phone=? and id != ? ");
+			pstmt.setString(1, phone);
+			pstmt.setString(2, id);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				x = -1;
+			
+			}else {
+				x = 1;
+				
+			}
+			
+			
+		}catch(Exception ex) {
+			
+		}finally {
+			if( rs != null) try {rs.close();} catch(SQLException ex) {}
+			if( pstmt != null) try {pstmt.close();} catch(SQLException ex) {}
+			if( conn != null) try {conn.close();} catch(SQLException ex) {}
+		}
+		
+		return x;
+	}
 }
 
 

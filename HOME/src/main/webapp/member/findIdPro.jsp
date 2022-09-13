@@ -17,15 +17,40 @@
 <head>
 <meta charset="UTF-8">
 <title>아이디 찾기</title>
+
+
+<script language="javascript">
+
+	function close(){
+		self.close();
+	}
+
+</script>
+
 </head>
 <body>
 
-아이디는 <%=id %> 입니다.
+<%
+	if(id != ""){
+%>
+	아이디는 <%=id %> 입니다.
 
-<input type="button" value="닫기" onclick="setid()">
+<% 		
+	} else{
+%>
+	찾으시는 아이디가 존재하지 않습니다. <br>
+	다시 시도해주시기 바랍니다.
+<% 		
+	}
+%>
+<br>
 
+<button onclick="close()">닫기</button>
 
+<!--  이거 안됨 시발 -->
 
 
 </body>
 </html>
+
+
