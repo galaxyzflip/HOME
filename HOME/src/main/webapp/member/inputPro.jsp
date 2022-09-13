@@ -9,15 +9,35 @@
 	<jsp:setProperty name="member" property="*"/>
 </jsp:useBean>	
 
-
 <%
 
 	member.setReg_date(new Timestamp(System.currentTimeMillis()));
 	LogonDBBean manager = LogonDBBean.getInstance();
-	manager.insertMember(member);
+	int x = manager.checkPhone(member.getPhone());
+	
+	if(x == 1){
+		manager.insertMember(member);	
+		response.sendRedirect("loginForm.jsp");
+	
+	} else{
+%>		
+		<script>
+			alert("휴대폰번호가 중복되었습니다.");
+			history.go(-1);
+		</script>
+		
+		
+		
 	
 	
-	response.sendRedirect("loginForm.jsp");
+	
+	<%}
+		
+	
+	
+	
+	
+	
 
 %>
 

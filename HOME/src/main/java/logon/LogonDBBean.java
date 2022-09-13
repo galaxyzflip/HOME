@@ -1,5 +1,6 @@
 package logon;
 import java.sql.*;
+import java.util.*;
 import java.sql.DriverManager;
 
 public class LogonDBBean {
@@ -57,7 +58,11 @@ public class LogonDBBean {
 		
 		try {
 			conn = getConnection();
-			pstmt = conn.prepareStatement("insert into members values(?,?,?,?,?,?,?,?)");
+			
+			
+			String phone = member.getPhone().replace("-", "");
+			
+			pstmt = conn.prepareStatement("insert into members values(?,?,?,?,?,?,?,?,?,?,?,?)");
 			pstmt.setString(1, member.getId());
 			pstmt.setString(2, member.getPasswd());
 			pstmt.setString(3, member.getName());
@@ -66,13 +71,20 @@ public class LogonDBBean {
 			pstmt.setString(6, member.getEmail());
 			pstmt.setString(7, member.getBlog());
 			pstmt.setTimestamp(8, member.getReg_date());
+			pstmt.setString(9, member.getZipcode());
+			pstmt.setString(10, member.getAddress());
+			pstmt.setString(11, member.getDetailAddress());
+			pstmt.setString(12,phone);
 			
 			pstmt.executeQuery();
+			
 		}catch(Exception ex) {
 			ex.printStackTrace();
+			
 		}finally {
 			if(pstmt != null) try {pstmt.close();} catch(SQLException ex) {}
 			if(conn != null) try {conn.close();} catch(SQLException ex) {}
+			
 		}
 		
 	}
@@ -168,10 +180,15 @@ public class LogonDBBean {
 				member.setEmail(rs.getString("email"));
 				member.setBlog(rs.getString("blog"));
 				member.setReg_date(rs.getTimestamp("reg_date"));
+				member.setZipcode(rs.getString("zipcode"));
+				member.setAddress(rs.getString("address"));
+				member.setDetailAddress(rs.getString("address2"));
+				member.setPhone(rs.getString("phone"));
 			}
 			
 		}catch(Exception ex) {
 			ex.printStackTrace();
+			
 		}finally {
 			if(rs != null) try {rs.close();} catch(SQLException ex) {}
 			if(pstmt != null) try {pstmt.close();} catch(SQLException ex) {}
@@ -188,12 +205,16 @@ public class LogonDBBean {
 		
 		try {
 			conn = getConnection();
-			pstmt = conn.prepareStatement("update members set passwd=?, name=?, email=?, blog=? where id=?");
+			pstmt = conn.prepareStatement("update members set passwd=?, name=?, email=?, blog=?, zipcode=?, address = ?, address2 = ?, phone=? where id=?");
 			pstmt.setString(1, member.getPasswd());
 			pstmt.setString(2, member.getName());
 			pstmt.setString(3, member.getEmail());
 			pstmt.setString(4, member.getBlog());
-			pstmt.setString(5, member.getId());
+			pstmt.setString(5, member.getZipcode());
+			pstmt.setString(6, member.getAddress());
+			pstmt.setString(7, member.getDetailAddress());
+			pstmt.setString(8, member.getPhone());
+			pstmt.setString(9, member.getId());
 			pstmt.executeUpdate();
 			
 		}catch(Exception ex) {
@@ -240,8 +261,146 @@ public class LogonDBBean {
 		return x;
 	}
 	
+
+	public Vector<ZipcodeBean> zipcodeRead(String area3) {
+		
+		Vector<ZipcodeBean> vecList = new Vector<>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = getConnection();
+			String query = "select * from zipcode where area3 like '%" + area3 + "%'"; 
+			pstmt = conn.prepareStatement(query);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				ZipcodeBean bean = new ZipcodeBean();
+				bean.setZipcode(rs.getString("zipcode"));
+				bean.setArea1(rs.getString("area1"));
+				bean.setArea2(rs.getString("area2"));
+				bean.setArea3(rs.getString("area3"));
+				bean.setArea4(rs.getString("area4"));
+				vecList.addElement(bean);
+				
+			}
+			
+		}catch(Exception ex) {
+			ex.printStackTrace();
+			
+		}finally {
+			if(rs != null) try {rs.close();} catch(SQLException ex) {}
+			if(pstmt != null) try {pstmt.close();} catch(SQLException ex) {}
+			if(conn != null) try {conn.close();} catch(SQLException ex) {}
+		}
+		
+		return vecList;
+	}
 	
 	
+	// 이름, 생년월일 입력해서 아이디 찾기
+	public String findId(String name, String sendPhone) {
+		LogonDataBean bean = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String id="";
+		String phone = sendPhone.replace("-", "");
+		
+		
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement("select id from members where name = ? and phone = ?");
+			pstmt.setString(1, name);
+			pstmt.setString(2, phone);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				id = rs.getString("id"); 
+			}
+			
+			
+		}catch(Exception ex) {
+			ex.printStackTrace();
+			
+		}finally {
+			if(rs != null) try {rs.close();} catch(SQLException ex) {}
+			if(pstmt != null) try {pstmt.close();} catch(SQLException ex) {}
+			if(conn != null) try {conn.close();} catch(SQLException ex) {}
+			
+		}
+		
+		return id;
+		
+	}
+	
+	public String findPasswd(String id, String sendPhone) {
+		String passwd = "";
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String phone = sendPhone.replace("-", "");
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement("select passwd from members where id = ? and phone = ?");
+			pstmt.setString(1, id);
+			pstmt.setString(2, phone);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				passwd = rs.getString("passwd");
+			}
+			
+		}catch(Exception ex) {
+			ex.printStackTrace();
+			
+		}finally {
+			if(rs != null) try {rs.close();} catch(SQLException ex) {}
+			if(pstmt != null) try {pstmt.close();} catch(SQLException ex) {}
+			if(conn != null) try {conn.close();} catch(SQLException ex) {}
+		}
+		return passwd;
+	}
+	
+	//휴대폰번호 중복 체크 
+	//x = -1 중복
+	//x = 1 사용가능
+	public int checkPhone(String sendPhone) {
+		int x = -1;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String phone = sendPhone.replace("-", "");
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement("select phone from members where phone=?");
+			pstmt.setString(1, phone);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				x = -1;
+			
+			}else {
+				x = 1;
+				
+			}
+			
+			
+		}catch(Exception ex) {
+			
+		}finally {
+			if( rs != null) try {rs.close();} catch(SQLException ex) {}
+			if( pstmt != null) try {pstmt.close();} catch(SQLException ex) {}
+			if( conn != null) try {conn.close();} catch(SQLException ex) {}
+		}
+		
+		return x;
+	}
 	
 }
 

@@ -29,6 +29,15 @@ function chekIt()
 	}
 }
 
+function findId(){
+	url = "findId.jsp";
+	window.open(url,"post", "toolbar=no,width=500,height=300,status=yes,scrollbars=yes,menubar=no");
+}
+
+function findPasswd(){
+	url = "findPasswd.jsp";
+	window.open(url,"post", "toolbar=no,width=500,height=300,status=yes,scrollbars=yes,menubar=no");
+}
 
 </script>
 
@@ -51,7 +60,7 @@ function chekIt()
 				<input type="text" name="id" size="15" maxlength="10"/></td>
 		</tr>
 		<tr>
-			<td rowspan="2" bgcolor="<%= bodyback_c %>" width="300"> 메인입니다. </td>
+			<td rowspan="3" bgcolor="<%= bodyback_c %>" width="300"> 메인입니다. </td>
 			<td bgcolor="<%=title_c %>" width="100" align="right"> 패스워드 </td>
 			<td width="100" bgcolor="<%= value_c %>">
 				<input type="password" name="passwd" size="15" maxlength="10"></td>
@@ -60,9 +69,16 @@ function chekIt()
 		<tr>
 			<td colspan="3" bgcolor="<%= title_c %>" align="center">
 			<input type="submit" name="Submit" value="로그인">
-			<input type="button" value="회원가입" onclick="javascript:window.location='inputForm.jsp'">
+			<input type="button" value="회원가입" onclick="javascript:window.location='inputForm2.jsp'">
 			</td>
 		</tr>
+		
+		<tr>
+        	<td colspan="3" bgcolor="<%=title_c%>" align="center">
+        		<input type="button" value="아이디찾기" onclick="findId()">
+        		<input type="button" value="비밀번호찾기" onclick="findPasswd()">
+        	</td>
+        </tr>
 			</form>
 			
 	
@@ -101,5 +117,6 @@ function chekIt()
 %>
 
 <% %>
+
 </body>
 </html>

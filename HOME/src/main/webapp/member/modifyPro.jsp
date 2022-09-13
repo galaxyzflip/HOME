@@ -10,14 +10,6 @@
 	<jsp:setProperty name="member" property="*"/>
 </jsp:useBean>
 
-<%
-	String id = (String)session.getAttribute("memId");
-	member.setId(id);
-	
-	LogonDBBean manager = LogonDBBean.getInstance();
-	manager.updateMember(member);
-%>
-	
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,7 +18,23 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<table width="270" border="0" cellspacing="0" cellpadding="5" align="cetner">
+
+
+
+
+<%
+	String id = (String)session.getAttribute("memId");
+	member.setId(id);
+	
+	LogonDBBean manager = LogonDBBean.getInstance();
+	int x = manager.checkPhone(member.getPhone());
+	if(x == 1){
+
+		manager.updateMember(member);
+%>
+
+		
+		<table width="270" border="0" cellspacing="0" cellpadding="5" align="cetner">
 		<tr bgcolor="<%=title_c %>">
 			<td hetight="39" align="cetner">
 				<font size="+1"><b>회원정보가 수정되었습니다.</b></font>
@@ -49,5 +57,21 @@
 			</td>
 		</tr>
 	</table>
+		
+
+<%
+	} else{%>
+	
+		<script>
+			alert("휴대폰번호가 중복되었습니다.");
+			history.go(-1);
+		</script>
+	
+<% 	}%>
+	
+
+	
+
+	
 </body>
 </html>
