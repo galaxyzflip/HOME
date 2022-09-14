@@ -12,7 +12,7 @@ public class jdbcUtil {
 				try {
 					rs.close();
 				}catch(SQLException ex) {
-					
+				 ex.printStackTrace();	
 				}
 			}
 		}
@@ -22,7 +22,7 @@ public class jdbcUtil {
 				try {
 					conn.close();
 				}catch(SQLException ex) {
-					
+					ex.printStackTrace();
 				}
 			}
 		}
@@ -34,7 +34,7 @@ public class jdbcUtil {
 					stmt.close();
 				
 				}catch(SQLException ex) {
-					
+					ex.printStackTrace();
 				}
 			}
 		}
@@ -44,7 +44,7 @@ public class jdbcUtil {
 				try {
 					conn.rollback();
 				}catch(SQLException ex) {
-					
+					ex.printStackTrace();
 				}
 			}
 		}

@@ -301,7 +301,7 @@ public class BoardDAO {
 				
 				if(rs.next()) {
 					dbPasswd = rs.getString("passwd");
-					pstmt = conn.prepareStatement("update baord set writer=?, email=?, subject=, passwd=?, content = ? where num=?");
+					pstmt = conn.prepareStatement("update board set writer=?, email=?, subject=?, passwd=?, content = ? where num=?");
 					pstmt.setString(1, article.getWriter());
 					pstmt.setString(2, article.getEmail());
 					pstmt.setString(3, article.getSubject());
@@ -340,6 +340,7 @@ public class BoardDAO {
 				conn = getConnection();
 				pstmt = conn.prepareStatement("select passwd from board where num=?");
 				pstmt.setInt(1, num);
+				rs = pstmt.executeQuery();
 				
 				if(rs.next()) {
 					dbPasswd = rs.getString("passwd");

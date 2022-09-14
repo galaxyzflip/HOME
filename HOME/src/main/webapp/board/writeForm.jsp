@@ -18,8 +18,8 @@
 	int num=0, ref=1, re_step=0, re_level=0;
 
 	try{
-		if(request.getParameter("num") != null){
-			num = Integer.parseInt(request.getParameter("nul"));
+		if((request.getParameter("num") != null) ){
+			num = Integer.parseInt(request.getParameter("num"));
 			ref = Integer.parseInt(request.getParameter("ref"));
 			re_step = Integer.parseInt(request.getParameter("re_step"));
 			re_level = Integer.parseInt(request.getParameter("re_level"));
@@ -81,7 +81,7 @@
 		<tr>
 			<td width="80" bgcolor="<%=value_c %>" align="center"> 비밀번호 </td>
 			<td width="330">
-				<input type="passwd" size="8" maxlength="20" name="passwd">
+				<input type="password" size="8" maxlength="20" name="passwd">
 			</td>
 		</tr>
 		
@@ -94,7 +94,7 @@
 <%
 
 }catch(Exception ex){
-	
+	ex.printStackTrace();
 }
 %>
 

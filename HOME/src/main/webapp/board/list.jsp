@@ -6,14 +6,14 @@
 <%@ include file="color.jsp" %>
 
 <%!
-	final static int PAGESIZE = 3;
+	final int PAGESIZE = 3;
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 %>
 
 <%
 	String pageNum = request.getParameter("pageNum");
-	if(pageNum == null){
-	pageNum = "1";
+	if (pageNum == null || pageNum.equals("null")){
+		pageNum = "1";
 	}
 	
 	int currentPage = Integer.parseInt(pageNum);
@@ -48,7 +48,7 @@
 <b>글 목 록(전체글 : <%=count %>)</b>
 
 
-<table width="700" align="center">
+<table width="1400" align="center">
 	<tr>
 		<td align=right bgcolor="<%=value_c %>">
 		<a href="writeForm.jsp">글쓰기</a>
@@ -58,7 +58,7 @@
 </table>
 
 	<% if(count == 0){%>
-		<table width="700" border="1" cellpadding="0" cellspacing="0">
+		<table width="1400" border="1" cellpadding="0" cellspacing="0">
 			<tr>
 				<td align="center">게시판에 저장된 글이 없습니다.</td>
 			</tr>
@@ -67,7 +67,7 @@
 	
 	<% 	
 	} else{%>
-		<table border="1" width="700" cellpadding="0" cellspacing="0" align="center">
+		<table border="1" width="1400" cellpadding="0" cellspacing="0" align="center">
 			<tr height="30" bgcolor="<%=value_c %>">
 				<td align="center" width="50"> 번호 </td>
 				<td align="center" width="250"> 제목 </td>
