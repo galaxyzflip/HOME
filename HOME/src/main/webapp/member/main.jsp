@@ -45,6 +45,7 @@ function findPasswd(){
 </head>
 <body onLoad="focusIt();" bgcolor="<%=bodyback_c %>">
 	
+<form name="inform" method="post" action="loginPro.jsp" onsubmit = "return checkIt();">
 	
 	<table width="500" cellpadding="0" cellspacing="0" align="center" border="1">
 	
@@ -53,17 +54,18 @@ function findPasswd(){
 			&nbsp;
 			</td>
 			
-			<form name="inform" method="post" action="loginPro.jsp" onsubmit = "return checkIt();">
 			
 			<td bgcolor="<%=title_c %>" width="100" align="right"> 아이디 </td>
-			<td width="100" bcolor="<%= value_c %>">
-				<input type="text" name="id" size="15" maxlength="10"/></td>
+			<td width="100" bgcolor="<%= value_c %>">
+				<input type="text" name="id" size="15" maxlength="10" autofocus tabindex="1"/></td>
 		</tr>
 		<tr>
-			<td rowspan="3" bgcolor="<%= bodyback_c %>" width="300"> 메인입니다. </td>
+			<td rowspan="3" bgcolor="<%= bodyback_c %>" width="300"> 
+			<a href="../board/list.jsp">게시판</a>
+			 </td>
 			<td bgcolor="<%=title_c %>" width="100" align="right"> 패스워드 </td>
 			<td width="100" bgcolor="<%= value_c %>">
-				<input type="password" name="passwd" size="15" maxlength="10"></td>
+				<input type="password" name="passwd" size="15" maxlength="10" tabindex="2"></td>
 		</tr>
 		
 		<tr>
@@ -79,11 +81,11 @@ function findPasswd(){
         		<input type="button" value="비밀번호찾기" onclick="findPasswd()">
         	</td>
         </tr>
-			</form>
+			
 			
 	
 	</table>
-
+</form>
 
 
 
@@ -101,12 +103,11 @@ function findPasswd(){
 					<input type="button" value="회원정보변경" onclick="javascript:window.location='modify.jsp'">
 					</form>
 					
-					
 					</td>
 				</tr>
 				
 				<tr>
-					<td rowspan="2" bgcolor="<%= bodyback_c %>" width="300"> 메인입니다. </td>
+					<td rowspan="2" bgcolor="<%= bodyback_c %>" width="300"> <a href="../board/list.jsp">게시판</a> </td>
 				</tr>
 			
 			</table>
@@ -115,8 +116,7 @@ function findPasswd(){
 <% 	}		
 	}catch(NullPointerException ex){}
 %>
-
-<% %>
+	
 
 </body>
 </html>

@@ -2,6 +2,7 @@ package board;
 
 import java.sql.Timestamp;
 
+
 public class BoardDTO {
 
 	private int num;
@@ -16,6 +17,15 @@ public class BoardDTO {
 	private int ref;
 	private int re_step;
 	private int re_level;
+	private String article_class ;
+
+	public String getArticle_class() {
+		return article_class;
+	}
+
+	public void setArticle_class(String article_class) {
+		this.article_class = article_class;
+	}
 
 	public int getNum() {
 		return num;

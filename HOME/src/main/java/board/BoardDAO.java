@@ -36,7 +36,7 @@ public class BoardDAO {
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
 			
-			int num = article.getNum();
+			int num = article.getNum(); // content.jsp 파일에서 답글쓰기 했을때만 num 파라미터가 여기 도착한다....
 			int ref = article.getRef();
 			int re_step = article.getRe_step();
 			int re_level = article.getRe_level();
@@ -49,12 +49,17 @@ public class BoardDAO {
 				pstmt = conn.prepareStatement("select max(num) from board");
 				rs = pstmt.executeQuery();
 				
+				
+				//글이 한개라도 있으면 number는 max(num) + 1
+				//글이 없으면 number = 1?????
+				
 				if(rs.next()) {
 					number = rs.getInt(1) + 1;
+					
 				}else
 					number = 1;
 				
-				if(num != 0) {
+				if(num != 0) { // 답글쓰기 할때만 넘이 있음 그게 아니면 기본값 0
 					query = "update board set re_step = re_step+1 where ref=? and re_step > ?";
 					pstmt = conn.prepareStatement(query);
 					pstmt.setInt(1, ref);
@@ -64,7 +69,8 @@ public class BoardDAO {
 					re_level +=1;
 					
 				}else {
-					ref = number;
+					
+					ref = number; //1뎁스글일때
 					re_step = 0;
 					re_level = 0;
 				}
@@ -133,6 +139,39 @@ public class BoardDAO {
 			
 			return x;
 		}
+		
+		public int getArticleCount(String object, String value) throws Exception{
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			int x = 0;
+			
+			try {
+				conn = getConnection();
+				
+				pstmt = conn.prepareStatement("select count(1) from board");
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					x = rs.getInt(1);
+				}
+			
+			}catch(Exception ex) {
+				ex.printStackTrace();
+			
+			}finally {
+				jdbcUtil.close(rs);
+				jdbcUtil.close(pstmt);
+				jdbcUtil.close(conn);
+			}
+			
+			
+			
+			return x;
+		}
+		
+
 		
 		public List<BoardDTO> getArticles(int start, int end){
 			Connection conn = null;
@@ -335,24 +374,58 @@ public class BoardDAO {
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
 			String dbPasswd = "";
+			int articleCount = 0;
 			
 			try {
 				conn = getConnection();
-				pstmt = conn.prepareStatement("select passwd from board where num=?");
+				
+				//답글이 있는지 확인, 있으면 글제목 업데이트
+				//pstmt = conn.prepareStatement("select count(1) from board where article_class='1' and ref in (select ref from board where num=?)");
+				
+	
+				
+				
+				 //맨 마지막 re_step 조건 추가함 다시 확인해봐야함
+				
+				  String sql =
+				  "select num, b.subject, b.ref, re_step, b.re_level , article_class " +
+				  "  from board b, (select ref, re_level from board where num= ? ) d " +
+				  "  where  b.article_class='1' and b.ref = d.ref and d.re_level < b.re_level"
+				  ;
+				 
+				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, num);
 				rs = pstmt.executeQuery();
-				
 				if(rs.next()) {
-					dbPasswd = rs.getString("passwd");
-					if(dbPasswd.equals(passwd)) {
-						pstmt = conn.prepareStatement("delete from board where num = ?");
+					articleCount = rs.getInt(1);
+					
+					//
+					if(articleCount > 1) {
+						pstmt = conn.prepareStatement("update board set subject = '삭제된 글입니다.', content = '삭제된 글입니다.', article_class='0' where num = ?");
 						pstmt.setInt(1, num);
 						pstmt.executeUpdate();
-						x = 1; 
-					}
+						x = 1;
 					
-				}else
-					x = 0;
+					}
+				
+				}else {
+					pstmt = conn.prepareStatement("select passwd from board where num=?");
+					pstmt.setInt(1, num);
+					rs = pstmt.executeQuery();
+					
+					if(rs.next()) {
+						dbPasswd = rs.getString("passwd");
+						if(dbPasswd.equals(passwd)) {
+							pstmt = conn.prepareStatement("delete from board where num = ?");
+							pstmt.setInt(1, num);
+							pstmt.executeUpdate();
+							x = 1;
+						}
+						
+					}else 
+						x=-1;
+					
+				}
 				
 			}catch(Exception ex) {
 				ex.printStackTrace();
@@ -365,6 +438,81 @@ public class BoardDAO {
 
 			return x;
 		}
+		
+		
+		public List<BoardDTO> getArticles(String object, String value, int start, int end){
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			List<BoardDTO> articleList = null;
+			BoardDTO article = null;
+			String sql = "";
+			
+			if(object == "writer") {
+				sql = "select num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip,readcount, r  "
+						+ " from (select num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip,readcount,rownum r  "
+						+ " from (select num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip,readcount "
+						+ " from board  where writer='"+ value +  "'order by ref desc, re_step asc) order by ref desc, re_step asc ) where r >= ? and r <= ?";
+			}else if(object == "content") {
+				sql = "select num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip,readcount, r  "
+						+ " from (select num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip,readcount,rownum r  "
+						+ " from (select num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip,readcount "
+						+ " from board where contect like '&" + value + "%'order by ref desc, re_step asc) order by ref desc, re_step asc ) where r >= ? and r <= ?";
+			}else {
+				sql = "select num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip,readcount, r  "
+						+ " from (select num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip,readcount,rownum r  "
+						+ " from (select num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip,readcount "
+						+ " from board order by ref desc, re_step asc) order by ref desc, re_step asc ) where r >= ? and r <= ?";
+			}
+				
+			
+			
+			try {
+				
+				conn = getConnection();
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, start);
+				pstmt.setInt(2, end);
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					articleList = new ArrayList<BoardDTO>(end);
+					do {
+						article = new BoardDTO();
+						article.setNum(rs.getInt("num"));
+						article.setWriter(rs.getString("writer"));
+						article.setSubject(rs.getString("subject"));
+						article.setPasswd(rs.getString("passwd"));
+						article.setReg_date(rs.getTimestamp("reg_date"));
+						article.setReadcount(rs.getInt("readcount"));
+						article.setRef(rs.getInt("ref"));
+						article.setRe_step(rs.getInt("re_step"));
+						article.setRe_level(rs.getInt("re_level"));
+						article.setContent(rs.getString("content"));
+						article.setIp(rs.getString("ip"));
+						
+						articleList.add(article);
+						
+						
+					}while(rs.next());
+					
+				}
+				
+				
+			}catch(Exception ex) {
+				ex.printStackTrace();
+			
+			}finally {
+				jdbcUtil.close(rs);
+				jdbcUtil.close(pstmt);
+				jdbcUtil.close(conn);
+				
+			}
+			
+			return articleList;
+		}
+	
+		
 		
 		
 }

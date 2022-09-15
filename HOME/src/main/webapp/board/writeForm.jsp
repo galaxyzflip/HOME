@@ -24,6 +24,8 @@
 			re_step = Integer.parseInt(request.getParameter("re_step"));
 			re_level = Integer.parseInt(request.getParameter("re_level"));
 		}
+		
+	String id = (String)session.getAttribute("memId");
 %>
 <body bgcolor = "<%=bodyback_c%>">
 <center>
@@ -45,8 +47,9 @@
 		
 		<tr>
 			<td width="70" bgcolor="<%=value_c %>" align="center">이름</td>
+			
 			<td width="330">
-				<input type="text" size="10" maxlength="10" name="writer"></td>
+				<input type="text" size="10" maxlength="10" name="writer"  value="<%=id%>"></td>
 		</tr>
 		
 		

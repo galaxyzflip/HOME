@@ -6,11 +6,23 @@
 <%@ include file="color.jsp" %>
 
 <%!
-	final int PAGESIZE = 3;
+	final int PAGESIZE = 10;
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 %>
 
+	<!-- 로그인 안하고 테스트할때 아래 라인 주석 해제 -->
+	<% session.setAttribute("memId", "pigcs11");%>
+
 <%
+
+	if(session.getAttribute("memId") == null){%>
+		<script>
+			alert("로그인 후 이용해주시기 바랍니다.");
+			location.href = '../member/main.jsp';
+		</script>
+		
+	<%} 
+	
 	String pageNum = request.getParameter("pageNum");
 	if (pageNum == null || pageNum.equals("null")){
 		pageNum = "1";
@@ -18,13 +30,25 @@
 	
 	int currentPage = Integer.parseInt(pageNum);
 //	System.out.println(currentPage);
-	int startRow = (currentPage * 3) - 2;
+	int startRow = (currentPage * PAGESIZE) - (PAGESIZE-1);
 	int endRow = currentPage * PAGESIZE;
 	int count = 0;
 	int number = 0;
 	
+	
 	List<BoardDTO> articleList = null;
 	BoardDAO manager = BoardDAO.getInstance();
+	
+	
+	String object = (String)request.getParameter("object");
+	String value = (String)request.getParameter("value");
+	if(object == null || object.equals("null")){
+		object = null;
+		value = null;
+	}
+	
+	
+	
 	count = manager.getArticleCount();
 	if(count > 0){
 		articleList = manager.getArticles(startRow, endRow);
@@ -48,17 +72,17 @@
 <b>글 목 록(전체글 : <%=count %>)</b>
 
 
-<table width="1400" align="center">
+<table width="1000" align="center">
 	<tr>
 		<td align=right bgcolor="<%=value_c %>">
 		<a href="writeForm.jsp">글쓰기</a>
+		<a href="../member/logout.jsp">로그아웃</a>
 		</td>
 	</tr>
-
 </table>
 
 	<% if(count == 0){%>
-		<table width="1400" border="1" cellpadding="0" cellspacing="0">
+		<table width="1000" border="1" cellpadding="0" cellspacing="0">
 			<tr>
 				<td align="center">게시판에 저장된 글이 없습니다.</td>
 			</tr>
@@ -67,7 +91,7 @@
 	
 	<% 	
 	} else{%>
-		<table border="1" width="1400" cellpadding="0" cellspacing="0" align="center">
+		<table border="1" width="1000" cellpadding="0" cellspacing="0" align="center">
 			<tr height="30" bgcolor="<%=value_c %>">
 				<td align="center" width="50"> 번호 </td>
 				<td align="center" width="250"> 제목 </td>
@@ -124,7 +148,16 @@
 	<%
 }
 %>
-
+<br>
+<form action="list.jsp" method="post">
+<td align = "center" width="400">
+	<select>
+		<option value="작성자">작성자</option>
+		<option value="작성자">제목</option>
+	</select>
+	<input type="text" name="writer"> <input type="submit" value="검색">
+</td>
+</form>
 
 <%
 

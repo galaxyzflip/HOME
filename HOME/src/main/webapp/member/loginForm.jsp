@@ -44,14 +44,14 @@
 		
 		<tr height="30">
 			<td width="110" bgcolor="<%=title_c%>" align="center">아이디</td>
-			<td width="150" bgcolor="<%=value_c %>" align="center">
+			<td width="150" bgcolor="<%=value_c %>" align="center" autofocus tabindex="1">
 				<input type="text" name="id" size="15" maxlength="12">
 			</td>
 		</tr>
 	
 		<tr height="30">
 			<td width="110" bgcolor="<%=title_c%>" align="center">비밀번호</td>
-			<td width="150" bgcolor="<%=value_c %>" align="center">
+			<td width="150" bgcolor="<%=value_c %>" align="center" tabindex="2">
 				<input type="password" name="passwd" size="15" maxlength="12">
 			</td>
 		</tr>
