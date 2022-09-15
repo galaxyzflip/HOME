@@ -109,38 +109,29 @@ public class BoardDAO {
 		
 		
 		
-		public int getArticleCount() throws Exception{
-			Connection conn = null;
-			PreparedStatement pstmt = null;
-			ResultSet rs = null;
-			
-			int x = 0;
-			
-			try {
-				conn = getConnection();
-				
-				pstmt = conn.prepareStatement("select count(1) from board");
-				rs = pstmt.executeQuery();
-				
-				if(rs.next()) {
-					x = rs.getInt(1);
-				}
-			
-			}catch(Exception ex) {
-				ex.printStackTrace();
-			
-			}finally {
-				jdbcUtil.close(rs);
-				jdbcUtil.close(pstmt);
-				jdbcUtil.close(conn);
-			}
-			
-			
-			
-			return x;
-		}
+		/*
+		 * public int getArticleCount() throws Exception{ Connection conn = null;
+		 * PreparedStatement pstmt = null; ResultSet rs = null;
+		 * 
+		 * int x = 0;
+		 * 
+		 * try { conn = getConnection();
+		 * 
+		 * pstmt = conn.prepareStatement("select count(1) from board"); rs =
+		 * pstmt.executeQuery();
+		 * 
+		 * if(rs.next()) { x = rs.getInt(1); }
+		 * 
+		 * }catch(Exception ex) { ex.printStackTrace();
+		 * 
+		 * }finally { jdbcUtil.close(rs); jdbcUtil.close(pstmt); jdbcUtil.close(conn); }
+		 * 
+		 * 
+		 * 
+		 * return x; }
+		 */
 		
-		public int getArticleCount(String object, String value) throws Exception{
+		public int getArticleCount(String target, String value) throws Exception{
 			Connection conn = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
@@ -149,13 +140,20 @@ public class BoardDAO {
 			
 			try {
 				conn = getConnection();
+				if(target == null) {
+					pstmt = conn.prepareStatement("select count(1) from board");
+					
+				}else {
+					pstmt = conn.prepareStatement("select count(1) from board where " + target + " like '%" + value + "%'");
+					
+				}
 				
-				pstmt = conn.prepareStatement("select count(1) from board");
 				rs = pstmt.executeQuery();
 				
 				if(rs.next()) {
 					x = rs.getInt(1);
 				}
+				
 			
 			}catch(Exception ex) {
 				ex.printStackTrace();
@@ -173,63 +171,55 @@ public class BoardDAO {
 		
 
 		
-		public List<BoardDTO> getArticles(int start, int end){
-			Connection conn = null;
-			PreparedStatement pstmt = null;
-			ResultSet rs = null;
-			List<BoardDTO> articleList = null;
-			BoardDTO article = null;
-			
-			String sql = "select num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip,readcount, r  "
-					+ " from (select num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip,readcount,rownum r  "
-					+ " from (select num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip,readcount "
-					+ " from board order by ref desc, re_step asc) order by ref desc, re_step asc ) where r >= ? and r <= ?";
-			
-			
-			try {
-				
-				conn = getConnection();
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, start);
-				pstmt.setInt(2, end);
-				rs = pstmt.executeQuery();
-				
-				if(rs.next()) {
-					articleList = new ArrayList<BoardDTO>(end);
-					do {
-						article = new BoardDTO();
-						article.setNum(rs.getInt("num"));
-						article.setWriter(rs.getString("writer"));
-						article.setSubject(rs.getString("subject"));
-						article.setPasswd(rs.getString("passwd"));
-						article.setReg_date(rs.getTimestamp("reg_date"));
-						article.setReadcount(rs.getInt("readcount"));
-						article.setRef(rs.getInt("ref"));
-						article.setRe_step(rs.getInt("re_step"));
-						article.setRe_level(rs.getInt("re_level"));
-						article.setContent(rs.getString("content"));
-						article.setIp(rs.getString("ip"));
-						
-						articleList.add(article);
-						
-						
-					}while(rs.next());
-					
-				}
-				
-				
-			}catch(Exception ex) {
-				ex.printStackTrace();
-			
-			}finally {
-				jdbcUtil.close(rs);
-				jdbcUtil.close(pstmt);
-				jdbcUtil.close(conn);
-				
-			}
-			
-			return articleList;
-		}
+		/*
+		 * public List<BoardDTO> getArticles(int start, int end){ Connection conn =
+		 * null; PreparedStatement pstmt = null; ResultSet rs = null; List<BoardDTO>
+		 * articleList = null; BoardDTO article = null;
+		 * 
+		 * String sql =
+		 * "select num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip,readcount, r  "
+		 * +
+		 * " from (select num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip,readcount,rownum r  "
+		 * +
+		 * " from (select num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip,readcount "
+		 * +
+		 * " from board order by ref desc, re_step asc) order by ref desc, re_step asc ) where r >= ? and r <= ?"
+		 * ;
+		 * 
+		 * 
+		 * try {
+		 * 
+		 * conn = getConnection(); pstmt = conn.prepareStatement(sql); pstmt.setInt(1,
+		 * start); pstmt.setInt(2, end); rs = pstmt.executeQuery();
+		 * 
+		 * if(rs.next()) { articleList = new ArrayList<BoardDTO>(end); do { article =
+		 * new BoardDTO(); article.setNum(rs.getInt("num"));
+		 * article.setWriter(rs.getString("writer"));
+		 * article.setSubject(rs.getString("subject"));
+		 * article.setPasswd(rs.getString("passwd"));
+		 * article.setReg_date(rs.getTimestamp("reg_date"));
+		 * article.setReadcount(rs.getInt("readcount"));
+		 * article.setRef(rs.getInt("ref")); article.setRe_step(rs.getInt("re_step"));
+		 * article.setRe_level(rs.getInt("re_level"));
+		 * article.setContent(rs.getString("content"));
+		 * article.setIp(rs.getString("ip"));
+		 * 
+		 * articleList.add(article);
+		 * 
+		 * 
+		 * }while(rs.next());
+		 * 
+		 * }
+		 * 
+		 * 
+		 * }catch(Exception ex) { ex.printStackTrace();
+		 * 
+		 * }finally { jdbcUtil.close(rs); jdbcUtil.close(pstmt); jdbcUtil.close(conn);
+		 * 
+		 * }
+		 * 
+		 * return articleList; }
+		 */
 		
 		
 		public BoardDTO getArticle(int num) {
@@ -266,7 +256,6 @@ public class BoardDAO {
 					article.setIp(rs.getString("ip"));
 					
 				}
-				
 				
 			}catch(Exception ex) {
 				ex.printStackTrace();
@@ -354,7 +343,6 @@ public class BoardDAO {
 				}else
 					x = 0;
 				
-				
 			}catch(Exception ex) {
 				ex.printStackTrace();
 				
@@ -382,24 +370,14 @@ public class BoardDAO {
 				//답글이 있는지 확인, 있으면 글제목 업데이트
 				//pstmt = conn.prepareStatement("select count(1) from board where article_class='1' and ref in (select ref from board where num=?)");
 				
-	
-				
-				
-				 //맨 마지막 re_step 조건 추가함 다시 확인해봐야함
-				
-				  String sql =
-				  "select num, b.subject, b.ref, re_step, b.re_level , article_class " +
-				  "  from board b, (select ref, re_level from board where num= ? ) d " +
-				  "  where  b.article_class='1' and b.ref = d.ref and d.re_level < b.re_level"
-				  ;
-				 
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, num);
+			    pstmt = conn.prepareStatement("select * from board where ref = (select ref from board where num = " +num+ ") " + 
+	                     "and re_step = (select re_step from board where num = " +num+ ")+1 " + 
+	                     "and re_level = (select re_level from board where num = " +num+ ")+1");
+			    
 				rs = pstmt.executeQuery();
 				if(rs.next()) {
 					articleCount = rs.getInt(1);
 					
-					//
 					if(articleCount > 1) {
 						pstmt = conn.prepareStatement("update board set subject = '삭제된 글입니다.', content = '삭제된 글입니다.', article_class='0' where num = ?");
 						pstmt.setInt(1, num);
@@ -440,7 +418,7 @@ public class BoardDAO {
 		}
 		
 		
-		public List<BoardDTO> getArticles(String object, String value, int start, int end){
+		public List<BoardDTO> getArticles(String target, String value, int start, int end){
 			Connection conn = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
@@ -448,25 +426,19 @@ public class BoardDAO {
 			BoardDTO article = null;
 			String sql = "";
 			
-			if(object == "writer") {
-				sql = "select num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip,readcount, r  "
-						+ " from (select num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip,readcount,rownum r  "
-						+ " from (select num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip,readcount "
-						+ " from board  where writer='"+ value +  "'order by ref desc, re_step asc) order by ref desc, re_step asc ) where r >= ? and r <= ?";
-			}else if(object == "content") {
-				sql = "select num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip,readcount, r  "
-						+ " from (select num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip,readcount,rownum r  "
-						+ " from (select num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip,readcount "
-						+ " from board where contect like '&" + value + "%'order by ref desc, re_step asc) order by ref desc, re_step asc ) where r >= ? and r <= ?";
-			}else {
+			if(target == null) {
 				sql = "select num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip,readcount, r  "
 						+ " from (select num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip,readcount,rownum r  "
 						+ " from (select num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip,readcount "
 						+ " from board order by ref desc, re_step asc) order by ref desc, re_step asc ) where r >= ? and r <= ?";
-			}
 				
-			
-			
+			}else {
+				sql = "select num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip,readcount, r  "
+						+ " from (select num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip,readcount,rownum r  "
+						+ " from (select num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip,readcount "
+						+ " from board where " + target + "  like '%" + value + "%' order by ref desc, re_step asc) order by ref desc, re_step asc ) where r >= ? and r <= ?";
+		
+			}
 			try {
 				
 				conn = getConnection();
@@ -493,11 +465,8 @@ public class BoardDAO {
 						
 						articleList.add(article);
 						
-						
 					}while(rs.next());
-					
 				}
-				
 				
 			}catch(Exception ex) {
 				ex.printStackTrace();
@@ -513,28 +482,6 @@ public class BoardDAO {
 		}
 	
 		
-		
-		
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

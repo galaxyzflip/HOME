@@ -16,6 +16,11 @@
 </head>
 
 <%
+	request.setCharacterEncoding("utf-8");
+	String target = (String)request.getParameter("target");
+	String value = (String)request.getParameter("value");
+	
+
 	int num = Integer.parseInt(request.getParameter("num"));
 	String pageNum = request.getParameter("pageNum");
 	
@@ -48,7 +53,14 @@
 		
 		<tr height="30">
 			<td align="center" width="125" bgcolor="<%=value_c%>">작성자</td>
-			<td align="center" width="125" align="center"> <%= article.getWriter() %> </td>
+			<td align="center" width="125" align="center"> 
+			
+			<a href="list.jsp?target=writer&value=<%=article.getWriter()%>"><%= article.getWriter() %></a>
+			
+			 
+			
+			
+			</td>
 			<td align="center" width="125" bgcolor="<%=value_c %>">작성일</td>
 			<td align="center" width="125" align="center"><%=article.getReg_date() %></td>
 		</tr>
@@ -69,7 +81,7 @@
 				<input type="button" value="글 수정" onclick="document.location.href='updateForm.jsp?num=<%=article.getNum() %>'"> &nbsp;&nbsp;&nbsp;&nbsp;
 				<input type="button" value="글 삭제" onclick="document.location.href='deleteForm.jsp?num=<%=article.getNum() %>'"> &nbsp;&nbsp;&nbsp;&nbsp;
 				<input type="button" value="답글쓰기" onclick="document.location.href='writeForm.jsp?num=<%=num%>&ref=<%=ref%>&re_step=<%=re_step%>&re_level=<%=re_level%>'"> &nbsp;&nbsp;&nbsp;&nbsp;
-				<input type="button" value="글 목록" onclick="document.location.href='list.jsp?pageNum=<%=pageNum %>'">
+				<input type="button" value="글 목록" onclick="document.location.href='list.jsp?pageNum=<%=pageNum %>&target=<%=target%>&value=<%=value%>'">
 			</td>
 		</tr>
 	

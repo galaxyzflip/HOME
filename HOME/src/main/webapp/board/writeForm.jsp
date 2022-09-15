@@ -10,7 +10,10 @@
 <meta charset="UTF-8">
 <title>게시판</title>
 <link href="style.css" rel="stylesheet" type="text/css">
-<script language="JavaScript" src="srtipt.js"></script>
+<!-- <script language="JavaScript" src="scrtipt.js"></script> -->
+<script type="text/javascript">
+	<%@ include file="script.js"%>
+</script>
 
 </head>
 

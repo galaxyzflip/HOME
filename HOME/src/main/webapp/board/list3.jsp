@@ -5,10 +5,8 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ include file="color.jsp" %>
 
-<% request.setCharacterEncoding("utf-8"); %>
-
 <%!
-	final int PAGESIZE = 5;
+	final int PAGESIZE = 10;
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 %>
 
@@ -42,17 +40,19 @@
 	BoardDAO manager = BoardDAO.getInstance();
 	
 	
-	String target = (String)request.getParameter("target");
+	String object = (String)request.getParameter("object");
 	String value = (String)request.getParameter("value");
-	if(target == null || target.equals("null")){
-		target = null;
+	if(object == null || object.equals("null")){
+		object = null;
 		value = null;
 	}
 	
-	count = manager.getArticleCount(target, value);
+	
+	count = manager.getArticleCount();
+	
 	
 	if(count > 0){
-		articleList = manager.getArticles(target, value, startRow, endRow);
+		articleList = manager.getArticles(startRow, endRow);
 	}
 	
 	number = count-(currentPage-1) * PAGESIZE;
@@ -65,9 +65,6 @@
 <meta charset="UTF-8">
 <title>게시판</title>
 <link href="style.css" rel="stylesheet" type="text/css">
-<script type="text/javascript">
-	<%@ include file="script.js"%>
-</script>
 
 </head>
 <body bgcolor="<%=bodyback_c%>">
@@ -125,7 +122,7 @@
 		<% }%>
 		
 				
-				<a href="content.jsp?num=<%=article.getNum() %>&pageNum=<%=currentPage %>&target=<%=target%>&value=<%=value%>">
+				<a href="content.jsp?num=<%=article.getNum() %>&pageNum=<%=currentPage %>">
 				<%=article.getSubject() %></a>
 				
 				<%if(article.getReadcount() >= 20){  %>
@@ -152,24 +149,14 @@
 	<%
 }
 %>
-<td align="center">
-<%if (target != null){%>
-	<a href="list.jsp">전체글 보기</a>
-	<% }%>
-	</td>
-
-
-
-
 <br>
-<form action="list.jsp" method="post" name="suchForm">
+<form action="list.jsp" method="post">
 <td align = "center" width="400">
-	<select name="target">
-		<option value="writer">작성자</option>
-		<option value="subject">제목</option>
-		<option value="content">내용</option>
+	<select>
+		<option value="작성자">작성자</option>
+		<option value="작성자">제목</option>
 	</select>
-	<input type="text" name="value"> <input type="submit" value="검색" onclick="return suchSave()">
+	<input type="text" name="writer"> <input type="submit" value="검색">
 </td>
 </form>
 
@@ -183,15 +170,15 @@
 		if(endPage > pageCount) endPage = pageCount;
 		
 		if(startPage > 5){%>
-			<a href="list.jsp?pageNum=<%=startPage - 5 %>&target=<%=target%>&value=<%=value%>">[이전]</a>
+			<a href="list.jsp?pageNum=<%=startPage - 5 %>">[이전]</a>
 		<%}
 		
 		for(int i = startPage ;i <= endPage ; i++){%>
-			<a href="list.jsp?pageNum=<%= i %>&target=<%=target%>&value=<%=value%>">[<%= i %>]</a>
+			<a href="list.jsp?pageNum=<%= i %>">[<%= i %>]</a>
 		<%}
 		
 		if(endPage > pageCount){%>
-			<a href="list.jsp?pageNum=<%=startPage + 5 %>&target=<%=target%>&value=<%=value%>">[다음]</a>
+			<a href="list.jsp?pageNum=<%=startPage + 5 %>">[다음]</a>
 		<%}
 		
 	}
