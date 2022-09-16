@@ -12,18 +12,8 @@
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 %>
 
-	<!-- 로그인 안하고 테스트할때 아래 라인 주석 해제 -->
-	<% session.setAttribute("memId", "pigcs11");%>
 
 <%
-
-	if(session.getAttribute("memId") == null){%>
-		<script>
-			alert("로그인 후 이용해주시기 바랍니다.");
-			location.href = '../member/main.jsp';
-		</script>
-		
-	<%} 
 	
 	String pageNum = request.getParameter("pageNum");
 	if (pageNum == null || pageNum.equals("null")){
@@ -31,7 +21,6 @@
 	}
 	
 	int currentPage = Integer.parseInt(pageNum);
-//	System.out.println(currentPage);
 	int startRow = (currentPage * PAGESIZE) - (PAGESIZE-1);
 	int endRow = currentPage * PAGESIZE;
 	int count = 0;
@@ -79,8 +68,26 @@
 <table width="1000" align="center">
 	<tr>
 		<td align=right bgcolor="<%=value_c %>">
-		<a href="writeForm.jsp">글쓰기</a>
-		<a href="../member/logout.jsp">로그아웃</a>
+		<%
+		if((session.getAttribute("memId") != null)){%>
+			<a href="writeForm.jsp">글쓰기</a>
+			
+			<form action="../member/logout.jsp">
+				<input type="hidden" name="prevPage" value="<%=request.getRequestURI()%>">
+				<input type="submit" value="로그아웃">
+			</form>
+			
+			<%
+
+		
+		} else { %>
+			<form action="../member/loginForm.jsp">
+				<input type="hidden" name="prevPage" value="<%=request.getRequestURI()%>">
+				<input type="submit" value="로그인">
+			</form>
+		
+		<%}	%>
+		
 		</td>
 	</tr>
 </table>
@@ -124,15 +131,15 @@
 			<img src="images/level.gif" width="<%=wid %>" height="16">
 		<% }%>
 		
-				
-				<a href="content.jsp?num=<%=article.getNum() %>&pageNum=<%=currentPage %>&target=<%=target%>&value=<%=value%>">
-				<%=article.getSubject() %></a>
+				<a class="tooltip" title="<%=article.getContent() %>" href="content1.jsp?num=<%=article.getNum() %>&pageNum=<%=currentPage %>&target=<%=target%>&value=<%=value%>">
+				<%=article.getSubject() %>
+				</a>
 				
 				<%if(article.getReadcount() >= 20){  %>
 					<img src="images/hot.gif" border="0" height="16">
-					<%	
-				}	
-					%>
+				<%	}%>
+					
+					
 					
 				<td align="center" width="100">
 					<a href="mailto:<%=article.getEmail() %>"><%=article.getWriter() %></a>					
@@ -143,22 +150,17 @@
 				<td align="center" width="100"><%=article.getIp() %></td>
 			</tr>
 	
-	<%} %>		
-	
-	
-	
+		<%} 
+	}
+%>	
 	</table>
 	
-	<%
-}
-%>
+
 <td align="center">
 <%if (target != null){%>
 	<a href="list.jsp">전체글 보기</a>
 	<% }%>
 	</td>
-
-
 
 
 <br>
@@ -197,6 +199,5 @@
 	}
 %>
 </center>
-
 </body>
 </html>

@@ -8,6 +8,8 @@
 <title>로그인</title>
 <link href="style.css" rel="stylesheet" type="text/css">
 
+<% String prevPage = request.getParameter("prevPage"); %>
+
 	<script language="javascript">
 	
 		function begin(){
@@ -36,6 +38,7 @@
 <body onLoad="begin()" bgcolor="<%=bodyback_c%>">
 
 <form name="myform" action="loginPro.jsp" method="post" onSubmit="return checkIt()">
+	<input type="hidden" name="prevPage" value="<%=prevPage%>">
 
 	<table cellspacing="1" cellpadding="1" width="260" border="1" align="center">
 		<tr height="30">

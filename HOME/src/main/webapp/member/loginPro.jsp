@@ -10,10 +10,19 @@
 	
 	LogonDBBean manager = LogonDBBean.getInstance();
 	int check = manager.userCheck(id, passwd);
+	String prevPage = request.getParameter("prevPage");
+
+	
 	
 	if(check == 1){
 		session.setAttribute("memId", id);
-		response.sendRedirect("main.jsp");
+		if(prevPage == null || prevPage.equals("null")){
+			response.sendRedirect("main.jsp");
+					
+		}else{
+			response.sendRedirect(prevPage);
+			
+		}
 	}else if(check == 0){
 %>
 		<script>

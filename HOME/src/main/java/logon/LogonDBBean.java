@@ -66,7 +66,7 @@ public class LogonDBBean {
 			String phone = member.getPhone().replace("-", "");
 			
 			pstmt = conn.prepareStatement("insert into members(id, passwd, name, birthday,"
-					+ " male, email,blog, reg_date, zipcode, address, detailaddress, phone) "
+					+ " male, email,blog, reg_date, zipcode, address, address2, phone) "
 					+ "values(?,?,?,?,?,?,?,?,?,?,?,?)");
 			pstmt.setString(1, member.getId());
 			pstmt.setString(2, member.getPasswd());

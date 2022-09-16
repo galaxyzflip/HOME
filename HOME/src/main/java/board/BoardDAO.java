@@ -59,6 +59,8 @@ public class BoardDAO {
 				}else
 					number = 1;
 				
+				conn.setAutoCommit(false);
+				
 				if(num != 0) { // 답글쓰기 할때만 넘이 있음 그게 아니면 기본값 0
 					query = "update board set re_step = re_step+1 where ref=? and re_step > ?";
 					pstmt = conn.prepareStatement(query);
@@ -94,7 +96,9 @@ public class BoardDAO {
 				
 				pstmt.executeUpdate();
 				
+				conn.commit();
 			}catch(Exception ex) {
+				jdbcUtil.rollback(conn);
 				ex.printStackTrace();
 				
 			}finally {
