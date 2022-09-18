@@ -30,8 +30,11 @@
 	String target = (String)request.getParameter("target");
 	String value = (String)request.getParameter("value");
 
-	//7pageNum1
+	
 	int num = Integer.parseInt(request.getParameter("num"));
+	
+	
+	
 	String pageNum = request.getParameter("pageNum");
 	
 	
@@ -46,7 +49,7 @@
 	
 	int cCurrentPage = Integer.parseInt(cPageNum);
 	int startRow = (cCurrentPage * PAGESIZE) - (PAGESIZE-1);
-	int endRow = cCurrentPage * PAGESIZE;
+	int endRow = cCurrentPage  * PAGESIZE;
 	
 	
 	
@@ -147,7 +150,7 @@
 		<td>코멘트 수 : <%=count %></td>
 	</tr>
 	
-	<% for(int i=0;i<count;i++){
+	<% for(int i=0;i<comments.size();i++){
 		CommentDTO cmt = comments.get(i);%>
 		
 		<tr>
@@ -179,19 +182,16 @@
 			int endPage = startPage + pageBlock - 1;
 			if(endPage > pageCount) endPage = pageCount;
 			
-			if(endPage > pageCount){
-				endPage = pageCount;
-			}
 			
 			if(startPage > 5){%>
-				 <a href="content.jsp?num=<%=num %>&pageNum=<%=pageNum %>?pageNum=<%=startPage - 5 %>">[이전]</a>
+				 <a href="content.jsp?num=<%=num %>&pageNum=<%=pageNum %>&cPageNum=<%=startPage - 5 %>">[이전]</a>
 			<%}
 			for(int i=startPage;i<=endPage;i++){%>
-				<a href="content.jsp?num=<%=num %>&pageNum=<%=pageNum %>&cPagenum=<%=i %>">[<%=i %>]</a>
+				<a href="content.jsp?num=<%=num %>&pageNum=<%=pageNum %>&cPageNum=<%=i %>">[<%=i %>]</a>
 			
 			<%}
 			
-			if(endPage > pageCount){ %>
+			if(endPage < pageCount){ %>
 				<a href="content.jsp?num=<%=num %>&pageNum=<%=pageNum %>&cPageNum=<%=startPage + 5 %>">[다음]</a>	
 			
 			
