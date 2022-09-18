@@ -130,6 +130,8 @@ public class LogonDBBean {
 		return x;
 	}
 	
+
+	
 	//confirmId.jsp 에서 id 중복체크 
 	//중복 아니면 1리턴 중복이면 -1 리턴
 	public int confirmId(String id) throws Exception{

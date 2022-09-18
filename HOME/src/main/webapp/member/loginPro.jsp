@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="logon.LogonDBBean" %>
+<%@ page import="logon.LogonDataBean" %>
 
 <% request.setCharacterEncoding("utf-8"); %>
 
@@ -15,7 +16,11 @@
 	
 	
 	if(check == 1){
+		LogonDataBean memInfo = manager.getMember(id);
 		session.setAttribute("memId", id);
+		session.setAttribute("memEmail", memInfo.getEmail());
+		
+		
 		if(prevPage == null || prevPage.equals("null")){
 			response.sendRedirect("main.jsp");
 					

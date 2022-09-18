@@ -72,9 +72,17 @@
 		</tr>
 		
 		<tr>
-			<td width="80" bgcolor="<%=value_c %>" align="center"> Email</td>
+			<td width="80" bgcolor="<%=value_c %>" align="center" > Email</td>
 			<td width="330">
+			 
+			<%if(session.getAttribute("memEmail") != null){%>
+				<input type="text" size="40" maxlength="30" name="email" value=<%=session.getAttribute("memEmail") %>></td>
+			 
+			<%}else {%>
 				<input type="text" size="40" maxlength="30" name="email"></td>
+			<%}%>
+			
+			 	
 		</tr>
 		
 		<tr>
@@ -107,9 +115,6 @@
 
 </form>
 </center>
-
-
-
 
 
 </body>
