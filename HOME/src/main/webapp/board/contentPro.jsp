@@ -12,10 +12,23 @@
 <%
 	CommentDAO manager = CommentDAO.getInstance();
 	cmt.setReg_date(new Timestamp(System.currentTimeMillis()));
-	int con_num = Integer.parseInt(request.getParameter("con_num"));
-	cmt.setComment_num(con_num);
+	cmt.setIp(request.getRemoteAddr());
 	
+	
+	String conNum = request.getParameter("con_num");
+	int con_num = Integer.parseInt(conNum);
+	
+	cmt.setContent_num(con_num);
+	
+	cmt.setComment_num((manager.getCommentCount(con_num))+1);
+	System.out.printf("ss");
 	manager.insertComment(cmt);
+	
+	String content_num = request.getParameter("content_num");
+	String p_num = request.getParameter("p_num");
+	String url = "content.jsp?num="+con_num+"&pageNum="+p_num;
+	response.sendRedirect(url);
+	
 	
 %>
 

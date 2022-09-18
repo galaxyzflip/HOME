@@ -2,9 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ page import="board.*" %>
 <%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ include file="color.jsp" %>
-
-
 
 
 <!DOCTYPE html>
@@ -13,26 +12,59 @@
 <meta charset="UTF-8">
 <title>게시판</title>
 <link href="style.css" rel="stylesheet" type="text/css">
+<script>
+	function writeSave(){
+		if(document.comment.commentt.value==""){
+			alert("작성자를 입력해주셍.");
+			document.comment.commentt.focus();
+			return false;
+		}
+	}
+
+</script>
 </head>
 
 <%
+	//board 용
 	request.setCharacterEncoding("utf-8");
 	String target = (String)request.getParameter("target");
 	String value = (String)request.getParameter("value");
-	
 
+	//7pageNum1
 	int num = Integer.parseInt(request.getParameter("num"));
 	String pageNum = request.getParameter("pageNum");
 	
+	
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+	
+	
+	final int PAGESIZE = 5;
+	String cPageNum = request.getParameter("cPageNum");
+	if(cPageNum == null || cPageNum.equals("null")){
+		cPageNum = "1";
+	}
+	
+	int cCurrentPage = Integer.parseInt(cPageNum);
+	int startRow = (cCurrentPage * PAGESIZE) - (PAGESIZE-1);
+	int endRow = cCurrentPage * PAGESIZE;
+	
+	
+	
 	
 	try{
 		BoardDAO manager = BoardDAO.getInstance();
 		BoardDTO article = manager.getArticle(num);
 		
+		CommentDAO cManager = CommentDAO.getInstance();
+		ArrayList<CommentDTO> comments = cManager.getComments(article.getNum(), startRow, endRow);
+		int count = cManager.getCommentCount(article.getNum());
+		
 		int ref = article.getRef();
 		int re_step = article.getRe_step();
 		int re_level = article.getRe_level();
+		
+		
+		
 %>		
 		 				
 <body bgcolor="<%=bodyback_c%>">		
@@ -88,6 +120,88 @@
 	</table>	
 </form>
 
+<form method="post" action="contentPro.jsp" name="comment" onsubmit="return writeSave()">
+<table width="500" border="1" cellspacing="0" cellpadding="0" bgcolor="<%=bodyback_c %>" align="center">
+
+	<tr bgcolor="<%=value_c %>" align="center">
+		<td colpsan="2">
+			<textarea name="commentt" rows = "6" cols="40"></textarea>
+			<input type="hidden" name="con_num" value=<%=article.getNum() %>>
+			<input type="hidden" name="p_num" value=<%=pageNum %>>
+		</td>
+	<tr align="center">
+		<td align=center>
+			작성자<input type="text" name=commenter size=10>
+			비밀번호<input type="password" name=passwd size=10>
+			<input type="submit" value="코멘트달기">
+		</td>
+	</tr>
+
+</table>
+</form>
+
+
+<table width="500" border=0 cellspacing=0 cellpadding=0 bgcolor=<%=bodyback_c %> align=center>
+
+	<tr>
+		<td>코멘트 수 : <%=count %></td>
+	</tr>
+	
+	<% for(int i=0;i<count;i++){
+		CommentDTO cmt = comments.get(i);%>
+		
+		<tr>
+			<td align=left size=250 bgcolor=<%=value_c %>>
+			<b><%=cmt.getCommenter() %> 님</b> (<%=sdf.format(cmt.getReg_date()) %>)
+			</td>
+			
+			<td align=riglt size=250 bgcolor=<%=value_c %>> 접속 IP : <%=cmt.getIp() %>  
+			<a href="delCommentForm.jsp?ctn=<%=cmt.getContent_num() %>&cmn=<%=cmt.getComment_num()%>&p_num=<%=pageNum%>">삭제</a>
+			</td>
+		</tr>
+		
+		<tr>
+			<td colspan=2><%=cmt.getCommentt() %></td>
+		
+	<%} %>
+</table>
+	
+<table width=500 border=0 cellspacing=0 cellpadding=0 bgcolor=<%=bodyback_c %>>
+<center>
+
+	<tr>
+	<% 
+		if(count>0){
+			int pageCount = count / PAGESIZE + (count % PAGESIZE == 0 ? 0 : 1);
+			//					1					
+			int pageBlock = 5;
+			int startPage = (int)(cCurrentPage/5) * 5 + 1;
+			int endPage = startPage + pageBlock - 1;
+			if(endPage > pageCount) endPage = pageCount;
+			
+			if(endPage > pageCount){
+				endPage = pageCount;
+			}
+			
+			if(startPage > 5){%>
+				 <a href="content.jsp?num=<%=num %>&pageNum=<%=pageNum %>?pageNum=<%=startPage - 5 %>">[이전]</a>
+			<%}
+			for(int i=startPage;i<=endPage;i++){%>
+				<a href="content.jsp?num=<%=num %>&pageNum=<%=pageNum %>&cPagenum=<%=i %>">[<%=i %>]</a>
+			
+			<%}
+			
+			if(endPage > pageCount){ %>
+				<a href="content.jsp?num=<%=num %>&pageNum=<%=pageNum %>&cPageNum=<%=startPage + 5 %>">[다음]</a>	
+			
+			
+			<%}
+		}
+	
+	%>
+	
+</center>	
+</table>	
 	
 	
 	<%

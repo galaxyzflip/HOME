@@ -71,7 +71,7 @@ function findPasswd(){
 		<tr>
 			<td colspan="3" bgcolor="<%= title_c %>" align="center">
 			<input type="submit" name="Submit" value="로그인">
-			<input type="button" value="회원가입" onclick="javascript:window.location='inputForm2.jsp'">
+			<input type="button" value="회원가입" onclick="javascript:window.location='inputForm.jsp'">
 			</td>
 		</tr>
 		

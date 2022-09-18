@@ -33,14 +33,14 @@ public class CommentDAO {
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement("insert into b_comment(content_num, commenter, commentt, passwd, reg_date, ip, comment_num) "
-					+ "value(?,?,?,?,?,?,?)");
+					+ "values(?,?,?,?,?,?,?)");
 			pstmt.setInt(1, cmt.getContent_num());
 			pstmt.setString(2, cmt.getCommenter());
 			pstmt.setString(3, cmt.getCommentt());
 			pstmt.setString(4, cmt.getPasswd());
 			pstmt.setTimestamp(5, cmt.getReg_date());
 			pstmt.setString(6, cmt.getIp());
-			//pstmt.setInt(7, cmt.getComment_num());
+			pstmt.setInt(7, cmt.getComment_num());
 			//count 다시 구해서 넣자
 			pstmt.executeUpdate();
 			
@@ -83,10 +83,9 @@ public class CommentDAO {
 					CommentDTO cmt = new CommentDTO();
 					cmt.setContent_num(rs.getInt("content_num"));
 					cmt.setCommenter(rs.getString("commenter"));
-					cmt.setCommentt(rs.getString("ommentt"));
+					cmt.setCommentt(rs.getString("commentt"));
 					cmt.setReg_date(rs.getTimestamp("reg_date"));
 					cmt.setIp(rs.getString("ip"));
-					cmt.setPasswd(rs.getString("Passwd"));
 					cmt.setComment_num(rs.getInt("comment_num"));
 					
 					list.add(cmt);	
@@ -138,7 +137,7 @@ public class CommentDAO {
 		return count;
 	}
 	
-	public int deleteCommnet(int content_num, String passwd, int comment_num) {
+	public int deleteComment(int content_num, String passwd, int comment_num) {
 		int x = -1;
 		
 		Connection conn = null;

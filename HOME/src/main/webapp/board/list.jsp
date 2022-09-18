@@ -131,7 +131,7 @@
 			<img src="images/level.gif" width="<%=wid %>" height="16">
 		<% }%>
 		
-				<a class="tooltip" title="<%=article.getContent() %>" href="content1.jsp?num=<%=article.getNum() %>&pageNum=<%=currentPage %>&target=<%=target%>&value=<%=value%>">
+				<a class="tooltip" title="<%=article.getContent() %>" href="content.jsp?num=<%=article.getNum() %>&pageNum=<%=currentPage %>&target=<%=target%>&value=<%=value%>">
 				<%=article.getSubject() %>
 				</a>
 				

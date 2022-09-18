@@ -5,23 +5,15 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ include file="color.jsp" %>
 
+<% request.setCharacterEncoding("utf-8"); %>
+
 <%!
-	final int PAGESIZE = 10;
+	final int PAGESIZE = 5;
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 %>
 
-	<!-- 로그인 안하고 테스트할때 아래 라인 주석 해제 -->
-	<% session.setAttribute("memId", "pigcs11");%>
 
 <%
-
-	if(session.getAttribute("memId") == null){%>
-		<script>
-			alert("로그인 후 이용해주시기 바랍니다.");
-			location.href = '../member/main.jsp';
-		</script>
-		
-	<%} 
 	
 	String pageNum = request.getParameter("pageNum");
 	if (pageNum == null || pageNum.equals("null")){
@@ -29,7 +21,6 @@
 	}
 	
 	int currentPage = Integer.parseInt(pageNum);
-//	System.out.println(currentPage);
 	int startRow = (currentPage * PAGESIZE) - (PAGESIZE-1);
 	int endRow = currentPage * PAGESIZE;
 	int count = 0;
@@ -40,19 +31,17 @@
 	BoardDAO manager = BoardDAO.getInstance();
 	
 	
-	String object = (String)request.getParameter("object");
+	String target = (String)request.getParameter("target");
 	String value = (String)request.getParameter("value");
-	if(object == null || object.equals("null")){
-		object = null;
+	if(target == null || target.equals("null")){
+		target = null;
 		value = null;
 	}
 	
-	
-	count = manager.getArticleCount();
-	
+	count = manager.getArticleCount(target, value);
 	
 	if(count > 0){
-		articleList = manager.getArticles(startRow, endRow);
+		articleList = manager.getArticles(target, value, startRow, endRow);
 	}
 	
 	number = count-(currentPage-1) * PAGESIZE;
@@ -65,6 +54,9 @@
 <meta charset="UTF-8">
 <title>게시판</title>
 <link href="style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript">
+	<%@ include file="script.js"%>
+</script>
 
 </head>
 <body bgcolor="<%=bodyback_c%>">
@@ -76,8 +68,26 @@
 <table width="1000" align="center">
 	<tr>
 		<td align=right bgcolor="<%=value_c %>">
-		<a href="writeForm.jsp">글쓰기</a>
-		<a href="../member/logout.jsp">로그아웃</a>
+		<%
+		if((session.getAttribute("memId") != null)){%>
+			<a href="writeForm.jsp">글쓰기</a>
+			
+			<form action="../member/logout.jsp">
+				<input type="hidden" name="prevPage" value="<%=request.getRequestURI()%>">
+				<input type="submit" value="로그아웃">
+			</form>
+			
+			<%
+
+		
+		} else { %>
+			<form action="../member/loginForm.jsp">
+				<input type="hidden" name="prevPage" value="<%=request.getRequestURI()%>">
+				<input type="submit" value="로그인">
+			</form>
+		
+		<%}	%>
+		
 		</td>
 	</tr>
 </table>
@@ -121,15 +131,15 @@
 			<img src="images/level.gif" width="<%=wid %>" height="16">
 		<% }%>
 		
-				
-				<a href="content.jsp?num=<%=article.getNum() %>&pageNum=<%=currentPage %>">
-				<%=article.getSubject() %></a>
+				<a class="tooltip" title="<%=article.getContent() %>" href="content1.jsp?num=<%=article.getNum() %>&pageNum=<%=currentPage %>&target=<%=target%>&value=<%=value%>">
+				<%=article.getSubject() %>
+				</a>
 				
 				<%if(article.getReadcount() >= 20){  %>
 					<img src="images/hot.gif" border="0" height="16">
-					<%	
-				}	
-					%>
+				<%	}%>
+					
+					
 					
 				<td align="center" width="100">
 					<a href="mailto:<%=article.getEmail() %>"><%=article.getWriter() %></a>					
@@ -140,23 +150,28 @@
 				<td align="center" width="100"><%=article.getIp() %></td>
 			</tr>
 	
-	<%} %>		
-	
-	
-	
+		<%} 
+	}
+%>	
 	</table>
 	
-	<%
-}
-%>
+
+<td align="center">
+<%if (target != null){%>
+	<a href="list.jsp">전체글 보기</a>
+	<% }%>
+	</td>
+
+
 <br>
-<form action="list.jsp" method="post">
+<form action="list.jsp" method="post" name="suchForm">
 <td align = "center" width="400">
-	<select>
-		<option value="작성자">작성자</option>
-		<option value="작성자">제목</option>
+	<select name="target">
+		<option value="writer">작성자</option>
+		<option value="subject">제목</option>
+		<option value="content">내용</option>
 	</select>
-	<input type="text" name="writer"> <input type="submit" value="검색">
+	<input type="text" name="value"> <input type="submit" value="검색" onclick="return suchSave()">
 </td>
 </form>
 
@@ -170,20 +185,19 @@
 		if(endPage > pageCount) endPage = pageCount;
 		
 		if(startPage > 5){%>
-			<a href="list.jsp?pageNum=<%=startPage - 5 %>">[이전]</a>
+			<a href="list.jsp?pageNum=<%=startPage - 5 %>&target=<%=target%>&value=<%=value%>">[이전]</a>
 		<%}
 		
 		for(int i = startPage ;i <= endPage ; i++){%>
-			<a href="list.jsp?pageNum=<%= i %>">[<%= i %>]</a>
+			<a href="list.jsp?pageNum=<%= i %>&target=<%=target%>&value=<%=value%>">[<%= i %>]</a>
 		<%}
 		
 		if(endPage > pageCount){%>
-			<a href="list.jsp?pageNum=<%=startPage + 5 %>">[다음]</a>
+			<a href="list.jsp?pageNum=<%=startPage + 5 %>&target=<%=target%>&value=<%=value%>">[다음]</a>
 		<%}
 		
 	}
 %>
 </center>
-
 </body>
 </html>
