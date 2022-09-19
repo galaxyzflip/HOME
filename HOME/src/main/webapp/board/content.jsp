@@ -59,9 +59,10 @@
 		BoardDTO article = manager.getArticle(num);
 		
 		CommentDAO cManager = CommentDAO.getInstance();
-		ArrayList<CommentDTO> comments = cManager.getComments(article.getNum(), startRow, endRow);
-		int count = cManager.getCommentCount(article.getNum());
+		ArrayList<CommentDTO> comments = null; 
+		comments = cManager.getComments(article.getNum(), startRow, endRow);
 		
+		int count = cManager.getCommentCount(article.getNum());
 		int ref = article.getRef();
 		int re_step = article.getRe_step();
 		int re_level = article.getRe_level();
@@ -150,23 +151,30 @@
 		<td>코멘트 수 : <%=count %></td>
 	</tr>
 	
-	<% for(int i=0;i<comments.size();i++){
-		CommentDTO cmt = comments.get(i);%>
-		
-		<tr>
-			<td align=left size=250 bgcolor=<%=value_c %>>
-			<b><%=cmt.getCommenter() %> 님</b> (<%=sdf.format(cmt.getReg_date()) %>)
-			</td>
+	
+	
+	<%
+	if(count > 0){
+		for(int i=0;i<comments.size();i++){
+			CommentDTO cmt = comments.get(i);%>
 			
-			<td align=riglt size=250 bgcolor=<%=value_c %>> 접속 IP : <%=cmt.getIp() %>  
-			<a href="delCommentForm.jsp?ctn=<%=cmt.getContent_num() %>&cmn=<%=cmt.getComment_num()%>&p_num=<%=pageNum%>">삭제</a>
-			</td>
-		</tr>
-		
-		<tr>
-			<td colspan=2><%=cmt.getCommentt() %></td>
-		
-	<%} %>
+			<tr>
+				<td align=left size=250 bgcolor=<%=value_c %>>
+				<b><%=cmt.getCommenter() %> 님</b> (<%=sdf.format(cmt.getReg_date()) %>)
+				</td>
+				
+				<td align=riglt size=250 bgcolor=<%=value_c %>> 접속 IP : <%=cmt.getIp() %>  
+				<a href="delCommentForm.jsp?ctn=<%=cmt.getContent_num() %>&cmn=<%=cmt.getComment_num()%>&p_num=<%=pageNum%>">삭제</a>
+				</td>
+			</tr>
+			
+			<tr>
+				<td colspan=2><%=cmt.getCommentt() %></td>
+			
+		<%} 
+	}%>
+	
+	
 </table>
 	
 <table width=500 border=0 cellspacing=0 cellpadding=0 bgcolor=<%=bodyback_c %>>

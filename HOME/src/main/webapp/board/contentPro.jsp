@@ -21,7 +21,6 @@
 	cmt.setContent_num(con_num);
 	
 	cmt.setComment_num((manager.getCommentCount(con_num))+1);
-	System.out.printf("ss");
 	manager.insertComment(cmt);
 	
 	String content_num = request.getParameter("content_num");
