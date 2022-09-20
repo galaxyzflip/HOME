@@ -11,6 +11,7 @@
 <%
 	article.setReg_date(new Timestamp(System.currentTimeMillis()));
 	article.setIp(request.getRemoteAddr());
+	article.setId((String)session.getAttribute("memId"));
 	
 	BoardDAO manager = BoardDAO.getInstance();
 	manager.insertArticle(article);

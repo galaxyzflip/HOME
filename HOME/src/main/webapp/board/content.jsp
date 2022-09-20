@@ -114,9 +114,24 @@
 		
 		<tr height="30">
 			<td colspan="4" bgcolor="<%=value_c %>" align="right">
-				<input type="button" value="글 수정" onclick="document.location.href='updateForm.jsp?num=<%=article.getNum() %>'"> &nbsp;&nbsp;&nbsp;&nbsp;
-				<input type="button" value="글 삭제" onclick="document.location.href='deleteForm.jsp?num=<%=article.getNum() %>'"> &nbsp;&nbsp;&nbsp;&nbsp;
-				<input type="button" value="답글쓰기" onclick="document.location.href='writeForm.jsp?num=<%=num%>&ref=<%=ref%>&re_step=<%=re_step%>&re_level=<%=re_level%>'"> &nbsp;&nbsp;&nbsp;&nbsp;
+			
+			
+			
+			
+			<%
+				
+				if(article.getId().equals((String)session.getAttribute("memId"))){ %>
+					<input type="button" value="글 수정" onclick="document.location.href='updateForm.jsp?num=<%=article.getNum() %>'"> &nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="button" value="글 삭제" onclick="document.location.href='deleteForm.jsp?num=<%=article.getNum() %>'"> &nbsp;&nbsp;&nbsp;&nbsp;
+				<%}%>
+				
+				<% 
+				if(session.getAttribute("memId") != null){ %>
+					<input type="button" value="답글쓰기" onclick="document.location.href='writeForm.jsp?num=<%=num%>&ref=<%=ref%>&re_step=<%=re_step%>&re_level=<%=re_level%>'"> &nbsp;&nbsp;&nbsp;&nbsp;	
+				<%}
+				%>
+				
+				
 				<input type="button" value="글 목록" onclick="document.location.href='list.jsp?pageNum=<%=pageNum %>&target=<%=target%>&value=<%=value%>'">
 			</td>
 		</tr>

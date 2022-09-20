@@ -2,7 +2,6 @@ package board;
 
 import java.sql.Timestamp;
 
-
 public class BoardDTO {
 
 	private int num;
@@ -17,7 +16,16 @@ public class BoardDTO {
 	private int ref;
 	private int re_step;
 	private int re_level;
-	private String article_class ;
+	private String article_class;
+	private String id;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getArticle_class() {
 		return article_class;

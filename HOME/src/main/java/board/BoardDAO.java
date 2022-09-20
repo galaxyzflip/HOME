@@ -37,6 +37,7 @@ public class BoardDAO {
 			ResultSet rs = null;
 			
 			int num = article.getNum(); // content.jsp 파일에서 답글쓰기 했을때만 num 파라미터가 여기 도착한다....
+										// 글번호임
 			int ref = article.getRef();
 			int re_step = article.getRe_step();
 			int re_level = article.getRe_level();
@@ -79,8 +80,8 @@ public class BoardDAO {
 				
 				
 				query = "insert into board(num, writer, email, subject, passwd, reg_date, "
-						+ "ref, re_step, re_level, content, ip) "
-						+ "values(board_num.nextval, ?,?,?,?,?,?,?,?,?,? )";
+						+ "ref, re_step, re_level, content, ip, id) "
+						+ "values(board_num.nextval, ?,?,?,?,?,?,?,?,?,?,? )";
 				
 				pstmt = conn.prepareStatement(query);
 				pstmt.setString(1, article.getWriter());
@@ -93,6 +94,7 @@ public class BoardDAO {
 				pstmt.setInt(8, re_level);
 				pstmt.setString(9, article.getContent());
 				pstmt.setString(10, article.getIp());
+				pstmt.setString(11, article.getId());
 				
 				pstmt.executeUpdate();
 				
@@ -258,6 +260,7 @@ public class BoardDAO {
 					article.setRe_level(rs.getInt("re_level"));
 					article.setContent(rs.getString("content"));
 					article.setIp(rs.getString("ip"));
+					article.setId(rs.getString("id"));
 					
 				}
 				

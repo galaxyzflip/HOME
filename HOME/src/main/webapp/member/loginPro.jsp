@@ -19,6 +19,8 @@
 		LogonDataBean memInfo = manager.getMember(id);
 		session.setAttribute("memId", id);
 		session.setAttribute("memEmail", memInfo.getEmail());
+		session.setAttribute("memName", memInfo.getName());
+		
 		
 		
 		if(prevPage == null || prevPage.equals("null")){

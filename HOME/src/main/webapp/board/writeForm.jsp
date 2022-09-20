@@ -19,8 +19,12 @@
 
 <%
 	int num=0, ref=1, re_step=0, re_level=0;
-
+	
 	try{
+		
+		//댓글이면 아래 작업 진행
+		//댓글 아니면  int num=0, ref=1, re_step=0, re_level=0; 이대로 날아감
+		//댓글이면 받은 파라미터 날아감...
 		if((request.getParameter("num") != null) ){
 			num = Integer.parseInt(request.getParameter("num"));
 			ref = Integer.parseInt(request.getParameter("ref"));
@@ -29,6 +33,9 @@
 		}
 		
 	String id = (String)session.getAttribute("memId");
+	String name = (String)session.getAttribute("memName");
+	
+	
 %>
 <body bgcolor = "<%=bodyback_c%>">
 <center>
@@ -52,7 +59,7 @@
 			<td width="70" bgcolor="<%=value_c %>" align="center">이름</td>
 			
 			<td width="330">
-				<input type="text" size="10" maxlength="10" name="writer"  value="<%=id%>"></td>
+				<input type="text" size="10" maxlength="10" name="writer"  value=<%=name %> readonly ></td>
 		</tr>
 		
 		
