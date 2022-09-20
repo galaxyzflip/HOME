@@ -101,14 +101,15 @@ public abstract class MessageDAO {
 			
 		}
 		
-		public int update(Connection conn, int messageId, String message) throws SQLException{
+		public int update(Connection conn, int messageId, String guestName,  String message) throws SQLException{
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
 			
 			try {
-				pstmt = conn.prepareStatement("update guestbook_message set message =? where message_id=?");
-				pstmt.setString(1, message);
-				pstmt.setInt(2, messageId);
+				pstmt = conn.prepareStatement("update guestbook_message set guest_name=?,  message =? where message_id=?");
+				pstmt.setString(1, guestName);
+				pstmt.setString(2, message);
+				pstmt.setInt(3, messageId);
 				return pstmt.executeUpdate();
 			
 			}finally {

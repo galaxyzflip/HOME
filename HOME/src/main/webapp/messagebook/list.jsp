@@ -52,8 +52,14 @@
 		메시지 번호 : <%=message.getId() %><br>	
 		손님 이름 : <%=message.getGuestName() %><br>	
 		메시지 : <%=message.getMessage() %><br>
+		
+		
+		<a href="confirmUpdate.jsp?messageId=<%=message.getId() %>">
+		[수정]</a>
+		
 		<a href="confirmDeletion.jsp?messageId=<%=message.getId() %>">
-		[삭제하기]</a>
+		[삭제]</a>
+		
 		</td>
 	</tr>
 <%} %>	
