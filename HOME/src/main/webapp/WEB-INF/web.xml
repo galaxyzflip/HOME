@@ -24,5 +24,15 @@
 	<load-on-startup>1</load-on-startup>  
   </servlet>
   
+  <servlet>
+  	<servlet-name>MessageDAOProvider</servlet-name>
+  	<servlet-class>messagebook.MessageDAOProviderInit</servlet-class>
+  	<init-param>
+  		<param-name>dbms</param-name>
+  		<param-value>oracle</param-value>
+  	</init-param>
+  	<load-on-startup>1</load-on-startup>
+  </servlet>
+  
   
 </web-app>
