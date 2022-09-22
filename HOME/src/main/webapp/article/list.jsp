@@ -6,7 +6,7 @@
 	String pageNumberString = request.getParameter("p");
 	int pageNumber = 1;
 	
-	if(pageNumberString != null && pageNumberString.length() >0){
+	if(pageNumberString != null && pageNumberString.length() > 0){
 		pageNumber = Integer.parseInt(pageNumberString);
 	}
 	
@@ -15,7 +15,7 @@
 	request.setAttribute("listModel", articleListModel);
 	
 	if(articleListModel.getTotalPageCount() > 0){
-		int beginPageNumber = (articleListModel.getRequestPage() - 1) / ListArticleService.COUNT_PER_PAGE * (ListArticleService.COUNT_PER_PAGE + 1);
+		int beginPageNumber = (articleListModel.getRequestPage() - 1) / ListArticleService.COUNT_PER_PAGE * ListArticleService.COUNT_PER_PAGE + 1;
 		int endPageNumber = beginPageNumber + (ListArticleService.COUNT_PER_PAGE - 1);
 		
 		if(endPageNumber > articleListModel.getTotalPageCount()){
@@ -23,7 +23,7 @@
 		}
 		
 		request.setAttribute("beginPage", beginPageNumber);
-		request.setAttribute("endpage", endPageNumber);
+		request.setAttribute("endPage", endPageNumber);
 	}
 
  %>

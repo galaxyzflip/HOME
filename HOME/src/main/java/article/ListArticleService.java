@@ -3,6 +3,8 @@ package article;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import article.model.ArticleDTO;
+import article.dao.ArticleDAO;
 
 import logon.jdbcUtil;
 import messagebook.ConnectionProvider;

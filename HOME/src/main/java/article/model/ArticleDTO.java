@@ -1,4 +1,4 @@
-package article;
+package article.model;
 
 import java.util.Date;
 
@@ -106,7 +106,7 @@ public class ArticleDTO {
 		}
 		
 		if(sequenceNumber.endsWith("99")) {
-			return -2;
+			return 2;
 		}
 		
 		return 3;

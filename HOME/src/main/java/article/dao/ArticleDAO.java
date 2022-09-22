@@ -1,4 +1,5 @@
-package article;
+package article.dao;
+
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,9 +10,9 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
+import article.model.ArticleDTO;
 
 import logon.jdbcUtil;
-//import ArticleDTO
 
 public class ArticleDAO {
 
@@ -26,7 +27,18 @@ public class ArticleDAO {
 		Statement stmt = null;
 		ResultSet rs = null;
 		
-		return 0;
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("select count(1) from article");
+			rs.next();
+			
+			return rs.getInt(1);
+			
+		}finally {
+			jdbcUtil.close(stmt);
+			jdbcUtil.close(rs);
+		}
+		
 	}
 	
 	
@@ -36,7 +48,7 @@ public class ArticleDAO {
 		ResultSet rs = null;
 		
 		try {
-			pstmt = conn.prepareStatement("select article_id, group_id, sequence_no, posting_date, read_count, writer_name, password, title from(select rownum rnum, article_id, group_id, sequence_no, posting_date, read_count, writer_name, password, title from (select * from article , order by m.sequence_no desc) where rownum <= ? ) where rnum >=?");
+			pstmt = conn.prepareStatement("select article_id, group_id, sequence_no, posting_date, read_count, writer_name, password, title from(select rownum rnum, article_id, group_id, sequence_no, posting_date, read_count, writer_name, password, title from (select * from article m order by m.sequence_no desc) where rownum <= ? ) where rnum >=?");
 			pstmt.setInt(1, endRow);
 			pstmt.setInt(2, firstRow);
 			rs = pstmt.executeQuery();
@@ -87,7 +99,7 @@ public class ArticleDAO {
 		ResultSet rs = null;
 		
 		try {
-			pstmt = conn.prepareStatement("insert into article (article_id, group_id, sequence_no, posting_date, read_count, writer_name, password, title, content) values(article_id_sql.nextval, ?,?,?,0,?,?,?,?)");
+			pstmt = conn.prepareStatement("insert into article(article_id, group_id, sequence_no, posting_date, read_count, writer_name, password, title, content) values(article_id_seq.nextval, ?,?,?,0,?,?,?,?)");
 			pstmt.setInt(1, article.getGroupId());
 			pstmt.setString(2, article.getSequenceNumber());
 			pstmt.setTimestamp(3, new Timestamp(article.getPostingDate().getTime()));
@@ -143,7 +155,7 @@ public class ArticleDAO {
 		PreparedStatement pstmt = null;
 		
 		try {
-			pstmt = conn.prepareStatement("update article set read_count = read_count+ where article_id=?");
+			pstmt = conn.prepareStatement("update article set read_count = read_count+1 where article_id=?");
 			pstmt.setInt(1, articleId);
 			pstmt.executeUpdate();
 			
@@ -183,23 +195,34 @@ public class ArticleDAO {
 	public int update(Connection conn, ArticleDTO article) throws SQLException{
 		PreparedStatement pstmt = null;
 				
-				try {
-					pstmt = conn.prepareStatement("update article set title=?, content=? where article_id=?");
-					
-					pstmt.setString(1, article.getTitle());
-					pstmt.setString(2, article.getContent());
-					pstmt.setInt(3, article.getId());
-					
-					return pstmt.executeUpdate();
-				
-				}finally {
-					jdbcUtil.close(pstmt);
-				}
+		try {
+			pstmt = conn.prepareStatement("update article set title=?, content=? where article_id=?");
+			
+			pstmt.setString(1, article.getTitle());
+			pstmt.setString(2, article.getContent());
+			pstmt.setInt(3, article.getId());
+			
+			return pstmt.executeUpdate();
+		
+		}finally {
+			jdbcUtil.close(pstmt);
+		}
 		
 		
 	}
 	
 	public void delete(Connection conn, int articleId) throws SQLException{
+		PreparedStatement pstmt = null;
+		
+		try {
+			pstmt = conn.prepareStatement("delete from article where article_id=?");
+			pstmt.setInt(1, articleId);
+			pstmt.executeUpdate();
+			
+		}finally {
+			jdbcUtil.close(pstmt);
+			
+		}
 		
 	}
 	

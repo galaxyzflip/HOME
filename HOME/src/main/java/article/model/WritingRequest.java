@@ -1,6 +1,6 @@
-package article.service;
+package article.model;
 
-import article.ArticleDTO;
+import article.model.ArticleDTO;
 
 public class WritingRequest {
 

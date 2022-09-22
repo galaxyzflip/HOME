@@ -1,6 +1,7 @@
 package article;
 import java.util.List;
 import java.util.ArrayList;
+import article.model.ArticleDTO;
 
 public class ArticleListModel {
 
@@ -8,19 +9,19 @@ public class ArticleListModel {
 	private int requestPage;
 	private int totalPageCount;
 	private int startRow;
-	private int endrow;
+	private int endRow;
 	
 	public ArticleListModel() {
 		this(new ArrayList<ArticleDTO>(), 0,0,0,0);
 	}
 
 	public ArticleListModel(List<ArticleDTO> articleList, int requestPage, int totalPageCount, int startRow,
-			int endrow) {
+			int endRow) {
 		this.articleList = articleList;
 		this.requestPage = requestPage;
 		this.totalPageCount = totalPageCount;
 		this.startRow = startRow;
-		this.endrow = endrow;
+		this.endRow = endRow;
 	}
 
 	public List<ArticleDTO> getArticleList() {
@@ -43,8 +44,8 @@ public class ArticleListModel {
 		return startRow;
 	}
 
-	public int getEndrow() {
-		return endrow;
+	public int getEndRow() {
+		return endRow;
 	}
 	
 	

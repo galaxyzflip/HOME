@@ -15,7 +15,7 @@
 </head>
 <body>
 
-오늘은 <b>${elfunc:dateFormat(today) }</b> 입니다.
+<%-- 오늘은 <b>${elfunc:dateFormat(today) }</b> 입니다. --%>
 
 
 </body>
