@@ -12,7 +12,7 @@ public class ReadArticleService {
 	
 	private ReadArticleService() {}
 	
-	public static  ReadArticleService getInstance() {
+	public static  ReadArticleService getInstance() { 
 		return instance;
 	}
 	

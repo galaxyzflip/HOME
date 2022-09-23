@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 import article.model.ArticleDTO;
 
-public class ArticleListModel {
+public class ArticleListRequest {
 
 	private List<ArticleDTO> articleList;
 	private int requestPage;
@@ -13,11 +13,11 @@ public class ArticleListModel {
 	private int endRow;
 	
 	
-	public ArticleListModel() {
+	public ArticleListRequest() {
 		this(new ArrayList<ArticleDTO>(), 0,0,0,0);
 	}
 
-	public ArticleListModel(List<ArticleDTO> articleList, int requestPage, int totalPageCount, int startRow,
+	public ArticleListRequest(List<ArticleDTO> articleList, int requestPage, int totalPageCount, int startRow,
 			int endRow) {
 		this.articleList = articleList;
 		this.requestPage = requestPage;

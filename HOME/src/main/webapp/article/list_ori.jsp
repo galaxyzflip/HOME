@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="article.model.ArticleListModel" %>
+<%@ page import="article.model.ArticleListRequest" %>
 <%@ page import="article.service.ListArticleService" %>
 <%request.setCharacterEncoding("utf-8"); %>
 
 
 <%
-
+/* 
 	String pageNumberString = request.getParameter("p");
 	int pageNumber = 1;
 	
@@ -28,7 +28,7 @@
 		
 		request.setAttribute("beginPage", beginPageNumber);
 		request.setAttribute("endPage", endPageNumber);
-	}
+	} */
 	
 
  %>

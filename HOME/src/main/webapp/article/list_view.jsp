@@ -123,12 +123,14 @@
 	<tr>
 		<td>
 			<select name="target">
-				<option value="writer_name">작성자</option>
-				<option value="title">제목</option>
-				<option value="content">내용</option>
+				<option value="0">작성자</option>
+				<option value="1">제목</option>
+				<option value="2">내용</option>
 			</select>
 			
-			<input type="text" name="searchValue">
+			
+			
+			<input type="text" name="searchValue" value="${searchValue }" >
 			<input type="submit" value="검색">
 			
 		</td>

@@ -12,7 +12,10 @@ public class SearchArticleModel {
 		
 	}};
 	
-	public static ArrayList<String> getTargetList(Integer target) {
+	public static String getTargetList(int target) {
+		if(target == -1) {
+			return new String();
+		} else
 		return targetList.get(target);
 	}
 	
