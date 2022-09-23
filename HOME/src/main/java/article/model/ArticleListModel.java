@@ -1,4 +1,5 @@
-package article;
+package article.model;
+
 import java.util.List;
 import java.util.ArrayList;
 import article.model.ArticleDTO;
@@ -10,6 +11,7 @@ public class ArticleListModel {
 	private int totalPageCount;
 	private int startRow;
 	private int endRow;
+	
 	
 	public ArticleListModel() {
 		this(new ArrayList<ArticleDTO>(), 0,0,0,0);
@@ -23,6 +25,8 @@ public class ArticleListModel {
 		this.startRow = startRow;
 		this.endRow = endRow;
 	}
+	
+	
 
 	public List<ArticleDTO> getArticleList() {
 		return articleList;

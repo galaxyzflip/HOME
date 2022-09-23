@@ -2,21 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@ page import="article.model.ArticleListModel" %>
 <%@ page import="article.service.ListArticleService" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%request.setCharacterEncoding("utf-8"); %>
 
 
 <%
-	//검색어 관련 설정
-	
-	String target = request.getParameter("target");
-	String searchValue = request.getParameter("searchValue");
-	
-	
-	request.setAttribute("target", target);
-	request.setAttribute("searchValue", searchValue);
-	//검색어 관련 설정
-	
 
 	String pageNumberString = request.getParameter("p");
 	int pageNumber = 1;
@@ -26,10 +15,7 @@
 	}
 	
 	ListArticleService listService = ListArticleService.getInstance();
-	
-	ArticleListModel articleListModel = listService.getArticleList(pageNumber, target, searchValue);
-	
-	
+	ArticleListModel articleListModel = listService.getArticleList(pageNumber);
 	request.setAttribute("listModel", articleListModel);
 	
 	if(articleListModel.getTotalPageCount() > 0){
@@ -47,5 +33,5 @@
 
  %>
 
-<jsp:forward page="list_view.jsp?"/>
+<jsp:forward page="list_view.jsp"/>
 <!-- request 객체를 가져가기 위해 sendRedirect가 아닌 forward 사용~ -->

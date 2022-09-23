@@ -49,7 +49,6 @@ public class ReplyArticleService {
 				
 			}
 			
-			
 			String searchMaxSeqNum = parent.getSequenceNumber();
 			String searchMinSeqNum = getSearchMinSeqNum(parent);
 			
@@ -70,7 +69,6 @@ public class ReplyArticleService {
 			article.setId(articleId);;
 			return article;
 			
-			
 		}catch(SQLException ex) {
 			jdbcUtil.rollback(conn);
 			throw new RuntimeException("DB 작업 실패 : " + ex.getMessage(), ex);
@@ -86,8 +84,8 @@ public class ReplyArticleService {
 			jdbcUtil.close(conn);
 		}
 		
-		
 	}
+	
 	
 	private void checkParent(ArticleDTO parent, int parentId) throws ArticleNotFoundException, CannotReplyArticleException{
 		
@@ -100,7 +98,6 @@ public class ReplyArticleService {
 			throw new CannotReplyArticleException("마지막 레벨 글에는 답글을 달 수 없습니다:" + parent.getId());
 		}
 	}
-	
 	
 	
 	private String getSearchMinSeqNum(ArticleDTO parent) {
@@ -124,8 +121,6 @@ public class ReplyArticleService {
 		
 		return decimalFormat.format(searchMinLongValue);
 	}
-	
-	
 	
 	
 	
@@ -175,13 +170,8 @@ public class ReplyArticleService {
 			long seq = Long.parseLong(sequenceNumber) - decUnit;
 			sequenceNumber = decimalFormat.format(seq);
 			
-			
 		}
 		return sequenceNumber;
 	}
 	
 }	
-
-
-
-
