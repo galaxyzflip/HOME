@@ -1,0 +1,71 @@
+@charset "UTF-8";
+
+h1.header a{
+	font-family:tahoma;;
+	cellpadding:10px;
+	text-decoration-line: none;
+	text-decoration-color: none;
+}
+
+body{
+	font-size: 9pt; line-height:160% 
+	}
+
+table{
+   width: 700px ; 
+   border-top: 0.5px solid #bbbbbb;
+   border-collapse: collapse;
+   
+} 
+
+th, td{
+   border-bottom: 1px solid #bbbbbb;
+   padding: 5px;
+}
+
+.no{
+	text-align:center;
+	width: 40px;
+}
+
+.writer{
+	text-align:center;
+	width: 100px;
+}
+
+.title{
+	text-align:left;
+	width: 430px;
+	cellpadding: 30px;
+}
+.regDate{
+	text-align:right;
+	width: 80px;
+}
+.readCount{
+	text-align:center;
+	width: 50px;
+}
+
+.hno{
+	text-align:center;
+	width: 40px;
+}
+
+.hwriter{
+	text-align:center;
+	width: 100px;
+}
+
+.htitle{
+	text-align:center;
+	width: 430px;
+}
+.hregDate{
+	text-align:center;
+	width: 80px;
+}
+.hreadCount{
+	text-align:center;
+	width: 50px;
+}

@@ -65,7 +65,7 @@
 <b>글 목 록(전체글 : <%=count %>)</b>
 
 
-<table width="1000" align="center">
+<table width="700" align="center">
 	<tr>
 		<td align=right bgcolor="<%=value_c %>">
 		<%

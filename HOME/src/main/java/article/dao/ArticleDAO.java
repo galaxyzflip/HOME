@@ -25,31 +25,9 @@ public class ArticleDAO {
 	}
 
 
-	/*
-	 * public int selectCount(Connection conn, String target, String value) throws
-	 * SQLException{ PreparedStatement pstmt = null; ResultSet rs = null; String sql
-	 * = null;
-	 * 
-	 * 
-	 * if(target == null || target.isBlank()) {
-	 * 
-	 * sql = "select count(1) from article"; }else sql =
-	 * "select count(1) from article where " + target + " like '%" + value + "%'";
-	 * 
-	 * 
-	 * try { pstmt = conn.prepareStatement(sql); rs = pstmt.executeQuery();
-	 * 
-	 * rs.next();
-	 * 
-	 * return rs.getInt(1);
-	 * 
-	 * }finally { jdbcUtil.close(pstmt); jdbcUtil.close(rs); }
-	 * 
-	 * }
-	 */
 	
 	
-	//검색대상 Integer로 받아오기 오버로딩
+	
 	public int selectCount(Connection conn, int target, String value) throws SQLException{
 		PreparedStatement  pstmt = null;
 		ResultSet rs = null;
@@ -81,42 +59,6 @@ public class ArticleDAO {
 	
 	
 	
-	/*
-	 * public List<ArticleDTO> select(Connection conn, int firstRow, int endRow,
-	 * String target, String value) throws SQLException{
-	 * 
-	 * PreparedStatement pstmt = null; ResultSet rs = null; String sql = "";
-	 * 
-	 * if(target == null || target.isBlank()) { sql =
-	 * "select article_id, group_id, sequence_no, posting_date, read_count, writer_name, password, title "
-	 * +
-	 * "from(select rownum rnum, article_id, group_id, sequence_no, posting_date, read_count, writer_name, password, title "
-	 * +
-	 * "from (select * from article m  order by m.sequence_no desc) where rownum <= ? ) where rnum >=?"
-	 * ; } else { sql =
-	 * "select article_id, group_id, sequence_no, posting_date, read_count, writer_name, password, title "
-	 * +
-	 * "from(select rownum rnum, article_id, group_id, sequence_no, posting_date, read_count, writer_name, password, title "
-	 * + "from (select * from article m where " + target + " like '%" + value +
-	 * "%'  order by m.sequence_no desc) where rownum <= ? ) where rnum >=?"; }
-	 * 
-	 * 
-	 * try { pstmt = conn.prepareStatement(sql); pstmt.setInt(1, endRow);
-	 * pstmt.setInt(2, firstRow); rs = pstmt.executeQuery(); if(!rs.next()) { return
-	 * Collections.emptyList(); } List<ArticleDTO> articleList = new
-	 * ArrayList<ArticleDTO>();
-	 * 
-	 * do { ArticleDTO article = makeArticleFromResultSet(rs, false);
-	 * articleList.add(article);
-	 * 
-	 * }while(rs.next()); return articleList;
-	 * 
-	 * }finally { jdbcUtil.close(pstmt); jdbcUtil.close(rs); } }
-	 */
-	
-	
-	
-	//검색대상 Integer로 받아오기 오버로딩
 	public List<ArticleDTO> select(Connection conn, int firstRow, int endRow, int target, String value) throws SQLException{
 		
 		PreparedStatement pstmt = null;

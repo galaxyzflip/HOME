@@ -1,8 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%request.setCharacterEncoding("utf-8"); %>
+
+<%
+	
+%>
+
+
+<c:set var="todayDate" value="<%=new java.util.Date() %>"/>
+
 
 <%-- <%
 	response.setHeader("Pragma", "No-cache");
@@ -15,29 +23,40 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link href="style.css" rel="stylesheet" type="text/css">
+
+
 <title>게시글 목록</title>
 </head>
 <body>
 
 
-<table border="1">
+
+
+<center>
+
+<jsp:include page="header.jsp" flush="false"/>
+
+
+<table class="main">
 <c:if test="${listModel.totalPageCount > 0 }">
 	<tr>
 		<td colspan="5">
-		${listModel.startRow} - ${listModel.endRow }
+		${listModel.startRow} - ${listModel.endRow }&nbsp;&nbsp;
 		[${listModel.requestPage } / ${listModel.totalPageCount }]  
 		</td>
 	</tr>
 </c:if>
 
 <tr>
-	<td>글 번호</td>
-	<td>제목</td>
-	<td>작성자</td>
-	<td>작성일</td>
-	<td>조회수</td>
+<b>
+	<td class="hno">번호</td>
+	<td class="hwriter">작성자</td>
+	<td class="htitle">제목</td>
+	<td class="hregDate">작성일</td>
+	<td class="hreadCount">조회수</td>
+</b>
 </tr>
-
 <c:choose>
 	
 	<c:when test="${listModel.hasArticle == false }">
@@ -51,8 +70,9 @@
 		<c:forEach var="article" items="${listModel.articleList }">
 		<tr>
 			
-			<td>${article.id }</td>
-			<td>
+			<td class="no">${article.id }</td>
+			<td class="writer">${article.writerName }</td>
+			<td class="title">
 				<c:if test="${article.level > 0 }">
 					<c:forEach begin="1" end="${article.level }"> - </c:forEach> &gt
 				</c:if>
@@ -62,14 +82,18 @@
 					${article.title }
 				</a>
 			</td>
-			
-			<td>${article.writerName }</td>
-			<td>${article.postingDate}</td>
-			<td>${article.readCount }</td>
+			<td class="regDate"><fmt:formatDate pattern="yyyy/MM/dd" value="${article.postingDate }"/></td>
+			<td class="readCount">${article.readCount }</td>
 		</tr>
 		</c:forEach>
 		
-		<tr>
+		
+	</c:otherwise>
+
+</c:choose>
+</table>
+
+<tr>
 			<td colspan="5" align=center>
 			
 			<c:if test="${beginPage > 10 }">
@@ -86,59 +110,38 @@
 			
 			</td>
 		</tr>	
-		
-		
-		<%-- <tr>
-			<td colpan="5">
-			
-			<c:if test="${beginPage > 10 }">
-				<a href="<c:url value="list.jsp?p=${beginPage-1 }"/>">이전</a>
-			</c:if>
-			
-			<c:forEach var="pno" begin="${beginPage }" end="${endPage }">
-				<a href="<c:url value="list.jsp?p=${pno }"/>">[${pno }]</a>
-			</c:forEach>
-			
-			<c:if test="${endPage < listModel.totalPageCount }">
-				<a href="<c:url value="list.jsp?p=${endPage + 1 }"/>"> 다음</a>
-			</c:if>
-			
-			</td>
-		</tr>	 --%>
-		
-		
-	</c:otherwise>
 
-</c:choose>
+<br><br>
+<div>
+			<a href="writeForm.jsp">글쓰기</a>&nbsp;&nbsp;&nbsp;
+			<a href="list.jsp">전체글보기</a>
+</div>
+</center>
 
-	<tr>
-		<td colspan="5" align=center>
-			<a href="writeForm.jsp">글쓰기</a>&nbsp;&nbsp;&nbsp;<a href="list.jsp">전체글보기</a>
-	
-</table>
-<br>
+
+
 
 <form action="list.jsp" method="post">
-<table>
-	<tr>
-		<td>
-			<select name="target">
-				<option value="0">작성자</option>
-				<option value="1">제목</option>
-				<option value="2">내용</option>
-			</select>
-			
-			
-			
-			<input type="text" name="searchValue" value="${searchValue }" >
-			<input type="submit" value="검색">
-			
-		</td>
-	</tr>
+<center>
 
-</table>
+
+<div class="search" align="center">
+	<select name="target">
+		<option value="0">작성자</option>
+		<option value="1">제목</option>
+		<option value="2">내용</option>
+	</select>
+	
+	<input type="text" name="searchValue" value="${searchValue }" >
+	<input type="submit" value="검색">
+			
+</div>
+</center>
 </form>
 
 
 </body>
+
+
+
 </html>
