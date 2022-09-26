@@ -25,6 +25,10 @@
 에러 : 
 
 <c:choose>
+	<c:when test="${exceptionType == 'ListChildAleadyExistsException' }">
+	등록할 수 있는 답변 개수를 초과했습니다.
+	</c:when>
+	
 	<c:when test="${exceptionType == 'ArticleNotFoundException' }">
 	답변을 등록할 게시글이 존재하지 않습니다.
 	</c:when>
@@ -33,9 +37,6 @@
 	답변 글을 등록할 수 없는 게시글 입니다.
 	</c:when>
 	
-	<c:when test="${exceptionType == 'ListChildAleadyExistsException' }">
-	등록할 수 있는 답변 개수를 초과했습니다.
-	</c:when>
 	
 </c:choose>
 <br>

@@ -30,6 +30,10 @@ request.setCharacterEncoding("utf-8");
 	//검색어 관련 설정
 	
 
+	
+	
+	
+	
 	String pageNumberString = request.getParameter("p");
 	int pageNumber = 1;
 	
@@ -40,6 +44,10 @@ request.setCharacterEncoding("utf-8");
 	ListArticleService listService = ListArticleService.getInstance();
 	
 	ArticleListRequest articleListModel = listService.getArticleList(pageNumber, target, searchValue);
+	
+
+	
+	
 	
 	
 	request.setAttribute("listModel", articleListModel);

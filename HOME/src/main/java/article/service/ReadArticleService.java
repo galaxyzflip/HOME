@@ -20,7 +20,11 @@ public class ReadArticleService {
 		return selectArticle(articleId, true);
 	}
 	
-	public ArticleDTO selectArticle(int articleId, boolean increaseCount) throws ArticleNotFoundException{
+	public ArticleDTO getArticle(int articleId) throws ArticleNotFoundException{
+		return selectArticle(articleId, false);
+	}
+	
+	private ArticleDTO selectArticle(int articleId, boolean increaseCount) throws ArticleNotFoundException{
 		
 		Connection conn = null;
 		try {
@@ -47,11 +51,6 @@ public class ReadArticleService {
 		}
 		
 	}
-	
-	
-	
-	public ArticleDTO getArticle(int articleId) throws ArticleNotFoundException{
-		return selectArticle(articleId, false);
-	}
+		
 	
 }

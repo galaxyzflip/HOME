@@ -10,13 +10,15 @@
 <title>if 태그</title>
 </head>
 <body>
-
+<%
+	request.setAttribute("name", "bk");
+%>
 
 <c:if test="true">
 무적권 실행 <br>
 </c:if>
 
-<c:if test="${param.name=='bk' }">
+<c:if test="${name=='bk' }">
 name 파라미터의 값이 ${param.name } 입니다. <br>
 </c:if>
 

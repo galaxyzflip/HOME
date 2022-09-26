@@ -31,12 +31,7 @@ public class ArticleCheckHelper {
 
 	private boolean checkPassword(String realPassword, String userInputPassword) {
 		
-		if(realPassword == null) {
-			return false;
-			
-		}
-		
-		if(realPassword.length() == 0) {
+		if(realPassword == null || realPassword.length() == 0) {
 			return false;
 		}
 		

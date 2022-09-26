@@ -19,6 +19,7 @@
 <textarea name="content" cols="40" rows="5"></textarea>
 <br>
 <input type="submit" value="전송">
+<input type="button" value="목록으로" onClick="document.location.href='list.jsp'">
 
 </form>
 

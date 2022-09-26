@@ -4,13 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%request.setCharacterEncoding("utf-8"); %>
 
-<%
-	
-%>
-
-
-<c:set var="todayDate" value="<%=new java.util.Date() %>"/>
-
 
 <%-- <%
 	response.setHeader("Pragma", "No-cache");
@@ -31,14 +24,10 @@
 <body>
 
 
-
-
 <center>
 
-<jsp:include page="header.jsp" flush="false"/>
-
-
-<table class="main">
+<%-- <jsp:include page="header.jsp" flush="false"/> --%>
+<div class="pageView">
 <c:if test="${listModel.totalPageCount > 0 }">
 	<tr>
 		<td colspan="5">
@@ -47,16 +36,22 @@
 		</td>
 	</tr>
 </c:if>
+</div>
 
+
+<table class="main">
+
+<thead>
 <tr>
 <b>
-	<td class="hno">번호</td>
-	<td class="hwriter">작성자</td>
-	<td class="htitle">제목</td>
-	<td class="hregDate">작성일</td>
-	<td class="hreadCount">조회수</td>
+	<th class="hno">번호</td>
+	<th class="hwriter">작성자</td>
+	<th class="htitle">제목</td>
+	<th class="hregDate">작성일</td>
+	<th class="hreadCount">조회수</td>
 </b>
 </tr>
+</thead>
 <c:choose>
 	
 	<c:when test="${listModel.hasArticle == false }">
@@ -64,7 +59,6 @@
 		<td colspan="5">게시글이 없습니다.</td>
 	</tr>
 	</c:when>
-	
 	
 	<c:otherwise>
 		<c:forEach var="article" items="${listModel.articleList }">
@@ -86,8 +80,6 @@
 			<td class="readCount">${article.readCount }</td>
 		</tr>
 		</c:forEach>
-		
-		
 	</c:otherwise>
 
 </c:choose>
@@ -110,8 +102,8 @@
 			
 			</td>
 		</tr>	
-
 <br><br>
+
 <div>
 			<a href="writeForm.jsp">글쓰기</a>&nbsp;&nbsp;&nbsp;
 			<a href="list.jsp">전체글보기</a>
