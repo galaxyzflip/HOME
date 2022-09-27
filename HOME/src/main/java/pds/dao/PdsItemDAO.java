@@ -57,7 +57,7 @@ public class PdsItemDAO {
 			pstmt.setString(1, item.getFileName());
 			pstmt.setString(2, item.getRealPath());
 			pstmt.setLong(3, item.getFileSize());
-			pstmt.setString(4, item.getDescritpion());
+			pstmt.setString(4, item.getDescription());
 			
 			int insertedCount = pstmt.executeUpdate();
 			
@@ -76,6 +76,45 @@ public class PdsItemDAO {
 			jdbcUtil.close(pstmt);
 		}
 		
+	}
+	
+	
+	public int update(Connection conn, PdsItem item, int pdsId) {
+		PreparedStatement pstmt = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		int check = 0;
+		
+		try {
+			
+			pstmt = conn.prepareStatement("update pds_item set filename=?, realpath=?, fileSize=?, "
+					+ " downloadcount = 0, description= ? where pds_item_id = ?");
+			// update 로 수정해야함
+			
+			pstmt.setString(1, item.getFileName());
+			pstmt.setString(2, item.getRealPath());
+			pstmt.setLong(3, item.getFileSize());
+			pstmt.setString(4, item.getDescription());
+			pstmt.setInt(5, pdsId);
+			
+			int insertedCount = pstmt.executeUpdate();
+			
+			if(insertedCount > 0) {
+				check =  1;
+			} else {
+				check = -1;
+			}
+			
+		}catch(SQLException ex) {
+			ex.printStackTrace();
+		}
+		
+		finally {
+			jdbcUtil.close(rs);
+			jdbcUtil.close(stmt);
+			jdbcUtil.close(pstmt);
+		}
+		return check;
 	}
 	
 	public PdsItem selectByid(Connection conn, int itemId) throws SQLException{
@@ -107,7 +146,7 @@ public class PdsItemDAO {
 		item.setFileSize(rs.getLong("filesize"));
 		item.setRealPath(rs.getString("realpath"));
 		item.setDownloadCount(rs.getInt("downloadcount"));
-		item.setDescritpion(rs.getString("description"));
+		item.setDescription(rs.getString("description"));
 		return item;
 
 	}
@@ -174,6 +213,7 @@ public class PdsItemDAO {
 		}
 		
 	}
+
 	
 	
 	

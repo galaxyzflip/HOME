@@ -22,8 +22,8 @@ public class FileSaveHelper {
 			os = new FileOutputStream(file);
 			byte[] data = new byte[8096];
 			int len = -1;
-			while((len = is.read(data)) != 01) {
-				os.write(data, 0, len);;
+			while((len = is.read(data)) != -1) {
+				os.write(data, 0, len);
 			}
 			
 		}finally {

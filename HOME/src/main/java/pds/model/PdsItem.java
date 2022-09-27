@@ -7,7 +7,7 @@ public class PdsItem {
 	private String realPath;
 	private long fileSize;
 	private int downloadCount;
-	private String descritpion;
+	private String description;
 	
 	public int getId() {
 		return id;
@@ -49,12 +49,14 @@ public class PdsItem {
 		this.downloadCount = downloadCount;
 	}
 
-	public String getDescritpion() {
-		return descritpion;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDescritpion(String descritpion) {
-		this.descritpion = descritpion;
+	public void setDescription(String description) {
+		this.description = description;
 	}
+
+	
 
 }

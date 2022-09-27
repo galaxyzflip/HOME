@@ -54,7 +54,7 @@
 				
 			<tr class="listCon">
 				<td>${item.id }</td>
-				<td class="subject">${item.fileName }</td>
+				<td class="subject"><a href="update_getItem.jsp?id=${item.id }">${item.fileName } </a></td>
 				<td>${item.fileSize }</td>
 				<td>${item.downloadCount }</td>
 				<td><a href="download.jsp?id=${item.id }">[DOWNLOAD]</a></td>
@@ -74,9 +74,9 @@
 		
 
 
-			<c:forEach var="pno" begin="${beginPage }" end="${endpage }">
+			<c:forEach var="pno" begin="${beginPage }" end="${endPage }">
 				<c:choose>
-					<c:when test="${listModel.requestpage == pno }">
+					<c:when test="${listModel.requestPage == pno }">
 						<a href="<c:url value="list.jsp?p=${pno }&search=${search}"/>"><span class="currentPage">[${pno }]</span></a>
 					</c:when>
 					

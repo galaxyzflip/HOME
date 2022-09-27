@@ -44,7 +44,7 @@ public class AddRequest {
 		item.setFileName(fileName);
 		item.setFileSize(fileSize);
 		item.setRealPath(realPath);
-		item.setDescritpion(description);
+		item.setDescription(description);
 		
 		return item;
 	}
