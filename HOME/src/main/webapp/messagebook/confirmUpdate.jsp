@@ -22,6 +22,6 @@
 	비밀번호 : <input type="password" name="password" >
 	<input type="submit" value="수정">
 </form>
-
+d
 </body>
 </html>

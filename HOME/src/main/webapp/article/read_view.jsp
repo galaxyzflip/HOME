@@ -104,9 +104,9 @@
 		<td>등록일</td>
 		<td>IP</td>
 	</tr>
-	<%-- 
+	
 	<c:choose>
-		<c:when test="${ComListModel.isHasComment == false}">
+		<c:when test="${ComListModel.hasComment == false}">
 		<tr>
 			<td>등록된 댓글이 없습니다.</td>
 		</tr>
@@ -123,12 +123,6 @@
 			</c:forEach>
 		</c:otherwise>
 	</c:choose>
-	 --%>
-	 
-	
-	
-	
-	
 	
 </table>
 

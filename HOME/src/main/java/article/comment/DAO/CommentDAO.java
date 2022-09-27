@@ -135,7 +135,7 @@ public class CommentDAO {
 	public int getCommentCount(Connection conn, int articleNumber) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		articleNumber = 0;
+		int count = 0;
 		
 		try {
 			pstmt = conn.prepareStatement("select count(1) from article_comment where article_num = ?");
@@ -143,7 +143,7 @@ public class CommentDAO {
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				articleNumber =  rs.getInt(1);
+				count =  rs.getInt(1);
 			}
 		
 		}catch(SQLException ex){
@@ -154,7 +154,7 @@ public class CommentDAO {
 			jdbcUtil.close(pstmt);
 			jdbcUtil.close(rs);
 		
-		return articleNumber;
+		return count;
 	}
 	
 	//해당 아티클의 가장 큰 댓글번호 구하기 // 다음 commentNumber 값 사용하기 위해
