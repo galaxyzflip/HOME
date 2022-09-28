@@ -101,7 +101,7 @@
 
 <c:if test="${empty list }">
 	<tr>
-		<td bgcolor="#f0f0f0" colspan="4" align="center">
+		<td bgcolor="#0f0f0f" colspan="4" align="center">
 		등록된 이미지가 없습니다.
 		</td>
 
@@ -111,7 +111,7 @@
 <c:if test="${!empty list }">
 	<c:forEach var="theme" items="${list }">
 	
-	<tr bgcolor=$f0f0f0">
+	<tr bgcolor=#f0f0f0">
 		<td><c:if test="${!empty theme.image }">
 				<% Theme theme = (Theme)pageContext.getAttribute("theme"); %>
 				<img src="/HOME/image/${theme.image }.small.jpg" width="50">

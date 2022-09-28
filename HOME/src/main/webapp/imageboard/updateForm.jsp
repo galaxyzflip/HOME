@@ -2,6 +2,6 @@
     pageEncoding="UTF-8"%>
 <% request.setCharacterEncoding("utf-8"); %>
 
-<jsp:forward page="../template/template.jsp">
+<jsp:forward page="template/template.jsp">
 	<jsp:param name="CONTENTPAGE" value="../updateForm_view.jsp"/>
 </jsp:forward>

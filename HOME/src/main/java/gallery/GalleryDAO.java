@@ -203,7 +203,7 @@ public class GalleryDAO {
 			query.append("select count(*) from theme_message ");
 			
 			if(whereCond != null && whereCond.size() > 0) {
-				query.append("where ");
+				query.append(" where ");
 				
 				for(int i=0;i<whereCond.size(); i++) {
 					query.append(whereCond.get(i));
@@ -269,9 +269,9 @@ public class GalleryDAO {
 			StringBuffer sql = new StringBuffer(200);
 			
 			sql.append(" select * from (select theme_message_id, group_id, order_no, levels, "
-					+ " parent_id, register, name, email,image,password, title, rownum rnum "
+					+ " parent_id, register, name, email, image,password, title, rownum rnum "
 					+ " from(select theme_message_id, group_id, order_no, levels, parent_id, register, "
-					+ " name, email, image,password, title from theme_message ");
+					+ " name, email, image, password, title from theme_message ");
 			if(whereCond != null && whereCond.size() > 0) {
 				sql.append(" where ");
 				for(int i=0; i< whereCond.size();i++) {
@@ -281,7 +281,7 @@ public class GalleryDAO {
 					}
 				}
 			}
-			sql.append(" order by group_id desc, order_no asc )where rownum <= ? ) where rnum >= ? ");
+			sql.append(" order by group_id desc, order_no asc ) where rownum <= ? ) where rnum >= ? ");
 			
 			conn = getConnection();
 			
@@ -340,7 +340,7 @@ public class GalleryDAO {
 		theme.setGroupId(rs.getInt("group_id"));
 		theme.setOrderNo(rs.getInt("order_no"));
 		theme.setLevels(rs.getInt("levels"));
-		theme.setParentId(rs.getInt("parentid"));
+		theme.setParentId(rs.getInt("parent_id"));
 		theme.setRegister(rs.getTimestamp("register"));
 		theme.setName(rs.getString("name"));
 		theme.setEmail(rs.getString("email"));

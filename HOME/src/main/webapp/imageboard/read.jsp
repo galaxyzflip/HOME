@@ -7,7 +7,7 @@
 %>
 
 
-<jsp:forward page="../template/template.jsp">
+<jsp:forward page="template/template.jsp">
 	<jsp:param name="CONTENTPAGE" value="../read_view.jsp"/>
 </jsp:forward>
 
