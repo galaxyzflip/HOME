@@ -32,18 +32,19 @@
 	boolean searchCondName = false;
 	boolean searchCondTitle = false;
 	
+/* 	if(searchCond != null && searchCond.length > 0 && searchKey != null){ */
 	if(searchCond != null && searchCond.length > 0 && searchKey != null){
 		whereCond = new ArrayList();
 		whereValue = new HashMap();
 		
 		for(int i=0;i<searchCond.length;i++){
 			if(searchCond[i].equals("name")){
-				whereCond.add("NAME = ?");
+				whereCond.add(" NAME = ? ");
 				whereValue.put(new Integer(1), searchKey);
 				searchCondName = true;
 				
 			}else if(searchCond[i].equals("title")){
-				whereCond.add("title like '%" + searchKey + "%'");
+				whereCond.add(" title like '%" + searchKey + "%' ");
 				searchCondTitle = true;
 			}
 		}
@@ -100,7 +101,7 @@
 
 <c:if test="${empty list }">
 	<tr>
-		<td bgcolor="$f0f0f0" colspan="4" align="center">
+		<td bgcolor="#f0f0f0" colspan="4" align="center">
 		등록된 이미지가 없습니다.
 		</td>
 

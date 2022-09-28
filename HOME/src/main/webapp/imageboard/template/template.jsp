@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page errorPage = "../error/error_view.jsp" %>
+<%-- <%@ page errorPage = "../error/error_view.jsp" %> --%>
 
 <!DOCTYPE html>
 <html>
@@ -24,7 +24,8 @@
 	
 	<tr>
 		<td>
-			<jsp:include page="${param.CONTENTPAGE }" flush="false"/>
+			<jsp:include page="${param.CONTENTPAGE }" flush="false"/> 
+			<%-- <jsp:include page="../list_view.jsp" flush="false"/>  --%>
 		</td>
 	</tr>
 

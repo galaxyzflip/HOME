@@ -202,7 +202,7 @@ public class GalleryDAO {
 			StringBuffer query  = new StringBuffer(200);
 			query.append("select count(*) from theme_message ");
 			
-			if(!(whereCond == null || whereCond.size() > 0)) {
+			if(whereCond != null && whereCond.size() > 0) {
 				query.append("where ");
 				
 				for(int i=0;i<whereCond.size(); i++) {
@@ -268,12 +268,12 @@ public class GalleryDAO {
 		try {
 			StringBuffer sql = new StringBuffer(200);
 			
-			sql.append("select * from (select theme_message_id, group_id, order_no, levels, "
-					+ "parent_id, register, name, email,image,password, title, rownum rnum "
-					+ "from(select theme_message_id, group_id, order_no, levels, parent_id, register,"
-					+ " name, email, image,password, title from theme_message");
+			sql.append(" select * from (select theme_message_id, group_id, order_no, levels, "
+					+ " parent_id, register, name, email,image,password, title, rownum rnum "
+					+ " from(select theme_message_id, group_id, order_no, levels, parent_id, register, "
+					+ " name, email, image,password, title from theme_message ");
 			if(whereCond != null && whereCond.size() > 0) {
-				sql.append("where ");
+				sql.append(" where ");
 				for(int i=0; i< whereCond.size();i++) {
 					sql.append(whereCond.get(i));
 					if(i < whereCond.size() - 1) {
@@ -281,7 +281,7 @@ public class GalleryDAO {
 					}
 				}
 			}
-			sql.append(" order by group_id desc, order_no asc )where rownum <= ? ) where rnum >= ?");
+			sql.append(" order by group_id desc, order_no asc )where rownum <= ? ) where rnum >= ? ");
 			
 			conn = getConnection();
 			

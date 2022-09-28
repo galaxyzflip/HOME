@@ -48,7 +48,7 @@
  
  </script>
 
-<form action="write.jsp" method="post" enctype="multipart/form-date" onsubmit="return validate(this)">
+<form action="write.jsp" method="post" enctype="multipart/form-data" onsubmit="return validate(this)">
 	
 	<input type="hidden" name="levels" value="${theme.levels + 1 }">
 	
@@ -82,7 +82,7 @@
 	
 	<tr>
 		<td>이미지</td>
-		<td><input type="file" name="imageFile""></td>
+		<td><input type="file" name="imageFile"></td>
 	</td>
 	
 	<tr>

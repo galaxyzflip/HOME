@@ -70,6 +70,7 @@ public class FileUploadRequestWrapper extends HttpServletRequestWrapper{
 						String[] tempValues = new String[values.length + 1];
 						System.arraycopy(values, 0, tempValues, 0 ,1);
 						tempValues[tempValues.length - 1] = value;
+						values = tempValues;
 					}
 					parameterMap.put(name,  values);
 				}else {
