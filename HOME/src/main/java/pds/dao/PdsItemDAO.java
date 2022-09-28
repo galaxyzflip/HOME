@@ -117,6 +117,39 @@ public class PdsItemDAO {
 		return check;
 	}
 	
+	
+	public int delete(Connection conn, int pdsId) {
+	
+		PreparedStatement pstmt = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		int check = 0;
+		
+		try {
+			
+			pstmt = conn.prepareStatement("delete from pds_item where PDS_ITEM_ID = ?");
+			pstmt.setInt(1, pdsId);
+			
+			int insertedCount = pstmt.executeUpdate();
+			
+			if(insertedCount > 0) {
+				check =  1;
+			} else {
+				check = -1;
+			}
+			
+		}catch(SQLException ex) {
+			ex.printStackTrace();
+		}
+		
+		finally {
+			jdbcUtil.close(rs);
+			jdbcUtil.close(stmt);
+			jdbcUtil.close(pstmt);
+		}
+		return check;
+	}
+	
 	public PdsItem selectByid(Connection conn, int itemId) throws SQLException{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -213,6 +246,8 @@ public class PdsItemDAO {
 		}
 		
 	}
+
+	
 
 	
 	
