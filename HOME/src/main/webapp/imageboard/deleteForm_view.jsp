@@ -13,7 +13,7 @@
  %>
     
     <c:set var="theme" value="<%=theme %>"/>
-    <c:if test="${!empry theme }">
+    <c:if test="${!empty theme }">
     
     <script language="JavaScript">
     	function validate(form){

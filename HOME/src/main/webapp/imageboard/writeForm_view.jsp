@@ -48,7 +48,7 @@
  
  </script>
 
-<form action="write.jsp" method="post" enctype="multipart/form-data" onsubmit="return validate(this)">
+<form action="write.jsp" method="post" enctype="multipart/form-data" accept-charset="UTF-8" onsubmit="return validate(this)">
 	
 	<input type="hidden" name="levels" value="${theme.levels + 1 }">
 	
@@ -87,7 +87,7 @@
 	
 	<tr>
 		<td>내용</td>
-		<td><<textarea name="content" cols="40" rows="8"></textarea></td>
+		<td><textarea name="content" cols="40" rows="8"></textarea></td>
 	</td>
 	
 	<tr>

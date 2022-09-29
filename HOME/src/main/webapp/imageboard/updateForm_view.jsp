@@ -43,7 +43,7 @@
 		
 		</script>
 	
-	<form action="upload.jsp" method="post" enctype="multipart/form-data" onSubmit = "return validate(this)">
+	<form action="update.jsp" method="post" enctype="multipart/form-data" onSubmit = "return validate(this)">
 	
 		<input type="hidden" name="id" value="${theme.id }">
 		

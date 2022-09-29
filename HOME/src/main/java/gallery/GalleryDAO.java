@@ -105,12 +105,13 @@ public class GalleryDAO {
 			pstmtInsertMessage.setTimestamp(6, theme.getRegister());
 			pstmtInsertMessage.setString(7, theme.getName());
 			pstmtInsertMessage.setString(8, theme.getEmail());
-			pstmtInsertMessage.setString(9, theme.getImage());
+			pstmtInsertMessage.setString(9,theme.getImage());
 			pstmtInsertMessage.setString(10, theme.getPassword());
-			pstmtInsertMessage.setString(11, theme.getTitle());
+			pstmtInsertMessage.setString(11,theme.getTitle());
 			pstmtInsertMessage.executeUpdate();
 			
 			pstmtInsertContent = conn.prepareStatement("insert into theme_content(THEME_MESSAGE_ID, CONTENT) values(?, ?)");
+			
 			pstmtInsertContent.setInt(1, theme.getId());
 			pstmtInsertContent.setCharacterStream(2, new StringReader(theme.getContent()), theme.getContent().length());
 			pstmtInsertContent.executeUpdate();
@@ -157,12 +158,13 @@ public class GalleryDAO {
 			pstmtUpdateMessage.setString(1, theme.getName());
 			pstmtUpdateMessage.setString(2, theme.getEmail());
 			pstmtUpdateMessage.setString(3, theme.getTitle());
-			pstmtUpdateMessage.setString(3, theme.getImage());
-			pstmtUpdateMessage.setInt(4, theme.getId());
+			pstmtUpdateMessage.setString(4, theme.getImage());
+			pstmtUpdateMessage.setInt(5, theme.getId());
 			pstmtUpdateMessage.executeUpdate();
 			
-			pstmtUpdateContent = conn.prepareStatement("update theme_content set content = ? where theme_messageId = ?");
+			pstmtUpdateContent = conn.prepareStatement("update theme_content set content = ? where theme_message_Id = ?");
 			pstmtUpdateContent.setCharacterStream(1, new StringReader(theme.getContent()), theme.getContent().length());
+			pstmtUpdateContent.setInt(2,theme.getId());
 			pstmtUpdateContent.executeUpdate();
 			
 			conn.commit();

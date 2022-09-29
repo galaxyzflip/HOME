@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page errorPage ="../error/error_view.jsp" %>
+<%-- <%@ page errorPage ="../error/error_view.jsp" %> --%>
 
 <%@ page import="java.io.File" %>
 <%@ page import="org.apache.commons.fileupload.FileItem" %>
@@ -90,9 +90,9 @@
 </head>
 <body>
 
-<c:set var="search_cond" value="<%=requestWrap.getParameterValues("search_cond") %>"/>
-<c:set var="pageNo" value="<%=requestWrap.getParameter("page") %>"/>
-<c:set var="search_key" value="<%=requestWrap.getParameter("search_key") %>"/>
+<c:set var="search_cond" value='<%=requestWrap.getParameterValues("search_cond") %>'/>
+<c:set var="pageNo" value='<%=requestWrap.getParameter("page") %>'/>
+<c:set var="search_key" value='<%=requestWrap.getParameter("search_key") %>'/>
 
 <form name="move" method="post">
 
@@ -110,7 +110,7 @@
 
 	</c:forEach>
 	
-	<c:if test="${1empty search_key }">
+	<c:if test="${! empty search_key }">
 		<input type="hidden" name="search_key" value="${search_key }">
 	</c:if>
 </form>

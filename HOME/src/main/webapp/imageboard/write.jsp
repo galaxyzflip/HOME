@@ -13,8 +13,10 @@
 <%@ page import="gallery.ThemeManagerException" %>
 
 <%
+	request.setCharacterEncoding("utf-8");
 	FileUploadRequestWrapper requestWrap = new FileUploadRequestWrapper
-	(request, -1, -1, "C:\\Users\\pigcs\\git\\HOME\\HOME\\src\\main\\webapp\\temp");
+	/* (request, -1, -1, "C:\\Users\\pigcs\\git\\HOME\\HOME\\src\\main\\webapp\\temp"); */
+	(request, -1, -1, "C:\\Users\\EZEN\\git\\HOME\\HOME\\src\\main\\webapp\\temp");
 	HttpServletRequest tempRequest = request;
 	request = requestWrap;
 
@@ -33,16 +35,19 @@
 		
 		//이미지를 지정한 경로에 저장
 		
-		File imageFile = new File("C:\\Users\\pigcs\\git\\HOME\\HOME\\src\\main\\webapp\\image");
+		/* File imageFile = new File("C:\\Users\\pigcs\\git\\HOME\\HOME\\src\\main\\webapp\\image"); */
+		File imageFile = new File("C:\\Users\\EZEN\\git\\HOME\\HOME\\src\\main\\webapp\\image");
 		
 		//같은 이름의 파일이름 처리
 		
 		if(imageFile.exists()){
 			for(int i=0; true; i++){
-				imageFile = new File("C:\\Users\\pigcs\\git\\HOME\\HOME\\src\\main\\webapp\\image", image + "_" + i);
+				/* imageFile = new File("C:\\Users\\pigcs\\git\\HOME\\HOME\\src\\main\\webapp\\image", image + "_" + i); */
+				imageFile = new File("C:\\Users\\EZEN\\git\\HOME\\HOME\\src\\main\\webapp\\image", image + "_" + i);
 				
 				if(!imageFile.exists()){
-					image = image + "_" + i;
+					/* image = image + "_" + i; */
+					image = new String(image.getBytes("8859_1"), "UTF-8") + "_" + i;
 					break;
 				}
 			}
@@ -50,13 +55,17 @@
 		
 		imageFileItem.write(imageFile);
 		
-		File destFile = new File("C:\\Users\\pigcs\\git\\HOME\\HOME\\src\\main\\webapp\\image", image + ".small.jpg");
+		/* File destFile = new File("C:\\Users\\pigcs\\git\\HOME\\HOME\\src\\main\\webapp\\image", image + ".small.jpg"); */
+		File destFile = new File("C:\\Users\\EZEN\\git\\HOME\\HOME\\src\\main\\webapp\\image", image + ".small.jpg");
 		
 		ImageUtil.resize(imageFile, destFile, 50, ImageUtil.RATIO);
 	}
 
 	theme.setRegister(new Timestamp(System.currentTimeMillis()));
 	theme.setImage(image);
+	
+
+	
 	
 	GalleryDAO.getInstance().insert(theme);
 	

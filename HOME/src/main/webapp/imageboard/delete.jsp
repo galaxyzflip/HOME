@@ -6,7 +6,7 @@
 <%@ page import="gallery.GalleryDAO" %>
 <%@ page import="gallery.ThemeManagerException" %>
 
-<%@ raglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
 
@@ -32,7 +32,7 @@
 
 <c:choose>
 
-	<c:when test="${empry lodTheme }">
+	<c:when test="${empty oldTheme }">
 		<script>
 			alert("글이 존재하지 않습니다.");
 			location.href="list.jsp";

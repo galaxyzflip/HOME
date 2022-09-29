@@ -4,5 +4,5 @@
 
 
 <jsp:forward page="template/template.jsp">
-	<jsp:param name="CONTENTPAGE" value="../deleteForm.view.jsp"/>
+	<jsp:param name="CONTENTPAGE" value="../deleteForm_view.jsp"/>
 </jsp:forward>

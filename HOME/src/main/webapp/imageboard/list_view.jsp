@@ -13,6 +13,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%! static int PAGE_SIZE = 5; %>
+<% request.setCharacterEncoding("utf-8"); %>
 
 
 <%
@@ -64,8 +65,10 @@
 			totalPageCount++;
 		}
 		
-		startRow = (currentPage - 1) * PAGE_SIZE+ 1;
+		startRow = (currentPage - 1) * PAGE_SIZE + 1;
 		endRow = currentPage * PAGE_SIZE;
+		
+		
 		
 		if(endRow > count){
 			endRow = count;
@@ -99,9 +102,18 @@
 	
 </c:if>
 
+<table width="100%" cellpadding="1" cellspacing="2">
+	<tr>
+		<td bgcolor="#e9e9e9"><b>이미지</b></td>
+		<td bgcolor="#e9e9e9"><b>제목</b></td>
+		<td bgcolor="#e9e9e9"><b>작성자</b></td>
+		<td bgcolor="#e9e9e9"><b>작성일</b></td>
+	</tr>
+
+
 <c:if test="${empty list }">
 	<tr>
-		<td bgcolor="#0f0f0f" colspan="4" align="center">
+		<td bgcolor="#f0f0f0" colspan="4" align="center">
 		등록된 이미지가 없습니다.
 		</td>
 
@@ -111,7 +123,7 @@
 <c:if test="${!empty list }">
 	<c:forEach var="theme" items="${list }">
 	
-	<tr bgcolor=#f0f0f0">
+	<tr bgcolor="#f0f0f0">
 		<td><c:if test="${!empty theme.image }">
 				<% Theme theme = (Theme)pageContext.getAttribute("theme"); %>
 				<img src="/HOME/image/${theme.image }.small.jpg" width="50">
@@ -151,30 +163,49 @@ function goView(id){
 <c:set var="currentPage" value="<%=Integer.toString(currentPage) %>"/>
 
 <c:if test="${count > 0 }">
+
 	<c:set var="pageCount" value="${count / PAGE_SIZE + (count % PAGE_SIZE == 0 ? 0 : 1) }"/>
-	<c:set var="startPage" value="${currentPage - (currentPage % 10) + 1 }"/>
-	<c:set var="endPage" value="${startPage + 10 }"/>
+	<fmt:parseNumber var="pageCount" integerOnly="true" value="${ pageCount}"/>
 	
-	<c:if test="${endPage > 10 }">
+	<%-- <c:set var="startPage" value="${currentPage - (currentPage % 10) + 1 }"/> --%>
+	<c:set var="startPage" value="${ (currentPage/5)  * 5 + 1 }"/>
+	<fmt:parseNumber var="tmp" integerOnly="true" value="${currentPage/5}"/>
+	<c:set var="startPage" value="${ tmp * 5 + 1 }"/>
+	
+	
+	<c:set var="endPage" value="${startPage +  1 }"/>
+	
+	
+	<c:if test="${endPage > PageCount }">
 		<c:set var="endPage" value="${pageCount}"/>
 	</c:if>
 	
-	<c:if test="${startPage > 10 }"/>
+	<c:if test="${startPage > 10 }">
 		<a href="javascript:goPage(${startPage - 10 })">[이전]</a>
 	</c:if>
 	
 	
-	<c:forEach var="pageNo" begin="${startpage }" end="${endPage }">
+	<c:forEach var="pageNo" begin="${startPage}" end="${endPage}">
 	
-		<c:if test="${currentPage == pageNo }">
-			<b><a href="javascript:goPage(${pageNo })">[${pageNo }]</a></b>
-		</c:if>
+		
+			
+				<b><a href="javascript:goPage(${pageNo })">[${pageNo }]</a></b>
+			
+	
+	
+	
+	<%-- <c:if test="${currentPage == pageNo }">
+		<b><a href="javascript:goPage(${pageNo })">[${pageNo }]</a></b>
+	</c:if> --%>
 	
 	</c:forEach>
 	
-	<c:if test="${endPage < pageCount }">
+	<c:if test="${endPage > pageCount }">
 		<a href="javascript:goPage(${startPage + 10 })">[다음]</a>
 	</c:if>
+</c:if>
+
+
 
 <form name="move" method="post">
 	<input type="hidden" name="id">

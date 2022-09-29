@@ -26,14 +26,14 @@ public class CommentDAO {
 	
 	
 	
-	public void insertComment(CommentDTO cmt) {
+	public void insertComment(CommentDTO cmt, String boardClass) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement("insert into b_comment(content_num, commenter, commentt, passwd, reg_date, ip, comment_num) "
-					+ "values(?,?,?,?,?,?,?)");
+					+ "values(?,?,?,?,?,?,?,?)");
 			pstmt.setInt(1, cmt.getContent_num());
 			pstmt.setString(2, cmt.getCommenter());
 			pstmt.setString(3, cmt.getCommentt());
@@ -41,6 +41,7 @@ public class CommentDAO {
 			pstmt.setTimestamp(5, cmt.getReg_date());
 			pstmt.setString(6, cmt.getIp());
 			pstmt.setInt(7, cmt.getComment_num());
+			pstmt.setString(8, cmt.getBoardClass());
 			//count 다시 구해서 넣자
 			pstmt.executeUpdate();
 			
@@ -56,7 +57,7 @@ public class CommentDAO {
 	}
 	
 	
-	public ArrayList<CommentDTO> getComments(int con_num, int start, int end) {
+	public ArrayList<CommentDTO> getComments(int con_num, int start, int end, String boardClass) {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -68,12 +69,13 @@ public class CommentDAO {
 			
 			String sql="select content_num,commenter,commentt,reg_date,ip,comment_num,r "
 					+ "from (select content_num,commenter,commentt,reg_date,ip,comment_num, rownum r "
-					+ "from (select content_num,commenter,commentt,reg_date,ip,comment_num "
-					+ "from b_comment where content_num="+con_num+" order by reg_date desc) order by reg_date desc) where r >= ? and r <= ?";
+					+ "from (select content_num,commenter,commentt,reg_date,ip,comment_num, "
+					+ "from b_comment where board_class= ?  and  content_num="+con_num+" order by reg_date desc) order by reg_date desc) where r >= ? and r <= ?";
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setInt(1, start);
-			pstmt.setInt(2, end);
+			pstmt.setString(1, boardClass);
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
 			
 			rs = pstmt.executeQuery();
 			
@@ -106,7 +108,7 @@ public class CommentDAO {
 	}
 	
 	
-	public int getCommentCount(int con_num) {
+	public int getCommentCount(int con_num, String boardClass) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -114,8 +116,9 @@ public class CommentDAO {
 		
 		try {
 			conn = getConnection();
-			pstmt = conn.prepareStatement("select count(1) from b_comment where content_num = ?");
+			pstmt = conn.prepareStatement("select count(1) from b_comment where content_num = ? and board_class = ?");
 			pstmt.setInt(1, con_num);
+			pstmt.setString(2, boardClass);
 			
 			rs = pstmt.executeQuery();
 			

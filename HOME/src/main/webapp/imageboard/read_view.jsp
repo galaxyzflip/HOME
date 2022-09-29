@@ -40,9 +40,9 @@
 		
 		<c:if test="${!empty theme.image }">
 			<tr>
-				<td colpan="2" align="center">
+				<td colspan="2" align="center">
 					<a href="javascript:viewLarge('/HOME/image/${theme.image }')">
-						<img src="/HOME/image/${theme.image }" width="15" border="0">
+						<img src="/HOME/image/${theme.image }" width="200" border="0">
 						<br>[크게보기]
 					</a>
 				</td>
@@ -63,6 +63,18 @@
 			<a href="javascript:goList()">[목록]</a>
 			</td>
 		</tr>
+		
+		<tr>
+		
+			<td height="200" colspan="2">
+			
+			<jsp:include page="comment.jsp" flush="false">
+				<jsp:param name="key" value="${ theme.getId()}"/>
+			</jsp:include>
+		
+		
+			</td>
+		<tr>
 		
 	</table>
 </c:if>

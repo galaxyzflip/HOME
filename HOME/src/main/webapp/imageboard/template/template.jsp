@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%-- <%@ page errorPage = "../error/error_view.jsp" %> --%>
 
+<% request.setCharacterEncoding("utf-8"); %>
+
 <!DOCTYPE html>
 <html>
 <head>

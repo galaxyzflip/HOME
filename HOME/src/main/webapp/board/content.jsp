@@ -31,7 +31,7 @@
 	String value = (String)request.getParameter("value");
 
 	
-	int num = Integer.parseInt(request.getParameter("num"));
+	int num = Integer.parseInt(request.getParameter("num")); //아티클 번호(원글 번호)
 	
 	
 	

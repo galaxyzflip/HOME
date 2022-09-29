@@ -10,6 +10,7 @@
 
 
 <%
+	String boardClass = "board";
 	CommentDAO manager = CommentDAO.getInstance();
 	cmt.setReg_date(new Timestamp(System.currentTimeMillis()));
 	cmt.setIp(request.getRemoteAddr());
@@ -20,8 +21,8 @@
 	
 	cmt.setContent_num(con_num);
 	
-	cmt.setComment_num((manager.getCommentCount(con_num))+1);
-	manager.insertComment(cmt);
+	cmt.setComment_num((manager.getCommentCount(con_num, boardClass))+1);
+	manager.insertComment(cmt, boardClass);
 	
 	String content_num = request.getParameter("content_num");
 	String p_num = request.getParameter("p_num");

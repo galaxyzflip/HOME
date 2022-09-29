@@ -11,6 +11,15 @@ public class CommentDTO {
 	private String passwd;
 	private Timestamp reg_date;
 	private String ip;
+	private String boardClass;
+
+	public String getBoardClass() {
+		return boardClass;
+	}
+
+	public void setBoardClass(String boardClass) {
+		this.boardClass = boardClass;
+	}
 
 	public int getComment_num() {
 		return comment_num;
