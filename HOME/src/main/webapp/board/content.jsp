@@ -23,6 +23,10 @@
 
 </script>
 </head>
+<%!
+	final static String BOARD_CLASS = "board"; 
+%>
+
 
 <%
 	//board 용
@@ -60,9 +64,9 @@
 		
 		CommentDAO cManager = CommentDAO.getInstance();
 		ArrayList<CommentDTO> comments = null; 
-		comments = cManager.getComments(article.getNum(), startRow, endRow);
+		comments = cManager.getComments(article.getNum(), startRow, endRow, BOARD_CLASS);
 		
-		int count = cManager.getCommentCount(article.getNum());
+		int count = cManager.getCommentCount(article.getNum(), BOARD_CLASS);
 		int ref = article.getRef();
 		int re_step = article.getRe_step();
 		int re_level = article.getRe_level();

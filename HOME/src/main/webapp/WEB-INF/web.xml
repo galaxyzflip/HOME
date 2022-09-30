@@ -17,6 +17,32 @@ version="4.0">
   </welcome-file-list>
 
 
+	<servlet>
+		<servlet-name>tiles</servlet-name>
+		<servlet-class>org.apache.tiles.web.startup.TilesServlet</servlet-class>
+		<init-param>
+			<param-name>
+			org.apache.tiles.impl.BasicTilesContainer.DEFINITIONS_CONFIG
+			</param-name>
+			<param-value>
+			/WEB-INF/tiles-hello.xml,/WEB-INF/tiles-service.xml
+			</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>TilesDispatchServlet</servlet-name>
+		<servlet-class>
+			org.apache.tiles.web.util.TilesDispatchServlet
+		</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>TilesDispatchServlet</servlet-name>
+		<url-pattern>*.tiles</url-pattern>
+	</servlet-mapping>
+
   
   <servlet>
   	<servlet-name>DBCPInit</servlet-name>

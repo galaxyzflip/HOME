@@ -10,19 +10,11 @@
 
 
 <%
-	String boardClass = request.getParameter("boardClass");
-
-
-
-
-
-
+	String boardClass = "boardClass";
 
 	CommentDAO manager = CommentDAO.getInstance();
 	cmt.setReg_date(new Timestamp(System.currentTimeMillis()));
-	
 	cmt.setIp(request.getRemoteAddr());
-	
 	
 	String conNum = request.getParameter("con_num");
 	int con_num = Integer.parseInt(conNum);
@@ -32,13 +24,19 @@
 	cmt.setComment_num((manager.getCommentCount(con_num, boardClass))+1);
 	manager.insertComment(cmt, boardClass);
 	
-	String content_num = request.getParameter("content_num");
-	String p_num = request.getParameter("p_num");
+	
+	//id, currentPage 받아서 넘겨줘야함
+	
+	int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+	
+	
+	
 	
 	
 /* 	String url = "/imageboard/read_view.jsp?num="+con_num+"&pageNum="+p_num;
 	response.sendRedirect(url); */
-	String url = "../imageboard/read.jsp?id="+con_num+"&pageNum="+p_num;
+	String url = "read.jsp?id=" + con_num+ "&currentPage=" + currentPage;
+	request.setAttribute("addUri", "?"+url);
 	response.sendRedirect(url);
 	
 	

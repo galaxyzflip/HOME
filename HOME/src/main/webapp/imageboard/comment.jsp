@@ -13,14 +13,14 @@
 </head>
 <body>
 
-<c:set var="key" value="${param.key }"/>
+
 <%! static final int PAGE_SIZE = 5; %>
 
 
 <%
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm"); 
-	int contentNum =  Integer.parseInt(request.getParameter("key"));
-	String boardClass = "image";
+	int contentNum =  Integer.parseInt(request.getParameter("id"));
+	String boardClass = request.getParameter("boardClass");
 
 	
 	
@@ -54,6 +54,32 @@
 	</tr>
 	
 	
+	<form method="post" action="commentPro.jsp" name="comment" onsubmit="return writeSave()">
+<table width="500" border="1" cellspacing="0" cellpadding="0" align="center">
+
+	<tr align="center">
+		<td colpsan="2">
+			<textarea name="commentt" rows = "6" cols="40"></textarea>
+			<input type="hidden" name="con_num" value=<%=contentNum %>>
+			<input type="hidden" name="boardClass" value=<%=boardClass %>>
+			<input type="hidden" name="uri" value="<%=request.getRequestURI() %>">
+			<%-- <input type="hidden" name="p_num" value=<%=pageNum %>> --%>
+		</td>
+	<tr align="center">
+		<td align=center>
+			작성자<input type="text" name=commenter size=10>
+			비밀번호<input type="password" name=passwd size=10>
+			<input type="submit" value="코멘트달기">
+		</td>
+	</tr>
+
+</table>
+</form>
+	
+	
+	
+	
+	
 	
 	<%
 	if(count > 0){
@@ -75,6 +101,9 @@
 			
 		<%} 
 	}%>
+	
+	
+	
 	
 	
 </table>

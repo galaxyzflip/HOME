@@ -32,7 +32,7 @@ public class CommentDAO {
 		
 		try {
 			conn = getConnection();
-			pstmt = conn.prepareStatement("insert into b_comment(content_num, commenter, commentt, passwd, reg_date, ip, comment_num) "
+			pstmt = conn.prepareStatement("insert into b_comment(content_num, commenter, commentt, passwd, reg_date, ip, comment_num, board_class) "
 					+ "values(?,?,?,?,?,?,?,?)");
 			pstmt.setInt(1, cmt.getContent_num());
 			pstmt.setString(2, cmt.getCommenter());
@@ -68,9 +68,9 @@ public class CommentDAO {
 			conn = getConnection();
 			
 			String sql="select content_num,commenter,commentt,reg_date,ip,comment_num,r "
-					+ "from (select content_num,commenter,commentt,reg_date,ip,comment_num, rownum r "
-					+ "from (select content_num,commenter,commentt,reg_date,ip,comment_num, "
-					+ "from b_comment where board_class= ?  and  content_num="+con_num+" order by reg_date desc) order by reg_date desc) where r >= ? and r <= ?";
+					+ " from (select content_num,commenter,commentt,reg_date,ip,comment_num, rownum r "
+					+ " from (select content_num,commenter,commentt,reg_date,ip,comment_num "
+					+ " from b_comment where board_class= ?  and  content_num="+con_num+" order by reg_date desc) order by reg_date desc) where r >= ? and r <= ?";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, boardClass);
