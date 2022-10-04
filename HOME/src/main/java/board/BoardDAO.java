@@ -80,8 +80,8 @@ public class BoardDAO {
 				
 				
 				query = "insert into board(num, writer, email, subject, passwd, reg_date, "
-						+ "ref, re_step, re_level, content, ip, id) "
-						+ "values(board_num.nextval, ?,?,?,?,?,?,?,?,?,?,? )";
+						+ "ref, re_step, re_level, content, ip) "
+						+ "values(board_num.nextval, ?,?,?,?,?,?,?,?,?,? )";
 				
 				pstmt = conn.prepareStatement(query);
 				pstmt.setString(1, article.getWriter());
@@ -94,7 +94,6 @@ public class BoardDAO {
 				pstmt.setInt(8, re_level);
 				pstmt.setString(9, article.getContent());
 				pstmt.setString(10, article.getIp());
-				pstmt.setString(11, article.getId());
 				
 				pstmt.executeUpdate();
 				
@@ -115,27 +114,27 @@ public class BoardDAO {
 		
 		
 		
-		/*
-		 * public int getArticleCount() throws Exception{ Connection conn = null;
-		 * PreparedStatement pstmt = null; ResultSet rs = null;
-		 * 
-		 * int x = 0;
-		 * 
-		 * try { conn = getConnection();
-		 * 
-		 * pstmt = conn.prepareStatement("select count(1) from board"); rs =
-		 * pstmt.executeQuery();
-		 * 
-		 * if(rs.next()) { x = rs.getInt(1); }
-		 * 
-		 * }catch(Exception ex) { ex.printStackTrace();
-		 * 
-		 * }finally { jdbcUtil.close(rs); jdbcUtil.close(pstmt); jdbcUtil.close(conn); }
-		 * 
-		 * 
-		 * 
-		 * return x; }
-		 */
+		
+		  public int getArticleCount() throws Exception{ Connection conn = null;
+		  PreparedStatement pstmt = null; ResultSet rs = null;
+		  
+		  int x = 0;
+		  
+		  try { conn = getConnection();
+		  
+		  pstmt = conn.prepareStatement("select count(1) from board"); rs =
+		  pstmt.executeQuery();
+		  
+		  if(rs.next()) { x = rs.getInt(1); }
+		  
+		  }catch(Exception ex) { ex.printStackTrace();
+		  
+		  }finally { jdbcUtil.close(rs); jdbcUtil.close(pstmt); jdbcUtil.close(conn); }
+		  
+		  
+		  
+		  return x; }
+		 
 		
 		public int getArticleCount(String target, String value) throws Exception{
 			Connection conn = null;
@@ -174,6 +173,8 @@ public class BoardDAO {
 			
 			return x;
 		}
+		
+		
 		
 
 		
@@ -260,7 +261,6 @@ public class BoardDAO {
 					article.setRe_level(rs.getInt("re_level"));
 					article.setContent(rs.getString("content"));
 					article.setIp(rs.getString("ip"));
-					article.setId(rs.getString("id"));
 					
 				}
 				
@@ -446,6 +446,63 @@ public class BoardDAO {
 						+ " from board where " + target + "  like '%" + value + "%' order by ref desc, re_step asc) order by ref desc, re_step asc ) where r >= ? and r <= ?";
 		
 			}
+			try {
+				
+				conn = getConnection();
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, start);
+				pstmt.setInt(2, end);
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					articleList = new ArrayList<BoardDTO>(end);
+					do {
+						article = new BoardDTO();
+						article.setNum(rs.getInt("num"));
+						article.setWriter(rs.getString("writer"));
+						article.setSubject(rs.getString("subject"));
+						article.setPasswd(rs.getString("passwd"));
+						article.setReg_date(rs.getTimestamp("reg_date"));
+						article.setReadcount(rs.getInt("readcount"));
+						article.setRef(rs.getInt("ref"));
+						article.setRe_step(rs.getInt("re_step"));
+						article.setRe_level(rs.getInt("re_level"));
+						article.setContent(rs.getString("content"));
+						article.setIp(rs.getString("ip"));
+						
+						articleList.add(article);
+						
+					}while(rs.next());
+				}
+				
+			}catch(Exception ex) {
+				ex.printStackTrace();
+			
+			}finally {
+				jdbcUtil.close(rs);
+				jdbcUtil.close(pstmt);
+				jdbcUtil.close(conn);
+				
+			}
+			
+			return articleList;
+		}
+		
+		public List<BoardDTO> getArticles(int start, int end){
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			List<BoardDTO> articleList = null;
+			BoardDTO article = null;
+			String sql = "";
+			
+		
+				sql = "select num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip,readcount, r  "
+						+ " from (select num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip,readcount,rownum r  "
+						+ " from (select num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip,readcount "
+						+ " from board order by ref desc, re_step asc) order by ref desc, re_step asc ) where r >= ? and r <= ?";
+				
+		
 			try {
 				
 				conn = getConnection();
