@@ -24,7 +24,7 @@
 <table width="700">
 	<tr>
 		<td align=right bgcolor="${value_c }">
-			<a href="/EZEN/MVC/writeForm.do">글쓰기</a>
+			<a href="/HOME/MVC/writeForm.do">글쓰기</a>
 		</td>
 	</tr>
 </table>
@@ -57,8 +57,32 @@
 		<tr height="30">
 			<td align="center" width="50">
 			<c:out value="${number }"/>
-	
-	
+			<c:set var="number" value="${number-1 }"/>
+			</td>
+			
+			<td width="250">
+				<c:if test="${article.re_level > 0 }">
+				<img src="/HOME/board/images/level.gif" width="${5 * article.re_level }" height="16">
+				<img src="/HOME/board/images/re.gif">
+				</c:if>
+				
+				<c:if test="${article.re_level == 0 }">
+					<img src="/HOME/board/images/level.gif" width="${5 * article.re_level }" height="16">
+				</c:if>
+				
+				<a href="/HOME/MVC/content.do?num=${article.num }&pageNum=${currentPage }">${article.subject}</a>
+				<c:if test="${article.readcount >= 20 }">
+					<img src="/HOME/board/images/hot.gif" border="0" height="16">
+				</c:if>
+			</td>
+			
+			<td align="center" width="100">
+				<a href="mailto:${article.email }">${article.writer }</a>
+			</td>
+			
+			<td align="center" width="150">${article.reg_date }</td>
+			<td align="center" width="50">${article.readcount}</td>
+			<td align="center" width="100">${article.ip }</td>
 		</tr>
 	</c:forEach>
 	</table>
@@ -67,8 +91,34 @@
 
 
 
+<!-- 페이징 -->
 
-
+	<c:if test="${count > 0 }">
+		<c:set var="pageCount" value="${count / pageSize + (count % pageSize == 0 ? 0 : 1) }"/>
+		<c:set var="pageBlock" value="${10 }"/>
+		
+		<fmt:parseNumber var="result" value="${currentPage / 10 }" integerOnly="true"/>
+		
+		<c:set var="startPage" value="${result * 10 + 1 }"/>
+		<c:set var="endPage" value="${startPage + pageBlock-1 }"/>
+		
+		<c:if test="${endPage > pageCount }">
+			<c:set var="endPage" value="${pageCount }"/>
+		</c:if>
+		
+		<c:if test="${endPage > pageCount }">
+			<a href="/HOME/MVC/list.do?pageNum=${startPage - 10 }">[이전]</a>
+		</c:if>
+		
+		<c:forEach var="i" begin="${startPage }" end="${endPage }">
+			<a href="/HOME/MVC/list.do?pageNum=${i }">[${i }]</a>
+		</c:forEach>
+		
+		<c:if test="${endPage < pageCount } ">
+			<a href="/HOME/MVC/list.do?pageNum=${startPage + 10 }">[다음]</a>
+		</c:if>
+		
+	</c:if>
 
 </center>
 </body>

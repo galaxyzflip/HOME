@@ -12,7 +12,7 @@ public class ListAction implements CommandAction{
 
 	public String requestPro(HttpServletRequest request, HttpServletResponse response) throws Throwable {
 		
-		String pageNum = request.getParameter("pageNul");
+		String pageNum = request.getParameter("pageNum");
 		
 		if(pageNum == null || pageNum.equals("null")) {
 			pageNum = "1";

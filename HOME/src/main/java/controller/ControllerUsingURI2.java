@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import action.CommandAction;
 import action.NullAction;
 
-public class controllerUsingURI2 extends HttpServlet{
+public class ControllerUsingURI2 extends HttpServlet{
 
 	private Map commandMap = new HashMap();
 	//명령어와 명령어 처리 클래스를 상으로 저장
@@ -88,6 +88,10 @@ public class controllerUsingURI2 extends HttpServlet{
 				command = command.substring(request.getContextPath().length());
 			}
 			com = (CommandAction)commandMap.get(command);
+			if(com == null) {
+				com = new NullAction();
+			}
+			view = com.requestPro(request, response);
 			
 		}catch(Throwable e) {
 			throw new ServletException (e);

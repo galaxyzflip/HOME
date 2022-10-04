@@ -239,7 +239,7 @@ public class BoardDAO {
 			try {
 				
 				conn = getConnection();
-				pstmt = conn.prepareStatement("update board set readcount = readcount+1 where num = ?");
+				pstmt = conn.prepareStatement("update board set readcount = readcount + 1 where num = ?");
 				pstmt.setInt(1, num);
 				pstmt.executeUpdate();
 				

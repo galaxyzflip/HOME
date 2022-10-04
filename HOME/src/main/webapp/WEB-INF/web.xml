@@ -86,26 +86,8 @@ version="4.0">
   
   
   <servlet>
-  	<servlet-name>ControllerUsingFile</servlet-name>
-  	<servlet-class>mvctest.ControllerUsingFile</servlet-class>
-  	
-  	<init-param>
-  		<param-name>configFile</param-name>
-  		<param-value>/WEB-INF/commandHandler.properties</param-value>
-  	
-  	</init-param>
-  </servlet>
-  
-  
-  <servlet-mapping>
-  	<servlet-name>ControllerUsingFile</servlet-name>
-  	<url-pattern>/controllerUsingFile</url-pattern>
-  </servlet-mapping>
-  
-  
-  <servlet>
   	<servlet-name>ControllerUsingURI</servlet-name>
-  	<servlet-class>mvctest.ControllerUsingURI2</servlet-class>
+  	<servlet-class>controller.ControllerUsingURI2</servlet-class>
   	<init-param>
   		<param-name>configFile2</param-name>
   		<param-value>/WEB-INF/commandHandlerURI.properties</param-value>
@@ -117,11 +99,6 @@ version="4.0">
  		<url-pattern>*.do</url-pattern>
  	</servlet-mapping>
  	
-  	
-  	
-  
-  
-  
   
   
 </web-app>
