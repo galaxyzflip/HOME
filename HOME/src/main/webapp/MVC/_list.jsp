@@ -3,6 +3,7 @@
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ include file="color.jspf" %>
 
 
     
@@ -13,20 +14,23 @@
 <title>게시판</title>
 <link href="style.css" rel="stylesheet" type="text/css"/>
 </head>
-<body>
+<body bgcolor="${bodyback_c }">
 
 <center>
-<div class=wrap>
 
 
-<h1 class="header">글목록(전체 글:${count })</h1>
+<b>글목록(전체 글:${count })</b>
 
-<div class="left-box">
+<table width="700">
+	<tr>
+		<td align=right bgcolor="${value_c }">
 			<a href="/HOME/MVC/writeForm.do">글쓰기</a>
-</div>
+		</td>
+	</tr>
+</table>
 
 <c:if test="${count == 0 }">
-	<table>
+	<table width="700" border="1" cellpadding="0" cellspacing="0">
 		<tr>
 			<td align="center">
 				게시판에 저장된 글이 없습니다.
@@ -38,8 +42,8 @@
 
 
 <c:if test="${count > 0 }">
-	<table class="main">
-	<tr>
+	<table border="1" width="700" cellpading="0" cellspacing="0" align="center">
+	<tr height="30" bgcolor="${value_c }">
 	
 		<td align="center" width="50">번호</td>
 		<td align="center" width="250">제목</td>
@@ -50,13 +54,13 @@
 	</tr>
 	
 	<c:forEach var="article" items="${articleList }">
-		<tr>
-			<td>
+		<tr height="30">
+			<td align="center" width="50">
 			<c:out value="${number }"/>
 			<c:set var="number" value="${number-1 }"/>
 			</td>
 			
-			<td>
+			<td width="250">
 				<c:if test="${article.re_level > 0 }">
 				<img src="/HOME/board/images/level.gif" width="${5 * article.re_level }" height="16">
 				<img src="/HOME/board/images/re.gif">
@@ -72,13 +76,13 @@
 				</c:if>
 			</td>
 			
-			<td>
+			<td align="center" width="100">
 				<a href="mailto:${article.email }">${article.writer }</a>
 			</td>
 			
-			<td>${article.reg_date }</td>
-			<td>${article.readcount}</td>
-			<td>${article.ip }</td>
+			<td align="center" width="150">${article.reg_date }</td>
+			<td align="center" width="50">${article.readcount}</td>
+			<td align="center" width="100">${article.ip }</td>
 		</tr>
 	</c:forEach>
 	</table>
@@ -131,7 +135,7 @@
 	<input type="button" value="전체글보기" onclick="document.location.href='/HOME/MVC/list.do'">
 	
 	</form> 
-</div>
+
 </center>
 </body>
 </html>

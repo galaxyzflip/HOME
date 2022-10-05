@@ -24,14 +24,14 @@
 			<td width="300" bgcolor="${bodyback_c }" height="20">&nbsp;</td>
 			
 			
-			<td bgcolor="${title_c }" width="100" align="right">아이디</td>
+			<td bgcolor="${title_c }" width="200" align="right">아이디</td>
 			<td width="100" bgcolor="${value_c }">
 				<input type="text" name="id" size="15" maxlength="10"></td>
 		</tr>
 		
 		<tr>
 			<td roswpan="2" bgcolor="${bodyback_c }" width="300">메인입니다.</td>
-			<td bgcolor="${title_c }" width="100" align="right">패스워드</td>
+			<td bgcolor="${title_c }" width="200" align="right">패스워드</td>
 			<td width="100" bgcolor="${value_c }">
 				<input type="password" name="passwd" size="15"	maxlength="10"></td>
 		</tr>

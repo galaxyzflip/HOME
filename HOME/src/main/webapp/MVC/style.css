@@ -1,37 +1,106 @@
 @charset "UTF-8";
 
-BODY{
-	font-size:9pt; color:black; line-height: 160%; font-family: 굴림, verdana,tahoma
+h1.header a{
+	font-family:tahoma;;
+	cellpadding:10px;
+	text-decoration-line: none;
+	text-decoration-color: none;
 }
 
-td{
-	font-size:9pt; color:black; line-height: 160%; font-family: 굴림, verdana,tahoma
+.left-box{
+	float: right;
 }
 
-select{
-	font-size:9pt; color:black; line-height: 160%; font-family: 굴림, verdana,tahoma
+div.wrap{
+	width:700px;
 }
 
-div{
-	font-size:9pt; color:black; line-height: 160%; font-family: 굴림, verdana,tahoma
+body{
+	font-size: 9pt; line-height:160% 
+	}
+
+table.main{
+   width: 700px ; 
+   border-top: 0.5px solid #bbbbbb;
+   border-collapse: collapse;
+    margin-left:auto; 
+   margin-right:auto;
+   
+} 
+
+table.comment{
+   width: 500px ; 
+   border-top: 0.5px solid #bbbbbb;
+   border-collapse: collapse;
+   margin-left:auto; 
+   margin-right:auto;
+   
+}
+ 
+tr, td{
+   border-bottom: 1px solid #bbbbbb;
+   padding: 5px;
 }
 
-form{
-	font-size:9pt; color:black; line-height: 160%; font-family: 굴림, verdana,tahoma
-}
+tr th {
+    background-color: #e9f4fe;
+  }
 
-textarea{
-	border-right: 1px solid #999999; border-top: 1px solid #999999; font-size: 9px; border-left: 1px solid #999999; color:black; border-bottom: 1px solid #999999; font-family: 굴림, verdana; backgroud-color: white
-}
-
-input{
-	border-right: 1px solid #999999; border-top: 1px solid #999999; font-size: 9px; border-left: 1px solid #999999; color:black; border-bottom: 1px solid #999999; font-family: 굴림, verdana; height:19px; backgroud-color: white
+div.pageView{
+	text-align:left;
+	line-height:200%;
 }
 
 
-a:link {text-decoration:none;color:#696969}
-a:hover {text-decoration:yes;color:#66ccff}
-a:visited {text-decoration:none;color:#330066}
+.no{
+	text-align:center;
+	width: 40px;
+}
+
+.writer{
+	text-align:center;
+	width: 100px;
+}
+
+.title{
+	text-align:left;
+	width: 430px;
+	cellpadding: 30px;
+}
+.regDate{
+	text-align:right;
+	width: 80px;
+}
+.readCount{
+	text-align:center;
+	width: 50px;
+}
+
+.hno{
+	text-align:center;
+	width: 40px;
+	
+}
+
+.hwriter{
+	text-align:center;
+	width: 100px;
+}
+
+.htitle{
+	text-align:center;
+	width: 430px;
+}
+.hregDate{
+	text-align:center;
+	width: 80px;
+}
+.hreadCount{
+	text-align:center;
+	width: 50px;
+}
 
 
-
+.commentForm{
+	font-size:11px;
+}

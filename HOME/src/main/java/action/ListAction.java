@@ -12,13 +12,19 @@ public class ListAction implements CommandAction{
 
 	public String requestPro(HttpServletRequest request, HttpServletResponse response) throws Throwable {
 		
+		request.setCharacterEncoding("utf-8");
+		
 		String pageNum = request.getParameter("pageNum");
+		
+		String target = request.getParameter("target"); 
+		String keyword = request.getParameter("keyword");
+		 
 		
 		if(pageNum == null || pageNum.equals("null")) {
 			pageNum = "1";
 		}
 		
-		int pageSize = 10;
+		int pageSize = 5;
 		int currentPage = Integer.parseInt(pageNum);
 		int startRow = (currentPage - 1) * pageSize + 1;
 		int endRow = currentPage * pageSize;
@@ -27,10 +33,12 @@ public class ListAction implements CommandAction{
 		
 		List articleList = null;
 		BoardDAO dbPro = BoardDAO.getInstance();
-		count = dbPro.getArticleCount();
+		/* count = dbPro.getArticleCount(); */
+		count = dbPro.getArticleCount(target, keyword);
 		
 		if(count > 0) {
-			articleList = dbPro.getArticles(startRow, endRow);
+//			articleList = dbPro.getArticles(startRow, endRow);
+			articleList = dbPro.getArticles(target, keyword, startRow, endRow);
 		}else {
 			articleList = Collections.EMPTY_LIST;
 		}

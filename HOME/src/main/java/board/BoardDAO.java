@@ -115,25 +115,34 @@ public class BoardDAO {
 		
 		
 		
-		  public int getArticleCount() throws Exception{ Connection conn = null;
-		  PreparedStatement pstmt = null; ResultSet rs = null;
-		  
-		  int x = 0;
-		  
-		  try { conn = getConnection();
-		  
-		  pstmt = conn.prepareStatement("select count(1) from board"); rs =
-		  pstmt.executeQuery();
-		  
-		  if(rs.next()) { x = rs.getInt(1); }
-		  
-		  }catch(Exception ex) { ex.printStackTrace();
-		  
-		  }finally { jdbcUtil.close(rs); jdbcUtil.close(pstmt); jdbcUtil.close(conn); }
-		  
-		  
-		  
-		  return x; }
+		public int getArticleCount() throws Exception {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+
+			int x = 0;
+
+			try {
+				conn = getConnection();
+
+				pstmt = conn.prepareStatement("select count(1) from board");
+				rs = pstmt.executeQuery();
+
+				if (rs.next()) {
+					x = rs.getInt(1);
+				}
+
+			} catch (Exception ex) {
+				ex.printStackTrace();
+
+			} finally {
+				jdbcUtil.close(rs);
+				jdbcUtil.close(pstmt);
+				jdbcUtil.close(conn);
+			}
+
+			return x;
+		}
 		 
 		
 		public int getArticleCount(String target, String value) throws Exception{

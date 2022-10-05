@@ -140,7 +140,7 @@
 		</tr>
 		
 		<tr>
-			<td width="200" bgcolor="<%=value_c %>"><b>아이디 입력</b>
+			<td colspan="2" width="200" bgcolor="<%=value_c %>"><b>아이디 입력</b>
 			</td>
 		</tr>
 		
@@ -167,8 +167,8 @@
 		</tr>
 		
 		<tr>
-			<td width="200" bgcolor="<%=value_c %>"><b>개인정보 입력</b></td>
-			<td width="400" bgcolor="<%=value_c %>"></td>
+			<td colspan="2" width="200"><b>개인정보 입력</b></td>
+			
 		</tr>
 		
 		<tr>
