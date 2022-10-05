@@ -15,9 +15,9 @@
 <body bgcolor="${bodyback_c }">
 
 
-<c:if test="${empty sesstionScope.memId }">
+<c:if test="${empty sessionScope.memId }">
 
-	<form name="infoem" method="post" action="/HOME/logon2/loginPro.do">
+	<form name="inform" method="post" action="/HOME/logon2/loginPro.do">
 	<table width="300" cellpadding=0 cellspacing=0 align=center border=1>
 	
 		<tr>
@@ -48,7 +48,7 @@
 </c:if>
 
 
-<c:if test="${!empty sessionScope.memId }">
+<c:if test="${! empty sessionScope.memId }">
 
 	<table width="500" cellpadding="0" cellspacing=0 align=center border=1>
 	
@@ -61,6 +61,7 @@
 			<form method="post" action="/HOME/logon2/logout.do">
 				<input type="submit" value="로그아웃">
 				<input type="button" value="회원정보변경" onclick="document.location.href='/HOME/logon2/modify.do'">
+				<%-- <input type="button" value="회원정보변경" onclick="document.location.href='/HOME/logon2/modify.do?id=${sessionScope.memId}'"> --%>
 			</form>
 			</td>	
 		</tr>
