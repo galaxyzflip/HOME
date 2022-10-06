@@ -53,6 +53,11 @@ public class ListAction implements CommandAction{
 		request.setAttribute("number", new Integer(number));
 		request.setAttribute("articleList", articleList);
 		
+		request.setAttribute("target", target);
+		request.setAttribute("keyword", keyword);
+		
+		
+		
 		return "/MVC/list.jsp";
 		
 	}

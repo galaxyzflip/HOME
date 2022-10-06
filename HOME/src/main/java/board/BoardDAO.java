@@ -154,7 +154,7 @@ public class BoardDAO {
 			
 			try {
 				conn = getConnection();
-				if(target == null) {
+				if(target == null || target.isBlank()) {
 					pstmt = conn.prepareStatement("select count(1) from board");
 					
 				}else {
@@ -442,7 +442,7 @@ public class BoardDAO {
 			BoardDTO article = null;
 			String sql = "";
 			
-			if(target == null) {
+			if(target == null || target.isBlank()) {
 				sql = "select num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip,readcount, r  "
 						+ " from (select num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip,readcount,rownum r  "
 						+ " from (select num,writer,email,subject,passwd,reg_date,ref,re_step,re_level,content,ip,readcount "

@@ -1,0 +1,110 @@
+@charset "UTF-8";
+
+h1.header a{
+	font-family:tahoma;;
+	cellpadding:10px;
+	text-decoration-line: none;
+	text-decoration-color: none;
+	
+}
+
+.left-box{
+	float: right;
+}
+
+div.wrap{
+	width:700px;
+}
+
+body{
+	font-size: 9pt; line-height:160% 
+	}
+
+table.main{
+   width: 700px ; 
+   border-top: 0.5px solid #bbbbbb;
+   border-collapse: collapse;
+    margin-left:auto; 
+   margin-right:auto;
+   
+} 
+
+table.comment{
+   width: 500px ; 
+   border-top: 0.5px solid #bbbbbb;
+   border-collapse: collapse;
+   margin-left:auto; 
+   margin-right:auto;
+   
+}
+ 
+tr, td{
+   border-bottom: 1px solid #bbbbbb;
+   padding: 5px;
+}
+
+tr th {
+    background-color: #e9f4fe;
+    border-collapse: collapse;
+    font-size: 15pt; line-height:160% 
+  }
+
+
+div.pageView{
+	text-align:left;
+	line-height:200%;
+}
+
+
+.no{
+	text-align:center;
+	width: 40px;
+}
+
+.writer{
+	text-align:center;
+	width: 100px;
+}
+
+.title{
+	text-align:left;
+	width: 430px;
+	cellpadding: 30px;
+}
+.regDate{
+	text-align:right;
+	width: 80px;
+}
+.readCount{
+	text-align:center;
+	width: 50px;
+}
+
+.hno{
+	text-align:center;
+	width: 40px;
+	
+}
+
+.hwriter{
+	text-align:center;
+	width: 100px;
+}
+
+.htitle{
+	text-align:center;
+	width: 430px;
+}
+.hregDate{
+	text-align:center;
+	width: 80px;
+}
+.hreadCount{
+	text-align:center;
+	width: 50px;
+}
+
+
+.commentForm{
+	font-size:11px;
+}

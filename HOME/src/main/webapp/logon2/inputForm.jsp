@@ -16,21 +16,20 @@
 
 
 </head>
-<body bgcolor="${bodyback_c }">
+<body>
 
 <form method="post" action="/HOME/logon2/inputPro.do" name="userinput" onsubmit="return checkId()">
 
-<table width="600" border="1" cellpadding="3" align="center">
+<table class="main">
 
 	<tr>
-		<td colspan="2" height="39" align='center' bgcolor="${value_c }">
-			<font size="+1"><b>회원가입</b></font>
-		</td>
+		<th colspan="2">
+			<h1 class="header">회원가입</h1>
+		</th>
 	</tr>
 	
 	<tr>
-		<td width="200" bgcolor="${value_c }"><b>아이디 입력</b></td>
-		<td width="400" bgcolor="${value_c }">&nbsp;</td>
+		<td align="center" colspan="2">아이디 입력</td>
 	</tr>
 	
 	<tr>
@@ -52,8 +51,8 @@
 	</tr>
 
 	<tr>
-		<td>개인정보 입력</td>
-		<td>&nbsp;</td>
+		<td colspan="2" align="center">개인정보 입력</td>
+		
 	</tr>
 	
 	<tr>
@@ -80,6 +79,7 @@
 		<td>휴대폰번호</td>
 		<td>
 			<input type="text" name="phone" size="15" maxlength="13" placeholder="-없이 숫자만 입력">
+			<input type="button" name="confirm_phone" value="휴대폰번호 중복확인" onclick="openConfirmPhone(this.form)">
 		</td>
 	</tr>
 	

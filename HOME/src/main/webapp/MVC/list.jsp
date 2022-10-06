@@ -103,15 +103,15 @@
 		</c:if>
 		
 		<c:if test="${endPage > pageCount }">
-			<a href="/HOME/MVC/list.do?pageNum=${startPage - 10 }">[이전]</a>
+			<a href="/HOME/MVC/list.do?pageNum=${startPage - 10 }&target=${target }&keyword=${keyword}">[이전]</a>
 		</c:if>
 		
 		<c:forEach var="i" begin="${startPage }" end="${endPage }">
-			<a href="/HOME/MVC/list.do?pageNum=${i }">[${i }]</a>
+			<a href="/HOME/MVC/list.do?pageNum=${i }&target=${target }&keyword=${keyword}">[${i }]</a>
 		</c:forEach>
 		
 		<c:if test="${endPage < pageCount } ">
-			<a href="/HOME/MVC/list.do?pageNum=${startPage + 10 }">[다음]</a>
+			<a href="/HOME/MVC/list.do?pageNum=${startPage + 10 }&target=${target }&keyword=${keyword}">[다음]</a>
 		</c:if>
 		
 	</c:if>

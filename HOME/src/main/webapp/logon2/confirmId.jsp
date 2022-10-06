@@ -10,7 +10,13 @@
 <title>아이디 중복 확인</title>
 <link href="style.css" rel="stylesheet" type="text/css">
 
-<script language="JavaScript" src="script.js"></script>
+<script language="JavaScript">
+function setId() {
+	opener.document.userinput.id.value = '${id}';
+	self.close();
+}
+
+</script>
 
 </head>
 <body>

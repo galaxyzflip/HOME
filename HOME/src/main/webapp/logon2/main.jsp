@@ -30,7 +30,10 @@
 		</tr>
 		
 		<tr>
-			<td roswpan="2" bgcolor="${bodyback_c }" width="300">메인입니다.</td>
+			<td roswpan="2" bgcolor="${bodyback_c }" width="300">
+				메인입니다.
+			
+			</td>
 			<td bgcolor="${title_c }" width="200" align="right">패스워드</td>
 			<td width="100" bgcolor="${value_c }">
 				<input type="password" name="passwd" size="15"	maxlength="10"></td>
@@ -53,7 +56,11 @@
 	<table width="500" cellpadding="0" cellspacing=0 align=center border=1>
 	
 		<tr>
-			<td width="300" bgcolor="${bodyback_c }" height="20">하하하</td>
+			<td width="300" bgcolor="${bodyback_c }" height="20">
+				<a href="/HOME/MVC/list.do?id=${sessionScope.memId }">게시판</a>
+				&nbsp;
+				<a href="/HOME/MVC/list.do?id=${sessionScope.memId }">방명록</a>
+			</td>
 			
 			<td rowspan="3" bgcolor="${value_c }" align="center">
 				${sessionScope.memId }님이 <br> 방문하셨습니다.

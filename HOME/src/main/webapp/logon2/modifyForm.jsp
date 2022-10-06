@@ -10,6 +10,7 @@
 <title>회원정보수정</title>
 <link href="style.css" rel="style.css" type="text/css">
 <script language="javascript" src="script.js"></script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 </head>
 <body>
@@ -59,8 +60,65 @@
 		
 	<tr>
 		<td>성별</td>
-		<td>${member.male }</td>
+		<td>
+			<c:if test="${member.male == 'ma' }">
+				남자			
+			</c:if>
+		
+			<c:if test="${member.male == 'fe' }">
+				여자			
+			</c:if>
+		</td>
 	</tr>
+
+	<tr>
+		<td>휴대폰번호</td>
+		<td>
+			<c:if test="${empty member.phone }">
+				<input type="text" name="phone" size="12" maxlength="12">
+				<input type="button" name="confirm_phone" value="휴대폰번호 중복확인" onclick="openConfirmPhone(this.form)">
+			</c:if>
+
+			<c:if test="${!empty member.phone }">
+				<input type="text" name="phone" size="12" value="${member.phone }" maxlength="12">
+				<input type="button" name="confirm_phone" value="휴대폰번호 중복확인" onclick="openConfirmPhone(this.form)">
+			</c:if>
+		</td>
+	</tr>
+
+	
+	<tr>
+		<td>우편번호</td>
+		<td>
+			<c:if test="${empty member.zipcode }">
+				<input type="text" name="zipcode" id="sample6_postcode" size="7">
+				<input type="button" onclick="sample6_execDaumPostcode()" value="다음우편번호"><br>
+			</c:if>
+
+			<c:if test="${!empty member.zipcode }">
+				<input type="text" name="zipcode" id="sample6_postcode" value="${member.zipcode }" size="7">
+				<input type="button" onclick="sample6_execDaumPostcode()" value="다음우편번호"><br>
+			</c:if>
+		</td>
+	</tr>
+	
+	<tr>
+		<td>주소</td>
+		<td>
+			<c:if test="${empty member.address }">
+				<input type="text" name="address" id="sample6_address" size="70"><br>
+				<input type="text" name="detailAddress" id="sample6_detailAddress" size="70">
+			</c:if>
+
+			<c:if test="${!empty member.address }">
+				<input type="text" name="address" id="sample6_address" value="${member.address }" size="70"><br>
+				<input type="text" name="detailAddress" id="sample6_detailAddress" value="${member.detailAddress }" size="70">
+			
+			</c:if>
+		</td>
+	</tr>
+	
+	
 	
 	<tr>
 		<td>E-mail</td>
@@ -74,6 +132,7 @@
 			</c:if>
 		</td>
 	</tr>
+	
 
 	<tr>
 		<td>BLOG</td>

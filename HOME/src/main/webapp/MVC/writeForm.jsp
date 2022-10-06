@@ -18,7 +18,7 @@
 
 <b>글쓰기</b> <br>
 
-<form method="post" name="writeform" action="/HOME/MVC/writePro.do" onsubmit="return writeSave()">
+<form method="post" name="writeform" action="/HOME/MVC/writeForm.do" onsubmit="return writeSave()">
 	<input type="hidden" name="num" value="${num }">
 	<input type="hidden" name="ref" value="${ref }">
 	<input type="hidden" name="re_step" value="${re_step }">

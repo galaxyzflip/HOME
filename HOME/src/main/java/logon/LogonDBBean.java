@@ -63,7 +63,8 @@ public class LogonDBBean {
 			conn = getConnection();
 			
 			//휴대폰번호 - 기호 삭제
-			String phone = member.getPhone().replace("-", "");
+			String match="[^0-9]";
+			String phone = member.getPhone().replaceAll(match, "");
 			
 			pstmt = conn.prepareStatement("insert into members(id, passwd, name, birthday,"
 					+ " male, email,blog, reg_date, zipcode, address, address2, phone) "
@@ -385,7 +386,9 @@ public class LogonDBBean {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String phone = sendPhone.replace("-", "");
+		String match="[^0-9]"; 
+		String phone = sendPhone.replaceAll(match, "");
+		
 		
 		try {
 			conn = getConnection();
