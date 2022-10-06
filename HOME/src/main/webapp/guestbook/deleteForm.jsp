@@ -7,12 +7,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>방명록 수정</title>
+<title>방명록 삭제</title>
 <script language="JavaScript" src="script.js"></script>
 </head>
 <body>
 
-<form method="post" name="writeForm" action="/HOME/guestbook/modifyPro.do" onsubmit="wrtieSave()">
+<form method="post" name="writeForm" action="/HOME/guestbook/deletePro.do" onsubmit="deleteSave()">
 
 <table align="center" border=1>
 
@@ -25,10 +25,10 @@
 	</tr>
 	<tr>	
 		<td width="80%">
-			<textarea name="message" rows="4" cols="50">${getMessage.message }</textarea>
+			<textarea name="message" rows="4" cols="50" readonly>${getMessage.message }</textarea>
 		</td>
 		<td align="center">
-			<input type="submit" value="수정">
+			<input type="submit" value="삭제">
 		</td>
 	</tr>
 

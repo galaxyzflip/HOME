@@ -131,7 +131,9 @@ public class GuestBookDAO {
 			pstmt = conn.prepareStatement("select * from guestbook_message where message_id = ?");
 			pstmt.setString(1, messageId);
 			rs = pstmt.executeQuery();
-			message = setRs(rs);
+			if(rs.next()) {
+				message = setRs(rs);
+			}
 			
 		}catch(SQLException ex) {
 			ex.printStackTrace();
@@ -145,6 +147,140 @@ public class GuestBookDAO {
 		return message;
 	}
 	
+
+	public int modifyMessage(Connection conn, GuestBookDTO message) {
+		
+		PreparedStatement pstmt = null;
+		int check = 0;
+		int checkPassword = 0;
+		
+		try {
+			
+			conn.setAutoCommit(false);
+			
+			checkPassword = checkPassword(conn, message);
+			if(checkPassword == 1) {
+				pstmt = conn.prepareStatement("update guestbook_message set guest_name = ? , message = ? where message_id = ?");
+				pstmt.setString(1, message.getGuestName());
+				pstmt.setString(2, message.getMessage());
+				pstmt.setInt(3, message.getMessageId());
+				
+				check = pstmt.executeUpdate();
+				if(check > 1) {
+					jdbcUtil.rollback(conn);
+					throw new RuntimeException("업데이트 1개 이상");
+				}
+			}else {
+				check = -1;
+			}
+			conn.commit();
+			
+		}catch(SQLException ex) {
+			ex.printStackTrace();
+		}finally {
+			jdbcUtil.close(pstmt);
+			try {
+				conn.setAutoCommit(true);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		return check;
+	}
+	
+	
+	//x = 1 정상삭제 ; x > 1 사고 ; x = -1 비번 틀림 ; x = 0 오류
+	public int deleteMessage(Connection conn, GuestBookDTO message) {
+		PreparedStatement pstmt = null;
+		int check = 0;
+		int checkPassword = 0;
+
+		try {
+
+			conn.setAutoCommit(false);
+
+			checkPassword = checkPassword(conn, message);
+			if (checkPassword == 1) {
+				pstmt = conn.prepareStatement("delete guestbook_message where message_id = ?");
+				pstmt.setInt(1, message.getMessageId());
+
+				check = pstmt.executeUpdate();
+				if (check > 1) {
+					jdbcUtil.rollback(conn);
+					throw new RuntimeException("삭제 1개 이상");
+				}
+			} else {
+				check = -1;
+			}
+			conn.commit();
+
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		} finally {
+			jdbcUtil.close(pstmt);
+			try {
+				conn.setAutoCommit(true);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return check;
+	}
+
+	
+	
+	//비번 확인
+	// check = 1 비번맞음, -1비번 틀림, 0 조회 안됨(잘못된 요청)
+	public int checkPassword(Connection conn, GuestBookDTO message) {
+		
+		int check = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String dbPassword = "";
+		
+		try {
+			pstmt = conn.prepareStatement("select password from guestbook_message where message_id = ?");
+			pstmt.setInt(1, message.getMessageId());
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				dbPassword = rs.getString("password");
+			}
+			
+			if(message.getPassword().equals(dbPassword)) {
+				check = 1;
+			}else {
+				check = -1;
+			}
+			
+		}catch(SQLException ex) {
+			ex.printStackTrace();
+			
+		}finally {
+			jdbcUtil.close(pstmt);
+			jdbcUtil.close(rs);
+		}
+		
+		return check;
+	}
+
+	
+	
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
 

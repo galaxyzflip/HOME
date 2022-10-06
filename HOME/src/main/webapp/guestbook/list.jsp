@@ -62,8 +62,8 @@
 		<tr>
 			<td height="80" width="80%">내용 : ${list.message }</td>
 			<td>
-				<input type="button" value="수정" onclick="document.location.href='/guestbook/modifyForm.do?messageId=${list.messageId}'">
-				<input type="button" value="삭제" onclick="document.location.href='/guestbook/deleteForm.do'">
+				<input type="button" value="수정" onclick="document.location.href='/HOME/guestbook/modifyForm.do?messageId=${list.messageId}'">
+				<input type="button" value="삭제" onclick="document.location.href='/HOME/guestbook/deleteForm.do?messageId=${list.messageId}'">
 			</td>
 		</tr>	
 		
